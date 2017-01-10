@@ -1,7 +1,7 @@
 version: '1'
 name: 'SIMPLE_PIPELINE_WITH_CODE_REVIEW'
 stages:
-  git-clone:
+  gitClone:
     type: git-clone
     input:
       REPOSITORY_URL: {{payload.repo_url}}
@@ -16,7 +16,7 @@ stages:
       WORKSPACE: {{context.workspace}}
     output:
     context:
-    depends_on: git-clone
+    depends_on: gitClone
   eslint:
     type: eslint
     input:
@@ -30,7 +30,7 @@ stages:
             js: {{OUTPUT}}
     context:
     depends_on:
-      - git-clone
+      - gitClone
   htmlhint:
     type: htmlhint
     input:
@@ -44,8 +44,8 @@ stages:
             html: {{OUTPUT}}
     context:
     depends_on:
-      - git-clone
-  codecoverage:
+      - gitClone
+  codeCoverage:
     type: codecoverage
     input:
       WORKSPACE: {{context.workspace}}
@@ -57,7 +57,7 @@ stages:
           codecoverage: {{OUTPUT}}
     context:
     depends_on:
-      - git-clone
+      - gitClone
   blackBoxTest:
     type: mocha
     input:
@@ -69,7 +69,7 @@ stages:
         output:
           blackbox: {{OUTPUT}}
     context:
-    depends_on: git-clone
+    depends_on: build
   whiteBoxTest:
     type: mocha
     input:
@@ -80,6 +80,8 @@ stages:
       payload:
         output:
           whitebox: {{OUTPUT}}
+    context:
+    depends_on: build
   unitTest:
     type: mocha
     input:
@@ -90,6 +92,8 @@ stages:
       payload:
         output:
           unittest: {{OUTPUT}}
+    context:
+    depends_on: build
   code-review:
     type: manual-code-review
     input:
@@ -98,3 +102,11 @@ stages:
       payload:
         output:
           code-review: {{OUTPUT}}
+    context:
+    depends_on:
+      - eslint
+      - htmlhint
+      - codeCoverage
+      - blackBoxTest
+      - whiteBoxTest
+      - unitTest
