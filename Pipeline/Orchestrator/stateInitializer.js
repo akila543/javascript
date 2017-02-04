@@ -24,7 +24,7 @@ function createContext(jobId,callback)
 			console.log(err);
 		else
 		{
-			dir = '/';
+			dir = '/tmp/';
 			callback();
 		}
 	});
@@ -36,7 +36,13 @@ function readTemplate(jobId,msg,callback)
  			    stage = Object.getOwnPropertyNames(msg.stages);
  				stage.map((item)=>{
  				   //time = ts.getHours() + ":" + ts.getMinutes() + ":" + ts.getSeconds();
- 				   msg.stages[item].status ='Initialized';
+					 if(item === "gitClone")
+					 {
+						 msg.stages[item].status ='Initialized';
+					 }
+					 else {
+					 		msg.stages[item].status ='Initialized';
+					 }
  				});
  				dataPush(jobId);
 				callback();
