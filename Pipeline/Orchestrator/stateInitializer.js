@@ -1,12 +1,13 @@
 //module imports
 var ts = new Date();
-var client = require('redis').createClient(6379,'127.0.0.1');
-var time,stages,dir='/tmp/',stage,array=[];
+const client = require('redis').createClient(6379,'127.0.0.1');
+const fs = require('fs');
+var time,stages,stage,array=[];
 
 //worker specific functions
-function createPayload(jobId,msg,callback)
+function createPayload(jobId,payload,callback)
 {
-	client.set(jobId+'_payload',JSON.stringify(msg),function(err,reply){
+	client.set(jobId+'_payload',JSON.stringify(payload),function(err,reply){
 			if(err)
 				console.log(err);
 			else
@@ -18,28 +19,56 @@ function createPayload(jobId,msg,callback)
 
 function createContext(jobId,callback)
 {
-	dir += jobId;
+	var dir ='/tmp/'+jobId;
 	client.set(jobId+'_resources',dir,function(err,reply){
 		if(err)
+			{	dir = '/tmp/';
 			console.log(err);
+			}
 		else
 		{
-			dir = '/';
+			dir = '/tmp/';
 			callback();
 		}
 	});
 
 }
 
-function readTemplate(jobId,msg,callback)
+function readTemplate(jobId,templateName,callback)
 {
- 			    stage = Object.getOwnPropertyNames(msg.stages);
+		console.log('inside read templateName');
+		fs.readFile(__dirname+'/template/template.json','utf8',function(err,data)
+ 			{
+ 				if(!err)
+ 				{
+ 				var template = JSON.parse(data);
+ 				stages=template.stages;
+ 				stage = Object.getOwnPropertyNames(template.stages);
  				stage.map((item)=>{
- 				   //time = ts.getHours() + ":" + ts.getMinutes() + ":" + ts.getSeconds();
- 				   msg.stages[item].status ='Initialized';
- 				});
+ 				   stages[item].status = 'Initialized';
+ 				   stages[item].ts_Initialized = ts.getHours() + ":" + ts.getMinutes() + ":" + ts.getSeconds();
+
+ 				})
+ 				stages = JSON.stringify(stages);
  				dataPush(jobId);
-				callback();
+ 				callback();
+				}
+				else
+					console.log(err);
+			});
+ 			//     stage = Object.getOwnPropertyNames(msg.stages);
+ 			// 	stage.map((item)=>{
+ 			// 	   //time = ts.getHours() + ":" + ts.getMinutes() + ":" + ts.getSeconds();
+				// 	 if(item === "gitClone")
+				// 	 {
+				// 		 msg.stages[item].status ='Initialized';
+				// 	 }
+				// 	 else {
+				// 	 		msg.stages[item].status ='Initialized';
+				// 	 }
+ 			// 	});
+ 			// 	dataPush(jobId);
+				// callback();
 }
 
 
@@ -65,9 +94,11 @@ function pushIstages(jobId,callback)
 
 function dataPush(jobId)
 {
+	var tmp = JSON.parse(stages);
 	stage.map((item)=>{
 		array.push(item);
-		array.push(JSON.stringify(stages[item]));
+		console.log(tmp[item])
+		array.push(JSON.stringify(tmp[item]));
 	});
 	pushIstages(jobId,function(jobId){
 		client.lpush('JOB_SCHEDULER',jobId,function(err,reply){
@@ -84,20 +115,20 @@ function dataPush(jobId)
 
 function Initiate (msg,callback)
 {
-	var input = JSON.parse(msg);
-	stages=input.template.stages;
+	//var input = JSON.parse(msg);
+	//stages=input.template.stages;
 	client.get('counter',function(err,reply){
 		if(!err)
 		{
 
-		 var jobId = input.template.templateName+'_'+(++reply);
+		 var jobId = JSON.parse(msg).templateName+'_'+(++reply);
 			client.set('counter',reply,function(err,reply){
 				if(!err)
 				{
 					console.log(jobId);
-					createPayload(jobId,input.payload,function(){
+					createPayload(jobId,JSON.parse(msg).payload,function(){
 					createContext(jobId,function(){
-					readTemplate(jobId,input.template,callback);
+					readTemplate(jobId,JSON.parse(msg).templateName,callback);
 						})
 					})
 				}

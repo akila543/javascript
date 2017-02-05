@@ -1,4 +1,5 @@
 //module imports
+const async = require('async');
 const rW = require('./workerServices/registerWorker');
 const stateInitializer = require('./Orchestrator/stateInitializer');
 const JobScheduler = require('./Orchestrator/JobScheduler');
@@ -8,9 +9,31 @@ const cloneAgent = require('./LanguagePacks/cloneAgent');
 const jsAgent = require('./LanguagePacks/JavaScript/jsAgent');
 
 //register a worker for a qeueue
-rW('QM',stateInitializer);
-rW('JOB_SCHEDULER',JobScheduler);
-rW('STAGE_SCHEDULER',stageScheduler);
-rW('stackroute/git',cloneAgent);
-rW('stackroute/javascript',jsAgent);
-rW('results',resultsProcessor);
+// rW('QM',stateInitializer);
+// rW('JOB_SCHEDULER',JobScheduler);
+// rW('STAGE_SCHEDULER',stageScheduler);
+// rW('stackroute/git',cloneAgent);
+// rW('stackroute/javascript',jsAgent);
+// rW('results',resultsProcessor);
+
+//async calls
+async.parallel([
+  function(){
+    rW('QM',stateInitializer);
+  },
+  function(){
+    rW('JOB_SCHEDULER',JobScheduler);
+  },
+  function(){
+    rW('STAGE_SCHEDULER',stageScheduler);
+  },
+  function(){
+    rW('stackroute/git',cloneAgent);
+  },
+  function(){
+    rW('stackroute/javascript',jsAgent);
+  },
+  function(){
+    rW('results',resultsProcessor);
+  }
+]);
