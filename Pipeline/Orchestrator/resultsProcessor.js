@@ -52,7 +52,7 @@ function updateRedis(result,cb){
 
   //retrieving and updating payload
   var payload;
-  retrievePayload(jobId,functon(err,res){
+  retrievePayload(jobId,function(err,res){
     if (err) {
       console.log(err);
     }
