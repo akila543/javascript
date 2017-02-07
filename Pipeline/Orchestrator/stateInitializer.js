@@ -49,8 +49,7 @@ function readTemplate(jobId,templateName,callback)
 
  				})
  				stages = JSON.stringify(stages);
- 				dataPush(jobId);
- 				callback();
+ 				dataPush(jobId,callback);
 				}
 				else
 					console.log(err);
@@ -78,7 +77,7 @@ function pushIstages(jobId,callback)
 	});
 }
 
-function dataPush(jobId)
+function dataPush(jobId,callback)
 {
 	var tmp = JSON.parse(stages);
 	stage.map((item)=>{
@@ -88,20 +87,19 @@ function dataPush(jobId)
 	pushIstages(jobId,function(jobId){
 		client.lpush('JOB_SCHEDULER',jobId,function(err,reply){
 			if(!err)
+			{
 				console.log('data sent to JOB_SCHEDULER');
+				callback();
+			}
 			else
 				console.log(err);
 		});
 	})
-
-
 }
 
 
 function Initiate (msg,callback)
 {
-	//var input = JSON.parse(msg);
-	//stages=input.template.stages;
 	client.get('counter',function(err,reply){
 		if(!err)
 		{
