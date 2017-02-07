@@ -25,6 +25,7 @@ function updateRedis(result,cb){
     output=stderr;
   }
 
+
   //retrieving and updating stage
   retrieveStage(jobId, stageName,function(err,res){
     if (err) {
@@ -65,43 +66,6 @@ function updateRedis(result,cb){
       });
     }
   });
-
-  stage.status=status;
-  stage.stdout=stdout;
-  stage.stderr=stderr;
-  stage.exitCode=exitCode;
-  stage.ts_completed=ts_completed;
-  stage.output=output;
-  updateStage(jobId,stageName,JSON.stringify(stage),function(err,res){
-    if (err) {
-      console.log(err);
-    }
-    else {
-      console.log(res);
-    }
-  });
-
-  //retrieving and updating payload
-  var payload;
-  retrievePayload(jobId,function(err,res){
-    if (err) {
-      console.log(err);
-    }
-    else {
-      payload = JSON.parse(res);
-    }
-  });
-
-  payload[stageName]=output;
-  updatePayload(jobId,JSON.stringify(payload),function(err,res){
-    if (err) {
-      console.log(err);
-    }
-    else {
-      console.log(res);
-    }
-  });
-  cb();
 }
 
 //pushing back to the JOB_SCHEDULAR queue
