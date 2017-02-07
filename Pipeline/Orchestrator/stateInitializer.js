@@ -20,7 +20,7 @@ function createPayload(jobId,payload,callback)
 function createContext(jobId,callback)
 {
 	var dir ='/tmp/'+jobId;
-	client.set(jobId+'_resources',dir,function(err,reply){
+	client.hmset(jobId+'_resources','WORKSPACE',dir,function(err,reply){
 		if(err)
 			{	dir = '/tmp/';
 			console.log(err);
@@ -36,8 +36,7 @@ function createContext(jobId,callback)
 
 function readTemplate(jobId,templateName,callback)
 {
-		console.log('inside read templateName');
-		fs.readFile(__dirname+'/template/template.json','utf8',function(err,data)
+		fs.readFile(__dirname+'/template/'+templateName+'.json','utf8',function(err,data)
  			{
  				if(!err)
  				{
@@ -56,19 +55,6 @@ function readTemplate(jobId,templateName,callback)
 				else
 					console.log(err);
 			});
- 			//     stage = Object.getOwnPropertyNames(msg.stages);
- 			// 	stage.map((item)=>{
- 			// 	   //time = ts.getHours() + ":" + ts.getMinutes() + ":" + ts.getSeconds();
-				// 	 if(item === "gitClone")
-				// 	 {
-				// 		 msg.stages[item].status ='Initialized';
-				// 	 }
-				// 	 else {
-				// 	 		msg.stages[item].status ='Initialized';
-				// 	 }
- 			// 	});
- 			// 	dataPush(jobId);
-				// callback();
 }
 
 
@@ -97,7 +83,6 @@ function dataPush(jobId)
 	var tmp = JSON.parse(stages);
 	stage.map((item)=>{
 		array.push(item);
-		console.log(tmp[item])
 		array.push(JSON.stringify(tmp[item]));
 	});
 	pushIstages(jobId,function(jobId){
