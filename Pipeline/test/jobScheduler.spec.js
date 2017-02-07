@@ -21,7 +21,6 @@ var input = {
 
   it('Stages are created', function(done) {
     // TODO: Retrieve Stages
-    console.log('-----------------------------------------------');
     async.waterfall([
     retrieveAllStages.bind(null,input.jobId),
     (stages,callback) => {
@@ -38,7 +37,7 @@ var input = {
             callback();
     }
     ],done);
-    
+
   });
 
   it('job is pushed to STAGE_SCHEDULER',function(done){

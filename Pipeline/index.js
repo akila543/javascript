@@ -18,22 +18,10 @@ const jsAgent = require('./LanguagePacks/JavaScript/jsAgent');
 
 //async calls
 async.parallel([
-  function(){
-    rW('QM',stateInitializer);
-  },
-  function(){
-    rW('JOB_SCHEDULER',JobScheduler);
-  },
-  function(){
-    rW('STAGE_SCHEDULER',stageScheduler);
-  },
-  function(){
-    rW('stackroute/git',cloneAgent);
-  },
-  function(){
-    rW('stackroute/javascript',jsAgent);
-  },
-  function(){
-    rW('results',resultsProcessor);
-  }
+    rW.bind(null,'QM',stateInitializer),
+    rW.bind(null,'JOB_SCHEDULER',JobScheduler),
+    rW.bind(null,'STAGE_SCHEDULER',stageScheduler),
+    rW.bind(null,'stackroute/git',cloneAgent),
+    rW.bind(null,'stackroute/javascript',jsAgent),
+    rW.bind(null,'results',resultsProcessor)
 ]);

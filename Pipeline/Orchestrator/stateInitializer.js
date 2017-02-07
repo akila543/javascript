@@ -60,7 +60,6 @@ function readTemplate(jobId,templateName,callback)
 
 function pushIstages(jobId,callback)
 {
-	console.log("setting on"+jobId);
 	client.hmset(jobId+'_stages',array,function(err,reply){
 		if(err)
 			console.log(err);
@@ -92,9 +91,7 @@ function dataPush(jobId)
 			else
 				console.log(err);
 		});
-	})
-
-
+	});
 }
 
 

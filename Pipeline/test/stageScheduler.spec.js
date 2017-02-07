@@ -5,6 +5,7 @@ var client=redis.createClient(6379, '127.0.0.1');
 const retrieveStage = require('../Orchestrator/stateServices/stages/retrieveStage');
 const updateStage = require('../Orchestrator/stateServices/stages/updateStage');
 const updatePayload = require('../Orchestrator/stateServices/payload/updatePayload');
+const updateResources = require('../Orchestrator/stateServices/resources/updateResources');
 
 var stageScheduler=require('../Orchestrator/stageScheduler')
 
@@ -21,20 +22,21 @@ describe('StageScheduler', () => {
           output: null,
           context: null,
           depends_on: ["gitClone"],
-          status: "initialized"
+          status: "Initialized"
       });
   var payload=JSON.stringify({
-     repo: "node-uuid",
+     repoUrl: "http://github.com/broofa/node-uuid",
       author: "broofa",
       branch: "master",
       headCommitId: "0983kshjhaqi1123344kmdjnsj",
       commitIds: "839290njnwyqiqka19238jsjwj111",
-      gitClone: ""
   });
+
   before(function(done) {
      async.series([
       updateStage.bind(null,input.jobId,input.stageName,stages),
        updatePayload.bind(null,input.jobId,payload),
+       updateResources.bind(null,input.jobId,'/tmp/CI-Pipeline_1'),
        stageScheduler.bind(null,JSON.stringify(input)),
      ],done);
    });
@@ -47,7 +49,7 @@ describe('StageScheduler', () => {
           var stages=JSON.parse(stage);
           should.exist(stages);
           // TODO: stage should have property status and should be updated to scheduled
-          stages.should.have.property('status').and.be.exactly('scheduled');
+          stages.should.have.property('status').and.be.exactly('Scheduled');
           // TODO: stage should have property ts_scheduled
           stages.should.have.property('ts_scheduled');
           callback();

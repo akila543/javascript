@@ -3,6 +3,15 @@ const redis = require('redis');
 
 //input payload for stage processing
 ////input for eslint
+var stage_payload1 = {
+  jobId: 'jobId1',
+  stageName: 'build',
+  cmd: '/stackroute/javascript/build',
+  input:{
+    WORKSPACE: '/tmp/jobId1',
+  }
+};
+
 var eslint_payload = {
   jobId: 'jobId5',
   stageName: 'eslint',
@@ -52,40 +61,4 @@ var instanbul_payload = {
 
 
 //adding stage payload to the worker queue
-var stageScheduler = redis.createClient(6379,'127.0.0.1');
-
-stageScheduler.lpush('stackroute:javascript:eslint',JSON.stringify(eslint_payload),(err,reply)=>{
-  if(err){
-    console.log(err);
-  }
-  else {
-    console.log(reply);
-  }
-});
-
-stageScheduler.lpush('stackroute:javascript:htmlhint',JSON.stringify(htmlhint_payload),(err,reply)=>{
-  if(err){
-    console.log(err);
-  }
-  else {
-    console.log(reply);
-  }
-});
-
-stageScheduler.lpush('stackroute:javascript:mocha',JSON.stringify(mocha_payload),(err,reply)=>{
-  if(err){
-    console.log(err);
-  }
-  else {
-    console.log(reply);
-  }
-});
-
-stageScheduler.lpush('stackroute:javascript:istanbul',JSON.stringify(istanbul_payload),(err,reply)=>{
-  if(err){
-    console.log(err);
-  }
-  else {
-    console.log(reply);
-  }
-});
+var client = redis.createClient(6379,'127.0.0.1');

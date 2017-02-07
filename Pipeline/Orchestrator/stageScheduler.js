@@ -48,7 +48,7 @@ function schedule(jobId, stageName, input_stages, comand, callback) {
               var input = res;
               var payload = JSON.parse(input);
               var author = payload["author"];
-              var repo = payload["repo"];
+              var repoUrl = payload["repoUrl"];
               var branch = payload["branch"];
 
               //creating input payload for stageSchedular
@@ -63,7 +63,7 @@ function schedule(jobId, stageName, input_stages, comand, callback) {
                       stageName: stageName,
                       cmd: comand,
                       input: {
-                          REPO_URL: "https://github.com/" + author + "/" + repo,
+                          REPO_URL: repoUrl,
                           BRANCH: branch,
                           WORKSPACE: workspace
                       }
@@ -86,7 +86,8 @@ function schedule(jobId, stageName, input_stages, comand, callback) {
           console.log(err);
         }
         else {
-          var workspace = res;
+          console.log(res);
+          var workspace = res.WORKSPACE;
           if (input_stages === null) {
             console.log('Code-review is Scheduled.');
             callback();
@@ -113,6 +114,7 @@ function schedule(jobId, stageName, input_stages, comand, callback) {
 }
 //popping message from STAGE_SCHEDULAR queue
 module.exports = function(reply, callback) {
+    console.log('stage input',reply);
     jobId = JSON.parse(reply).jobId;
     stageName = JSON.parse(reply).stageName;
     console.log(stageName);

@@ -27,12 +27,13 @@ describe('StateInitializer', () => {
     async.waterfall([
       retrieveResources.bind(null, 'stateInitializer.test.yml_1'),
       (resources, callback) => {
+        console.log(resources);
         should.exist(resources);
         // TODO: WORKSPACE is present
         should.exist(resources.WORKSPACE);
         //should.exist(resources.WORKSPAC);
         resources.should.have.property('WORKSPACE');
-        
+
         callback();
       }
     ], done);
@@ -76,7 +77,7 @@ describe('StateInitializer', () => {
       callback();
     }
     ],done);
-    
+
   });
 
   it('job is pushed to jobScheduler', function(done) {
@@ -89,7 +90,7 @@ describe('StateInitializer', () => {
       callback();
       }
       ],done);
-    
+
       });
   after(function(done) {
     flushRedis(done);
@@ -99,8 +100,8 @@ describe('StateInitializer', () => {
 function flushRedis(done) {
 
   client.flushdb((err,reply) =>{
-    if(err) 
-      console.log(err); 
+    if(err)
+      console.log(err);
     done();
   });
 

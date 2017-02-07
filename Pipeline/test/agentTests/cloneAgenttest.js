@@ -1,67 +1,80 @@
 //module imports
+const async = require('async');
 const redis = require('redis');
+const should = require('should');
+const spawn = require('child_process').spawn;
+const cloneAgent = require('../../LanguagePacks/cloneAgent');
 
-//input payload for stage processing
-var stage_payload1 = {
-  jobId: 'jobId1',
-  stageName: 'gitClone',
-  cmd: '/stackroute/git/clone',
-  input:{
-    REPO_URL: 'https://github.com/rsunray/ciserver',
-    BRANCH: 'refs/heads/master',
-    WORKSPACE: '/tmp/jobId1',
-  }
-};
+//redis client
+var client = redis.createClient(6379,'127.0.0.1');
 
-var stage_payload2 = {
-  jobId: 'jobId2',
-  stageName: 'gitClone',
-  cmd: '/stackroute/git/clone',
-  input:{
-    REPO_URL: 'https://github.com/rsunray/ciserver',
-    BRANCH: 'refs/heads/master',
-    WORKSPACE: '/tmp/jobId2',
-  }
-};
+describe('cloneAgent',function(){
+  var stage_payload = {
+    jobId: 'CI-Pipeline_1',
+    stageName: 'gitClone',
+    cmd: 'stackroute/git/clone',
+    input:{
+      REPO_URL: 'https://github.com/rsunray/ciserver',
+      BRANCH: 'refs/heads/master',
+      WORKSPACE: '/tmp/CI-Pipeline_1',
+    }
+  };
 
-var stage_payload3 = {
-  jobId: 'jobId3',
-  stageName: 'gitClone',
-  cmd: '/stackroute/git/clone',
-  input:{
-    REPO_URL: 'https://github.com/rsunray/ciserver',
-    BRANCH: 'refs/heads/master',
-    WORKSPACE: '/tmp/jobId3',
-  }
-};
+  var result;
 
-//create an EventEmitter
-var emitter = new EventEmitter();
+      before(function(done){
+        this.timeout(7500);
+        async.waterfall([
+          (callback)=>{
+            client.flushdb();
+            callback();
+          },
+          cloneAgent.bind(null,JSON.stringify(stage_payload)),
+        ],done);
+      });
 
-//adding stage payload to the worker queue
-var stageScheduler = redis.createClient(6379,'127.0.0.1');
+      it('Cloned repo should exist',function(done){
+        async.series([
+          (callback)=>{
+            var res = spawn('ls',['-A',stage_payload.input.WORKSPACE]);
+            res.on('close',(code)=>{
+              //code=1,if folder is empty
+              //code=2,if folder doesn't exist
+              code.should.be.exactly(0);
+            });
+            callback();
+          },
+        ],done);
+      });
 
-stageScheduler.lpush('stackroute/git',JSON.stringify(stage_payload1),JSON.stringify(stage_payload2),JSON.stringify(stage_payload3),(err,reply)=>{
-  if(err){
-    console.log(err);
-  }
-  else {
-    console.log(reply);
-  }
+      it('Exit code in the result should be 0',function(done){
+        async.waterfall([
+          (callback)=>{
+            client.brpop('results',0,callback);
+          },
+          (reply,callback)=>{
+            result = JSON.parse(reply[1]);
+            result.exitCode.should.be.exactly(0);
+            callback();
+          }
+        ],done);
+      });
+
+      it('Stage status should be in progress',function(done){
+        async.series([
+          (callback)=>{
+            result.stageStatus.should.be.exactly('IN PROGRESS');
+            callback();
+          }
+        ],done);
+      });
+
+      after(function(done){
+        async.series([
+          (callback)=>{
+            client.flushdb();
+            callback();
+          }
+        ],done)
+      });
 });
-
-function resultsTest(){
-stageScheduler.brpop('results',0,(err,reply)=>{
-  if (err) {
-    console.log(err);
-  }
-  else {
-    console.log(reply);
-    setTimeout(function(){
-      resultsTest();
-    },0)
-  }
-});
-};
-
-resultsTest();

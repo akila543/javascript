@@ -1,7 +1,7 @@
 var client = require('redis').createClient(6379,'127.0.0.1');
 var jobInput = {
     payload:{
-            repo:'node-uuid',
+            repoUrl:'http://github.com/broofa/node-uuid',
             author:'broofa',
             branch:'master',
             headCommitId:'0983kshjhaqi1123344kmdjnsj',
