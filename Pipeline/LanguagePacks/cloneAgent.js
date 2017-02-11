@@ -5,10 +5,11 @@ const spawn = require('child_process').spawn;
 const redis = require('redis');
 
 //reading the input from the stage queue
-var stageAgent = redis.createClient(6379,'127.0.0.1');
+var stageAgent = redis.createClient(6379,'172.23.238.179');
 
 //worker for stage queue
 module.exports = function(reply,callback){
+      console.log(reply);
       //// get the input from the queue
       var ipl = JSON.parse(reply);
       ////the output object

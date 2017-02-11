@@ -5,7 +5,7 @@ const spawn = require('child_process').spawn;
 const redis = require('redis');
 
 //reading the input from the stage queue
-var stageAgent = redis.createClient(6379,'127.0.0.1');
+var stageAgent = redis.createClient(6379,'172.23.238.179');
 
 //stage handler
 module.exports = function(reply,callback){
