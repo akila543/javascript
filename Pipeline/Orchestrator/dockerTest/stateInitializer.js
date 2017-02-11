@@ -93,7 +93,9 @@ function dataPush(jobId,callback)
 			else
 				console.log(err);
 		});
+
 	})
+
 }
 
 
@@ -127,5 +129,6 @@ function Initiate (msg,callback)
 
 //module exports
 module.exports = function(msg,callback){
+	console.log("it is called");
 	Initiate(msg,callback);
 };

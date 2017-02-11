@@ -18,7 +18,8 @@ describe('StateInitializer', () => {
 
   before(function(done) {
     async.series([
-      stateInitializer.bind(null,JSON.stringify(input))
+      flushRedis.bind(null),
+      stateInitializer.bind(null,JSON.stringify(input)),
     ],done);
   });
 
@@ -30,7 +31,7 @@ describe('StateInitializer', () => {
         console.log(resources);
         should.exist(resources);
         // TODO: WORKSPACE is present
-        should.exist(resources.WORKSPACE);
+        should.exist(resources.WORKSPACE)
         //should.exist(resources.WORKSPAC);
         resources.should.have.property('WORKSPACE');
 
