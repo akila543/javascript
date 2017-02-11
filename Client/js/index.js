@@ -27751,7 +27751,8 @@
 
 	var styles = {
 	  button: {
-	    margin: 12
+	    margin: 12,
+	    align: "center"
 	  },
 	  paper: {
 	    height: 800,
@@ -27769,6 +27770,14 @@
 	    left: 0,
 	    width: '100%',
 	    opacity: 1
+	  },
+	  inputField: {
+	    marginLeft: '400px',
+	    width: '400px'
+	  },
+	  progress: {
+	    marginTop: '50px',
+	    marginLeft: '500px'
 	  }
 	};
 
@@ -27820,7 +27829,7 @@
 	        box = _react2.default.createElement(
 	          'div',
 	          null,
-	          _react2.default.createElement(_CircularProgress2.default, null)
+	          _react2.default.createElement(_CircularProgress2.default, { size: 80, thickness: 5, style: styles.progress })
 	        );
 	      } else if (this.state.isSubmit) {
 	        box = _react2.default.createElement(
@@ -27836,7 +27845,8 @@
 	        _react2.default.createElement(_TextField2.default, {
 	          id: 'repoUrl', value: this.state.input, onChange: this.handleChange,
 	          floatingLabelText: 'Repo URL',
-	          type: 'text'
+	          type: 'text',
+	          style: styles.inputField
 	        }),
 	        _react2.default.createElement(_RaisedButton2.default, {
 	          target: '_blank',
