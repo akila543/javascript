@@ -1,6 +1,6 @@
 //module imports
 var ts = new Date();
-const client = require('redis').createClient(6379,'127.0.0.1');
+const client = require('redis').createClient();
 const fs = require('fs');
 var time,stages,stage,array=[];
 
@@ -59,7 +59,6 @@ function readTemplate(jobId,templateName,callback)
 
 function pushIstages(jobId,callback)
 {
-	console.log("setting on"+jobId);
 	client.hmset(jobId+'_stages',array,function(err,reply){
 		if(err)
 			console.log(err);

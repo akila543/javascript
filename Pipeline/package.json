@@ -2,7 +2,7 @@
   "name": "piper",
   "version": "1.0.0",
   "description": "distributed pipeline",
-  "main": "index.js",
+  "main": "/routes/loadRoutes.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -24,7 +24,10 @@
     "async": "^2.1.4",
     "deasync": "^0.1.9",
     "eslint": "^3.14.0",
-    "redis": "^2.6.5"
+    "lodash": "^4.17.4",
+    "mocha": "^3.2.0",
+    "redis": "^2.6.5",
+    "should": "^11.2.0"
   },
   "devDependencies": {
     "eslint": "^3.14.0",

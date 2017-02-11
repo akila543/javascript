@@ -9,7 +9,7 @@ var stageAgent = redis.createClient(6379,'127.0.0.1');
 
 //worker for stage queue
 module.exports = function(reply,callback){
-      //// get the output from the queue
+      //// get the input from the queue
       var ipl = JSON.parse(reply);
       ////the output object
       var result = {
@@ -18,22 +18,12 @@ module.exports = function(reply,callback){
         stdout: '',
         stderr: '',
         exitCode: '',
-        stageStatus:'IN PROGRESS',
+        stageStatus:'IN PROGRESS'
       };
       try{
-      ipl.input.ID = ipl.jobId;
       //// run the appropriate script
       var res = spawn("/"+ipl.cmd,{cwd:'/tmp/',env:ipl.input});
       //// send the exit code as response to the result processor
-      res.stdout.on('data', (data) => {
-        console.log(result.stageName+' stdout=====>',`${data}`);
-          result.stdout = `${data}`;
-      });
-
-      res.stderr.on('data', (data) => {
-        console.log(result.stageName+' stderr=====>',`${data}`);
-          result.stderr = `${data}`;
-      });
       res.on('close',(code)=>{
         console.log(ipl.jobId+` process exited with code ${code}`);
         result.exitCode = code;

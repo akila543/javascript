@@ -9,7 +9,7 @@ const cloneAgent = require('./LanguagePacks/cloneAgent');
 const jsAgent = require('./LanguagePacks/JavaScript/jsAgent');
 
 //register a worker for a qeueue
-// rW('QM',stateInitializer);
+rW('QM',stateInitializer);
 // rW('JOB_SCHEDULER',JobScheduler);
 // rW('STAGE_SCHEDULER',stageScheduler);
 // rW('stackroute/git',cloneAgent);
@@ -17,23 +17,11 @@ const jsAgent = require('./LanguagePacks/JavaScript/jsAgent');
 // rW('results',resultsProcessor);
 
 //async calls
-async.parallel([
-  function(){
-    rW('QM',stateInitializer);
-  },
-  function(){
-    rW('JOB_SCHEDULER',JobScheduler);
-  },
-  function(){
-    rW('STAGE_SCHEDULER',stageScheduler);
-  },
-  function(){
-    rW('stackroute/git',cloneAgent);
-  },
-  function(){
-    rW('stackroute/javascript',jsAgent);
-  },
-  function(){
-    rW('results',resultsProcessor);
-  }
-]);
+// async.parallel([
+//     rW.bind(null,'QM',stateInitializer),
+//     rW.bind(null,'JOB_SCHEDULER',JobScheduler),
+//     rW.bind(null,'STAGE_SCHEDULER',stageScheduler),
+//     rW.bind(null,'stackroute/git',cloneAgent),
+//     rW.bind(null,'stackroute/javascript',jsAgent),
+//     rW.bind(null,'results',resultsProcessor)
+// ]);
