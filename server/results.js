@@ -11,6 +11,7 @@ Router.post('/results', function(req, res, next) {
     client.get('eslint',function(err,reply){
       if(!err)
       {
+        console.log(req);
         var input = {
           payload:{
             repoUrl:req.body.data
