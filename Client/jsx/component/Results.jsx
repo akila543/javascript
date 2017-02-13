@@ -18,21 +18,7 @@ const styles = {
         marginTop: 20
         }
 };
-// const tilesData = [
-// {build:
-// {
-//   output:'sdasdasds'
-// }
-// },
-// {eslint:
-// {
-//   output:'sdasdasds'
-// }
-// }
-// ];
- /* A simple example of a scrollable `GridList` containing a [Subheader](/#/components/subheader).
- /**
- */
+
   class Results extends React.Component {
       constructor(props) {
       super(props);

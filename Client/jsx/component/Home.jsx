@@ -9,6 +9,7 @@ import CircularProgress from 'material-ui/CircularProgress';
 const styles = {
   button: {
     margin: 12,
+    align:"center"
   },
   paper:{
     height: 800,
@@ -27,6 +28,14 @@ const styles = {
     width: '100%',
     opacity: 1,
   },
+  inputField:{
+    marginLeft:'400px',
+    width:'400px'
+  },
+  progress:{
+    marginTop:'50px',
+    marginLeft:'500px'
+  }
 };
 
 class Home extends React.Component{
@@ -67,14 +76,14 @@ class Home extends React.Component{
   render(){
     var box=null;
     if(this.state.isSubmit && this.state.output==null){
-      box=<div>
-            <CircularProgress />
+      box=<div >
+            <CircularProgress size={80} thickness={5} style={styles.progress} />
             </div>
     }
     else if(this.state.isSubmit){
       box=<div>
           <Results output={this.state.output}/>
-      
+
       </div>
     }
 
@@ -83,6 +92,7 @@ class Home extends React.Component{
         id="repoUrl" value={this.state.input} onChange={this.handleChange}
         floatingLabelText="Repo URL"
         type="text"
+       style={styles.inputField}
       />
       <RaisedButton
        target="_blank"
