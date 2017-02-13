@@ -1,0 +1,5 @@
+#!/bin/bash
+#The blackbox testing script
+
+cd $WORKSPACE
+mocha

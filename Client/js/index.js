@@ -27750,9 +27750,28 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var styles = {
+	  circularprog: {
+	    margin: 12,
+	    position: 'relative',
+	    top: 100,
+	    bottom: 0,
+	    right: 0,
+	    left: 570
+	  },
+	  textfield: {
+	    position: 'absolute',
+	    top: 50,
+	    bottom: 0,
+	    right: 0,
+	    left: 500
+	  },
 	  button: {
 	    margin: 12,
-	    align: "center"
+	    position: 'relative',
+	    top: 60,
+	    bottom: 0,
+	    right: 0,
+	    left: 570
 	  },
 	  paper: {
 	    height: 800,
@@ -27770,14 +27789,6 @@
 	    left: 0,
 	    width: '100%',
 	    opacity: 1
-	  },
-	  inputField: {
-	    marginLeft: '400px',
-	    width: '400px'
-	  },
-	  progress: {
-	    marginTop: '50px',
-	    marginLeft: '500px'
 	  }
 	};
 
@@ -27789,13 +27800,21 @@
 
 	    var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
 
-	    _this.state = { input: '', completed: 0, isSubmit: false, output: null };
+	    _this.state = { input: '', completed: 0, isSubmit: false, output: null, dataSource: [] };
 	    _this.handleSubmit = _this.handleSubmit.bind(_this);
 	    _this.handleChange = _this.handleChange.bind(_this);
+	    _this.handleUpdateInput = _this.handleUpdateInput(_this);
 	    return _this;
 	  }
 
 	  _createClass(Home, [{
+	    key: 'handleUpdateInput',
+	    value: function handleUpdateInput(value) {
+	      this.setState({
+	        dataSource: [value, value + value, value + value + value]
+	      });
+	    }
+	  }, {
 	    key: 'handleChange',
 	    value: function handleChange(e) {
 	      e.preventDefault();
@@ -27812,11 +27831,12 @@
 	        if (err || !res.ok) {
 	          alert('Oh no! error');
 	        } else {
-	          if (_typeof(res.text) != String) {
+	          console.log(_typeof(res.text));
+	          if (res.text !== 'jobFailed') {
 	            that.setState({ output: JSON.parse(res.text) });
 	          } else {
 	            console.log(res.text);
-	            alert("Server error");
+	            alert("Server error: " + res.text);
 	          }
 	        }
 	      });
@@ -27829,7 +27849,7 @@
 	        box = _react2.default.createElement(
 	          'div',
 	          null,
-	          _react2.default.createElement(_CircularProgress2.default, { size: 80, thickness: 5, style: styles.progress })
+	          _react2.default.createElement(_CircularProgress2.default, { size: 100, thickness: 9, style: styles.circularprog })
 	        );
 	      } else if (this.state.isSubmit) {
 	        box = _react2.default.createElement(
@@ -27846,7 +27866,7 @@
 	          id: 'repoUrl', value: this.state.input, onChange: this.handleChange,
 	          floatingLabelText: 'Repo URL',
 	          type: 'text',
-	          style: styles.inputField
+	          style: styles.textfield
 	        }),
 	        _react2.default.createElement(_RaisedButton2.default, {
 	          target: '_blank',
@@ -30175,24 +30195,9 @@
 	    width: '1200px',
 	    height: 'auto',
 	    overflowY: 'auto',
-	    marginTop: 20
+	    marginTop: 50
 	  }
 	};
-	// const tilesData = [
-	// {build:
-	// {
-	//   output:'sdasdasds'
-	// }
-	// },
-	// {eslint:
-	// {
-	//   output:'sdasdasds'
-	// }
-	// }
-	// ];
-	/* A simple example of a scrollable `GridList` containing a [Subheader](/#/components/subheader).
-	/**
-	*/
 
 	var Results = function (_React$Component) {
 	  _inherits(Results, _React$Component);

@@ -1,41 +1,10 @@
 var client = require('redis').createClient();
-var jobInput = {
-    payload:{
-            repoUrl:'http://github.com/broofa/node-uuid',
-            author:'broofa',
-            branch:'master',
-            headCommitId:'0983kshjhaqi1123344kmdjnsj',
-            commitIds:'839290njnwyqiqka19238jsjwj111'
-
-    },
-    templateName:"CI-Pipeline"
-                }
-
-    client.lpush('QM',JSON.stringify(jobInput),(err,reply)=>{
-var async = require('async');
-// var jobInput = {
-//     payload:{
-//             repoUrl:'http://github.com/broofa/node-uuid',
-//             author:'broofa',
-//             branch:'master',
-//             headCommitId:'0983kshjhaqi1123344kmdjnsj',
-//             commitIds:'839290njnwyqiqka19238jsjwj111'
-
-//     },
-//     templateName:"CI-Pipeline"
-// }
-
-
-
 
 module.exports = function (input,callback)
 {
     console.log('Initiate pipeline called');
     client.lpush('QM',JSON.stringify(input),(err,reply)=>{
-
->>>>>>> 06d35325ca9b54dffe8a0584c03c4f385a226cc6
         console.log(reply);
-
         result(function(resultArray){
             callback(null,resultArray);
         });
@@ -43,7 +12,7 @@ module.exports = function (input,callback)
     });
 }
 
-function result(callback)
+function result(cb)
 {
     console.log('result called');
     client.brpop('COMPLETE_RESULT',0,1,function(err,reply){
@@ -60,22 +29,25 @@ function result(callback)
                     var cntr = 0;
                     // console.log(Object.getOwnPropertyNames(reply));
                     Object.getOwnPropertyNames(reply).map((item)=>{
+                      if(item !== 'gitClone' && item !== 'execute' && item !== 'code-review' )
+                      {
                         var result = {};
                             result[item] = JSON.parse(reply[item]).output;
                             resultArray.push(result);
-
+                      }
                     });
-                    callback(resultArray);
+                    cb(resultArray);
 
                 })
             }
             else
             {
-                callback("jobFailed");
+
+                cb("jobFailed");
             }
         }
         else
-            result(callback);
+            result(cb);
         }
         else
             console.log(err);
