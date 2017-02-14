@@ -1,5 +1,5 @@
 const Router = require('express').Router()
-const initiatePipeline = require('../Pipeline/initiatePipeline.js');
+const initiatePipeline = require('../../Pipeline/initiatePipeline.js');
 Router.use(require('body-parser').json());
 
 var client = require('redis').createClient();
@@ -11,6 +11,7 @@ Router.post('/results', function(req, res, next) {
     client.get('eslint',function(err,reply){
       if(!err)
       {
+        console.log(req);
         var input = {
           payload:{
             repoUrl:req.body.data

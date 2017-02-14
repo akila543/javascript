@@ -30,12 +30,23 @@ var config = {
                presets: ['es2015', 'react']
             }
          },
+<<<<<<< HEAD
 	 {
 	    test: /\.css$/,
   	    loader: 'style!css?modules',
   	    include: /flexboxgrid/,
 	 }
+=======
+         {
+           test: /\.css$/,
+           loader: 'style!css?modules',
+           include: /flexboxgrid/
+         }
+>>>>>>> 0f4e5f2a026860cedb0b63b06c045f963a1f8e51
       ]
+   },
+   resolve:{
+     extensions:['','.js','.jsx','/index.js','/index','/index.jsx']
    }
 }
 

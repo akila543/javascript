@@ -1,26 +1,27 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-var result = require('./results.js');
+var result = require('./routes/results');
+var saveFile = require('./routes/fileSave');
 
-app.use(express.static('Client/'));
-
+//request parsers
 app.use( bodyParser.json() );
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-// app.use(function(req, res, next) {
-//  res.header("Access-Control-Allow-Origin", "*");
-//  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//  next();
-// });
+//static file service
+app.use(express.static('../Client/'));
 
 app.use('/',function(req,res,next){
 	console.log("got routed");
 	next();
-},result);
+},result,saveFile);
 
+// app.use('/',function(req,res,next){
+// 	console.log("saveFile");
+// 	next();
+// },saveFile);
 
 app.listen(3000,console.log("server is running"));
 

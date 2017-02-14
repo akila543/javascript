@@ -36,7 +36,7 @@ function createContext(jobId,callback)
 
 function readTemplate(jobId,templateName,callback)
 {
-		fs.readFile(__dirname+'/template/'+templateName+'.json','utf8',function(err,data)
+		fs.readFile(__dirname+'/workflows/'+templateName+'.json','utf8',function(err,data)
  			{
  				if(!err)
  				{
@@ -88,7 +88,13 @@ function dataPush(jobId,callback)
 			if(!err)
 			{
 				console.log('data sent to JOB_SCHEDULER');
-				callback();
+				client.lpush('JOBLIST',jobId,function(err,reply){
+					if(!err)
+						callback();
+					else
+						console.log(err);
+				})
+
 			}
 			else
 				console.log(err);
