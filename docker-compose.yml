@@ -1,8 +1,10 @@
-version : '2'
+version : '1'
 services :
   stateInitializer :
     build: ./Pipeline/Orchestrator/stateInitializer
     image: stateinitializer
+    volumes:
+      - /workflows:./Server/workflows
     network_mode: "host"
     expose : ['6379']
 
