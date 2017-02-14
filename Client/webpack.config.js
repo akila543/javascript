@@ -3,6 +3,7 @@ var config = {
 
    output: {
       path:'./js/',
+      publicPath:'/js/',
       filename: 'index.js',
    },
 
@@ -28,16 +29,13 @@ var config = {
             query: {
                presets: ['es2015', 'react']
             }
-         },
-         {
-           test: /\.css$/,
-           loader: 'style!css?modules',
-           include: /flexboxgrid/
-         }
+          },
+          {
+              test: /\.css$/,
+              loader: 'style!css?modules',
+                include: /flexboxgrid/,
+            }
       ]
-   },
-   resolve:{
-     extensions:['','.js','.jsx','/index.js','/index','/index.jsx']
    }
 }
 

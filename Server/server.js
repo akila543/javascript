@@ -1,13 +1,14 @@
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
-var result = require('./routes/results');
-var saveFile = require('./routes/fileSave');
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+const result = require('./routes/results');
+const saveFile = require('./routes/fileSave');
 const stageLister = require('./routes/stageList');
 const deleteWorkflow = require('./routes/deleteWorkflow');
+const jobList = require('./routes/loadJobList');
 
 //request parsers
-app.use( bodyParser.json() );
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -19,7 +20,7 @@ app.use(express.static('../Client/'));
 app.use('/',function(req,res,next){
 	console.log("got routed");
 	next();
-},result,saveFile,stageLister,deleteWorkflow);
+},result,saveFile,stageLister,deleteWorkflow,jobList);
 
 //server run
 app.listen(3000,console.log("Server is running on port 3000..."));

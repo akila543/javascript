@@ -62,7 +62,7 @@
             code:reader.result
           });
 
-  Request.post('/saveFile').send({ data: reader.result,fileName:temp.name}).set('Accept', 'application/json')
+        Request.post('/saveFile').send({ data: reader.result,fileName:temp.name}).set('Accept', 'application/json')
         .end(function(err, res){
           if (err || !res.ok) {
             alert('Oh no! error');

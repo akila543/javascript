@@ -1,16 +1,43 @@
 const Router = require('express').Router()
-var fs = require('fs');
+const fs = require('fs');
+const MongoClient = require('mongodb').MongoClient;
+
+var url = 'mongodb://localhost:27017/workflows';
+
 Router.use(require('body-parser').json());
 
 Router.post('/saveFile', function(req, res, next) {
-  console.log('inside route');
+
   fs.writeFile("./workflows/"+req.body.fileName, req.body.data,'utf8', function(err) {
     if(err) {
         return console.log(err);
         }
-    res.send("The file was saved!");
+        else
+        {
+    		res.send("The file was saved!");
+    		MongoClient.connect(url, function(err, db) {
+
+		    console.log("Connected successfully to server");
+
+		    insertDocuments(db, req.body.fileName,req.body.data,function() { 
+		    db.close();
+		    });
+		   });
+
+		}
 });
 
 });
+
+var insertDocuments = function(db,fileName,fileData ,callback) {
+  // Get the documents collection
+  var collection = db.collection('templates');
+  // Insert some documents
+  collection.insertOne(
+    {fileName : fileData}, function(err, result) {
+    console.log(result.result.n);
+    callback(result);
+  });
+}
 
 module.exports = Router;
