@@ -46,24 +46,10 @@ return(
 
         <Link to="/monitor">
           <ListItem primaryText="Monitoring" leftIcon={<ContentInbox />} />
-          </Link>
-    <ListItem primaryText="Workflow" leftIcon={<ActionGrade />} nestedItems={[
-        <Link to="/add">
-                  <ListItem
-                  key={1}
-                  primaryText="ADD"
-
-                />
-            </Link>,
-            <Link to="/workflowlist">
-                <ListItem
-                  key={2}
-                  primaryText="EDIT/DELETE"
-                />
-              </Link>,
-            ]}>
-
-        </ListItem>
+        </Link>
+        <Link to='/workflowlist'>
+            <ListItem primaryText="Workflow" leftIcon={<ActionGrade />} />
+        </Link>
 
         <ListItem primaryText="Admin Setting" leftIcon={<ContentSend />} />
       </List>
