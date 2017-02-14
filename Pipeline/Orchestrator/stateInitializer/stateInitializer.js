@@ -88,7 +88,13 @@ function dataPush(jobId,callback)
 			if(!err)
 			{
 				console.log('data sent to JOB_SCHEDULER');
-				callback();
+				client.lpush('JOBLIST',jobId,function(err,reply){
+					if(!err)
+						callback();
+					else
+						console.log(err);
+				})
+				
 			}
 			else
 				console.log(err);
