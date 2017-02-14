@@ -3,6 +3,7 @@ var config = {
 
    output: {
       path:'./js/',
+      publicPath:'/js/',
       filename: 'index.js',
    },
 

@@ -34,7 +34,7 @@
 /******/ 	__webpack_require__.c = installedModules;
 
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
+/******/ 	__webpack_require__.p = "/js/";
 
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -27792,7 +27792,6 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	//import Displaybox from './displaybox.jsx';
 	var style = {
 
 	  paper: { height: 600,
@@ -70340,6 +70339,10 @@
 
 	var _Card = __webpack_require__(537);
 
+	var _superagent = __webpack_require__(492);
+
+	var _superagent2 = _interopRequireDefault(_superagent);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -70347,8 +70350,6 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	//import FlatButton from 'material-ui/FlatButton'
 
 	var styles = {
 	  headline: {
@@ -70363,6 +70364,8 @@
 	};
 
 	var value = 0;
+	var jobListArray = [];
+	var jobComponent = [];
 
 	var Monitoring = function (_React$Component) {
 	  _inherits(Monitoring, _React$Component);
@@ -70376,11 +70379,12 @@
 	      slideIndex: 0,
 	      jobId: '',
 	      stageName: '',
+	      jobTable: [],
 	      stages: [{ name: "clone" }, { name: "build" }, { name: "eslint" }, { name: "htmlhint" }],
 	      subtitle: "",
 	      data: [{ id: "CI-Pipeline_124" }, { id: "DISTRIBUTED-PIPELINE_3" }, { id: "Pied-Piper_5" }, { id: "Travis-CI_3" }]
 	    };
-	    _this.handleChange = _this.handleChange.bind(_this);
+
 	    _this.handlePrevSlide = _this.handlePrevSlide.bind(_this);
 	    _this.handleCellClick = _this.handleCellClick.bind(_this);
 	    _this.handleStageName = _this.handleStageName.bind(_this);
@@ -70394,6 +70398,39 @@
 	      this.setState({ slideIndex: value });
 	    }
 	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var that = this;
+	      _superagent2.default.post('/jobList').set('Accept', 'application/json').end(function (err, res) {
+	        if (err || !res.ok) alert('Oh no! error');else {
+	          that.setState({ data: JSON.parse(res.text) });
+	          JSON.parse(res.text).map(function (item, i) {
+	            jobListArray.push(_react2.default.createElement(
+	              _Table.TableRow,
+	              { key: i },
+	              _react2.default.createElement(
+	                _Table.TableRowColumn,
+	                { key: i + "shd" },
+	                item
+	              ),
+	              _react2.default.createElement(
+	                _Table.TableRowColumn,
+	                { key: i + "hbx" },
+	                'DISTRIBUTED-PIPELINE'
+	              ),
+	              _react2.default.createElement(
+	                _Table.TableRowColumn,
+	                { key: i + "uwhu2" },
+	                'Complete'
+	              )
+	            ));
+	          });
+
+	          that.setState({ jobTable: jobListArray });
+	        }
+	      });
+	    }
+	  }, {
 	    key: 'handleStageName',
 	    value: function handleStageName(row, column, event) {
 	      value++;
@@ -70401,16 +70438,12 @@
 	      this.setState({ stageName: this.state.stages[row].name });
 	    }
 	  }, {
-	    key: 'handleChange',
-	    value: function handleChange() {
-	      alert('aksdmmdp');
-	      //this.setState({subtitle:"Clone"});
-	    }
-	  }, {
 	    key: 'handleCellClick',
 	    value: function handleCellClick(row, column, event) {
 	      value++;
 	      this.setState({ slideIndex: value });
+	      console.log(this.state.data);
+	      console.log("======" + this.state.data[row]);
 	      this.setState({ jobId: this.state.data[row].id });
 	    }
 	  }, {
@@ -70461,83 +70494,8 @@
 	              ),
 	              _react2.default.createElement(
 	                _Table.TableBody,
-	                { onClick: this.handleChange, showRowHover: true, displayRowCheckbox: false },
-	                _react2.default.createElement(
-	                  _Table.TableRow,
-	                  { onRowClick: this.handleChange },
-	                  _react2.default.createElement(
-	                    _Table.TableRowColumn,
-	                    null,
-	                    'CI-Pipeline_124'
-	                  ),
-	                  _react2.default.createElement(
-	                    _Table.TableRowColumn,
-	                    null,
-	                    'CI-Pipeline'
-	                  ),
-	                  _react2.default.createElement(
-	                    _Table.TableRowColumn,
-	                    null,
-	                    'Complete'
-	                  )
-	                ),
-	                _react2.default.createElement(
-	                  _Table.TableRow,
-	                  null,
-	                  _react2.default.createElement(
-	                    _Table.TableRowColumn,
-	                    null,
-	                    'DISTRIBUTED-PIPELINE_3'
-	                  ),
-	                  _react2.default.createElement(
-	                    _Table.TableRowColumn,
-	                    null,
-	                    'DISTRIBUTED-PIPELINE'
-	                  ),
-	                  _react2.default.createElement(
-	                    _Table.TableRowColumn,
-	                    null,
-	                    'Complete'
-	                  )
-	                ),
-	                _react2.default.createElement(
-	                  _Table.TableRow,
-	                  null,
-	                  _react2.default.createElement(
-	                    _Table.TableRowColumn,
-	                    null,
-	                    'Pied-Piper_5'
-	                  ),
-	                  _react2.default.createElement(
-	                    _Table.TableRowColumn,
-	                    null,
-	                    'Pied-Piper'
-	                  ),
-	                  _react2.default.createElement(
-	                    _Table.TableRowColumn,
-	                    null,
-	                    'Failed'
-	                  )
-	                ),
-	                _react2.default.createElement(
-	                  _Table.TableRow,
-	                  null,
-	                  _react2.default.createElement(
-	                    _Table.TableRowColumn,
-	                    null,
-	                    'Travis-CI_3'
-	                  ),
-	                  _react2.default.createElement(
-	                    _Table.TableRowColumn,
-	                    null,
-	                    'Travis-CI'
-	                  ),
-	                  _react2.default.createElement(
-	                    _Table.TableRowColumn,
-	                    null,
-	                    'Complete'
-	                  )
-	                )
+	                { showRowHover: true, displayRowCheckbox: false },
+	                this.state.jobTable
 	              )
 	            )
 	          ),

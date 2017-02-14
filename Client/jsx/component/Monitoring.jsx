@@ -6,7 +6,7 @@ import SwipeableViews from 'react-swipeable-views';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
-//import FlatButton from 'material-ui/FlatButton'
+import Request from 'superagent';
 
 const styles = {
   headline: {
@@ -21,6 +21,8 @@ const styles = {
 };
 
 var value = 0;
+var jobListArray=[];
+var jobComponent=[];
 export default class Monitoring extends React.Component {
 
   constructor(props) {
@@ -29,11 +31,12 @@ export default class Monitoring extends React.Component {
       slideIndex: 0,
       jobId:'',
       stageName:'',
+      jobTable:[],
       stages:[{name:"clone"},{name:"build"},{name:"eslint"},{name:"htmlhint"}],
       subtitle:"",
       data:[{id:"CI-Pipeline_124"},{id:"DISTRIBUTED-PIPELINE_3"},{id:"Pied-Piper_5"},{id:"Travis-CI_3"}]
     };
-    this.handleChange = this.handleChange.bind(this);
+
     this.handlePrevSlide = this.handlePrevSlide.bind(this);
     this.handleCellClick = this.handleCellClick.bind(this);
     this.handleStageName = this.handleStageName.bind(this);
@@ -42,23 +45,43 @@ export default class Monitoring extends React.Component {
   handlePrevSlide () {
   	value--;
     this.setState({slideIndex: value });
-  };
+  }
+
+  componentDidMount()
+  {
+    var that = this;
+        Request.post('/jobList').set('Accept', 'application/json')
+        .end(function(err, res){
+          if (err || !res.ok) 
+            alert('Oh no! error');
+          else
+          {
+              that.setState({data:JSON.parse(res.text)})
+             JSON.parse(res.text).map((item,i)=>{        
+              jobListArray.push(
+              <TableRow key={i}>
+                <TableRowColumn key={i+"shd"}>{item}</TableRowColumn>
+                <TableRowColumn key={i+"hbx"}>DISTRIBUTED-PIPELINE</TableRowColumn>
+                <TableRowColumn key={i+"uwhu2"}>Complete</TableRowColumn>
+              </TableRow>);
+             })
+             
+             that.setState({jobTable:jobListArray});
+          }
+             });
+  }
 
   handleStageName(row,column,event){
   value++;
   this.setState({slideIndex: value });
   this.setState({stageName:this.state.stages[row].name});
   }
-  handleChange()
-  {
-  	alert('aksdmmdp');
-  //this.setState({subtitle:"Clone"});
-  }
   handleCellClick(row,column,event)
 	{
 	    value++;
 	    this.setState({slideIndex: value });
-      this.setState({jobId:this.state.data[row].id});
+      console.log(this.state.data);
+      this.setState({jobId:this.state.data[row]});
 	}
 
   render() {
@@ -75,34 +98,19 @@ export default class Monitoring extends React.Component {
 				    <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
 				      <TableRow onClick={this.handleChange} >
 				        <TableHeaderColumn>Job ID</TableHeaderColumn>
-				        <TableHeaderColumn>Job Name</TableHeaderColumn>
+				        <TableHeaderColumn>Template Name</TableHeaderColumn>
 				        <TableHeaderColumn>Job Status</TableHeaderColumn>
 				      </TableRow>
 				    </TableHeader>
-				    <TableBody onClick={this.handleChange} showRowHover={true} displayRowCheckbox={false}>
-				      <TableRow onRowClick={this.handleChange}>
-				        <TableRowColumn>CI-Pipeline_124</TableRowColumn>
-				        <TableRowColumn>CI-Pipeline</TableRowColumn>
-				        <TableRowColumn>Complete</TableRowColumn>
-				      </TableRow>
-				      <TableRow>
-				        <TableRowColumn>DISTRIBUTED-PIPELINE_3</TableRowColumn>
-				        <TableRowColumn>DISTRIBUTED-PIPELINE</TableRowColumn>
-				        <TableRowColumn>Complete</TableRowColumn>
-				      </TableRow>
-				      <TableRow>
-				        <TableRowColumn>Pied-Piper_5</TableRowColumn>
-				        <TableRowColumn>Pied-Piper</TableRowColumn>
-				        <TableRowColumn>Failed</TableRowColumn>
-				      </TableRow>
-				      <TableRow>
-				        <TableRowColumn>Travis-CI_3</TableRowColumn>
-				        <TableRowColumn>Travis-CI</TableRowColumn>
-				        <TableRowColumn>Complete</TableRowColumn>
-				      </TableRow>
+				    <TableBody  showRowHover={true} displayRowCheckbox={false}>
+
+				      {this.state.jobTable}
+				      
 				    </TableBody>
 				  </Table>
           </div>
+
+
           <div style={styles.slide}>
           <h1>STAGES LIST</h1>
           <Table onCellClick= {this.handleStageName} >

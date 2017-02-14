@@ -4,7 +4,6 @@ import {Grid,Row,Col} from 'react-flexbox-grid/lib';
 import List_Dashboard from './List_Dashboard.jsx';
 import DashNavbar from './DashNavbar.jsx';
 import Paper from 'material-ui/Paper';
-//import Displaybox from './displaybox.jsx';
 const style = {
 
   paper:{height: 600,
