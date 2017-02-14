@@ -7,28 +7,9 @@ import Request from 'superagent';
 import CircularProgress from 'material-ui/CircularProgress';
 
 const styles = {
-  circularprog:{
-    margin: 12,
-    position: 'relative',
-    top: 100,
-    bottom: 0,
-    right: 0,
-    left: 570,
-  },
-  textfield:{
-    position: 'absolute',
-    top: 50,
-    bottom: 0,
-    right: 0,
-    left: 500,
-  },
   button: {
     margin: 12,
-    position: 'relative',
-    top: 60,
-    bottom: 0,
-    right: 0,
-    left: 570,
+    align:"center"
   },
   paper:{
     height: 800,
@@ -47,26 +28,23 @@ const styles = {
     width: '100%',
     opacity: 1,
   },
+  inputField:{
+    marginLeft:'400px',
+    width:'400px'
+  },
+  progress:{
+    marginTop:'50px',
+    marginLeft:'500px'
+  }
 };
 
 class Home extends React.Component{
   constructor(props){
     super(props);
-    this.state = {input:'',completed:0, isSubmit:false,output:null,dataSource:[],};
+    this.state = {input:'',completed:0, isSubmit:false,output:null};
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleUpdateInput = this.handleUpdateInput(this);
   }
-
-  handleUpdateInput(value){
-    this.setState({
-      dataSource: [
-        value,
-        value + value,
-        value + value + value,
-      ],
-    });
-  };
 
   handleChange(e){
     e.preventDefault();
@@ -83,14 +61,13 @@ class Home extends React.Component{
              if (err || !res.ok) {
                alert('Oh no! error');
              } else {
-               console.log(typeof res.text);
-               if(res.text !== 'jobFailed')
+               if(typeof res.text != String)
                     {
                     that.setState({output:JSON.parse(res.text)});
                     }
                   else
                     {console.log(res.text);
-                    alert("Server error: "+res.text);
+                    alert("Server error");
                   }
              }
            });
@@ -99,8 +76,8 @@ class Home extends React.Component{
   render(){
     var box=null;
     if(this.state.isSubmit && this.state.output==null){
-      box=<div>
-            <CircularProgress size={100} thickness={9} style={styles.circularprog}/>
+      box=<div >
+            <CircularProgress size={80} thickness={5} style={styles.progress} />
             </div>
     }
     else if(this.state.isSubmit){
@@ -115,7 +92,7 @@ class Home extends React.Component{
         id="repoUrl" value={this.state.input} onChange={this.handleChange}
         floatingLabelText="Repo URL"
         type="text"
-        style={styles.textfield}
+       style={styles.inputField}
       />
       <RaisedButton
        target="_blank"
