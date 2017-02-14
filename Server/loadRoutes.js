@@ -2,8 +2,8 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var result = require('./results.js');
-
-app.use(express.static('Client/'));
+var saveFile = require('./fileSave.js');
+app.use(express.static('../Client/'));
 
 app.use( bodyParser.json() );
 app.use(bodyParser.urlencoded({
@@ -21,6 +21,10 @@ app.use('/',function(req,res,next){
 	next();
 },result);
 
+app.use('/',function(req,res,next){
+	console.log("saveFile");
+	next();
+},saveFile);
 
 app.listen(3000,console.log("server is running"));
 
