@@ -4,6 +4,7 @@ import React from 'react';
 import Dashboard from '../component/Dashboard.jsx';
 import DashNavbar from '../component/DashNavbar.jsx';
 import List_Dashboard from '../component/List_Dashboard.jsx';
+import Login from '../component/Login.jsx';
 import {Grid,Row,Col} from 'react-flexbox-grid/lib';
 import Paper from 'material-ui/Paper';
 const style={
@@ -17,7 +18,8 @@ class App extends React.Component {
     return (
       <div >
 
-        <Dashboard  />
+        <DashNavbar/>
+        <Login />
 
       </div>
 
