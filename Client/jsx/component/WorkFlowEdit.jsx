@@ -17,34 +17,16 @@ class WorkFlowEdit extends React.Component
 	constructor(props)
 	{
 		super(props);
-
-		this.handleChange = this.handleChange.bind(this);
 		this.handleVerify = this.handleVerify.bind(this);
 		this.updateCode = this.updateCode.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.state={open:false,graph:'',jsonCode:'',code:"//write your yml code here",err:[],isValid:false, isSubmit:false}
+		this.state={code:this.props.data,err:[],isValid:false, isSubmit:false}
 
 	}
 
-	handleChange()  //for upload button
-	{
-		var that = this;
-		var temp = document.getElementById('filedata').files[0];
-		var ext = temp.name.split('.').pop().toLowerCase();
-		if(ext!="yml")
+		componentWillReceiveProps(newProps)
 		{
-			alert('Not a yml file');
-		}
-		else{
-			var reader = new FileReader();
-			reader.onload = function(e) {
-
-				that.setState({
-					code:reader.result });
-				}
-				reader.readAsText(temp);
-			}
-
+	   this.setState({code:newProps.data})
 		}
 
 		handleVerify()
@@ -103,7 +85,7 @@ class WorkFlowEdit extends React.Component
 			}
 			else
 			{
-				box=<div>
+				box= <div>
 					<AceEditor
 						mode="yaml"
 						theme="tomorrow"
@@ -112,18 +94,15 @@ class WorkFlowEdit extends React.Component
 						name="UNIQUE_ID_OF_DIV"
 						annotations={this.state.err}
 						editorProps={{$blockScrolling: true}}
-						
+						style={{width:"10%"},{height:"70%"} ,{border:"1px solid black"}}
 						/>
-					<div className="row">
-						<div className="upload ">
-							<input type="file" name="upload" onChange={this.handleChange} id='filedata' />
-						</div>
-						<RaisedButton label="Verify" secondary={true}  onClick={this.handleVerify} style={{marginLeft:"1%"}}/>
-						<RaisedButton label="Submit" secondary={true} onClick={this.handleSubmit} style={{marginLeft:"1%"}} />
+					<div>
+						<RaisedButton label="Verify" secondary={true}  onClick={this.handleVerify} style={{margin:"1%"}} />
+						<RaisedButton label="Submit" secondary={true} onClick={this.handleSubmit} />
 
 					</div>
-</div>
 
+				</div>
 			}
 
 

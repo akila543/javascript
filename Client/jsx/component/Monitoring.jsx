@@ -67,8 +67,7 @@ export default class Monitoring extends React.Component {
 
       <div>
         <SwipeableViews
-          index={this.state.slideIndex}
-          onChangeIndex={this.handleSlide}>
+          index={this.state.slideIndex}>
           <div>
           <h1>JOB LIST</h1>
 				  <Table onCellClick= {this.handleCellClick} >

@@ -15,9 +15,7 @@ injectTapEventPlugin();
 ReactDOM.render(<MuiThemeProvider>
 	<Router history={browserHistory}>
 		 <Route path={"/"} component={Dashboard} >
-			 <Route path={"edit"} component={WorkFlowEdit} />
 			 <Route path={"workflowlist"} component={WorkFlowList} />
-		 	 <Route path={"add"} component={AddTemplate} />
 			 <Route path={"monitor"} component={Monitoring} />
 			</Route>
 
