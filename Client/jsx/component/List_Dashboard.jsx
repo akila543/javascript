@@ -47,7 +47,7 @@ return(
         <Link to="/monitor">
           <ListItem primaryText="Monitoring" leftIcon={<ContentInbox />} />
         </Link>
-        <Link to='/workflowlist'>
+        <Link to='/workflows'>
             <ListItem primaryText="Workflow" leftIcon={<ActionGrade />} />
         </Link>
 

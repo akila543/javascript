@@ -10,6 +10,7 @@ import 'brace/mode/yaml';
 import 'brace/theme/tomorrow';
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
+import request from 'superagent';
 
 
 class WorkFlowEdit extends React.Component
@@ -65,7 +66,7 @@ class WorkFlowEdit extends React.Component
 				this.setState({
 					isSubmit:true
 				});
-				request.post('/workflows/update')
+				request.post('/update')
 				.set('Content-Type', 'application/json')
 				.send({templateName:this.state.templateName,content:this.state.code})
 				.end(function(err,res){

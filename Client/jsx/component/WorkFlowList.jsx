@@ -18,7 +18,7 @@ const cellStyle={
 class WorkFlowList extends React.Component{
   constructor(props){
     super(props);
-    this.state={name:'',worklist:[], isEdit:{false}, slideIndex:0,content:''.templateName:""}
+    this.state={name:'',worklist:[], isEdit:{false}, slideIndex:0,content:'',templateName:""}
     this.handleDelete=this.handleDelete.bind(this);
     this.handleEdit=this.handleEdit.bind(this);
     this.handleAdd=this.handleAdd.bind(this);
@@ -46,7 +46,7 @@ class WorkFlowList extends React.Component{
         return item._id !== parseInt(id);                                //id is considered as integer
     });
     console.log(a);
-    request.post('/workflows/delete')
+    request.post('/delete')
     .set('Content-Type', 'application/json')
     .send(a[0])
     .end(function(err,res){

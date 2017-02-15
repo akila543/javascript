@@ -104,7 +104,7 @@
 				_reactRouter.Route,
 				{ path: "/dashboard", component: _Dashboard2.default },
 				_react2.default.createElement(_reactRouter.Route, { path: "/edit", component: _WorkFlowEdit2.default }),
-				_react2.default.createElement(_reactRouter.Route, { path: "/workflowlist", component: _WorkFlowList2.default }),
+				_react2.default.createElement(_reactRouter.Route, { path: "/workflows", component: _WorkFlowList2.default }),
 				_react2.default.createElement(_reactRouter.Route, { path: "/monitor", component: _Monitoring2.default })
 			)
 		)
@@ -28765,7 +28765,7 @@
 	          ),
 	          _react2.default.createElement(
 	            _reactRouter.Link,
-	            { to: '/workflowlist' },
+	            { to: '/workflows' },
 	            _react2.default.createElement(_List.ListItem, { primaryText: 'Workflow', leftIcon: _react2.default.createElement(_grade2.default, null) })
 	          ),
 	          _react2.default.createElement(_List.ListItem, { primaryText: 'Admin Setting', leftIcon: _react2.default.createElement(_send2.default, null) })
@@ -74768,6 +74768,10 @@
 
 	var _FlatButton2 = _interopRequireDefault(_FlatButton);
 
+	var _superagent = __webpack_require__(430);
+
+	var _superagent2 = _interopRequireDefault(_superagent);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -74792,7 +74796,7 @@
 			_this.handleVerify = _this.handleVerify.bind(_this);
 			_this.updateCode = _this.updateCode.bind(_this);
 			_this.handleSubmit = _this.handleSubmit.bind(_this);
-			_this.state = { code: _this.props.data, err: [], isValid: false, isSubmit: false };
+			_this.state = { templateName: _this.props.templateName, code: _this.props.data, err: [], isValid: false, isSubmit: false };
 
 			return _this;
 		}
@@ -74838,6 +74842,13 @@
 					alert('YAML file submitted');
 					this.setState({
 						isSubmit: true
+					});
+					_superagent2.default.post('/update').set('Content-Type', 'application/json').send({ templateName: this.state.templateName, content: this.state.code }).end(function (err, res) {
+						if (err) {
+							console.log(err);
+						} else {
+							console.log(res);
+						}
 					});
 				} else {
 					alert("Yaml is Still InValid");
@@ -94700,8 +94711,6 @@
 	  width: "30%"
 	};
 
-	//const templist=[{id:1, name:"workflow1",content:"my content"},{id:2,name:"workflow2"},{id:3, name:"workflow3"}];
-
 	var WorkFlowList = function (_React$Component) {
 	  _inherits(WorkFlowList, _React$Component);
 
@@ -94710,7 +94719,7 @@
 
 	    var _this = _possibleConstructorReturn(this, (WorkFlowList.__proto__ || Object.getPrototypeOf(WorkFlowList)).call(this, props));
 
-	    _this.state = { name: '', worklist: [], isEdit: { false: false }, slideIndex: 0, content: '' };
+	    _this.state = { name: '', worklist: [], isEdit: { false: false }, slideIndex: 0, content: '', templateName: "" };
 	    _this.handleDelete = _this.handleDelete.bind(_this);
 	    _this.handleEdit = _this.handleEdit.bind(_this);
 	    _this.handleAdd = _this.handleAdd.bind(_this);
@@ -94735,7 +94744,15 @@
 	    value: function handleDelete(e) {
 	      var id = e.target.id;
 	      var a = this.state.worklist.filter(function (item) {
-	        return item.id !== parseInt(id); //id is considered as integer
+	        return item._id !== parseInt(id); //id is considered as integer
+	      });
+	      console.log(a);
+	      _superagent2.default.post('/delete').set('Content-Type', 'application/json').send(a[0]).end(function (err, res) {
+	        if (err) {
+	          console.log(err);
+	        } else {
+	          console.log(res);
+	        }
 	      });
 	      this.setState({ worklist: a });
 	    }
@@ -94755,7 +94772,7 @@
 	      });
 	      console.log(obj);
 	      var data = obj[0].content;
-	      this.setState({ slideIndex: 1, content: data });
+	      this.setState({ slideIndex: 1, templateName: obj[0].templateName, content: data });
 	      console.log(this.state.content);
 	    }
 	  }, {
@@ -94841,7 +94858,7 @@
 	          _react2.default.createElement(
 	            'div',
 	            null,
-	            _react2.default.createElement(_WorkFlowEdit2.default, { data: this.state.content }),
+	            _react2.default.createElement(_WorkFlowEdit2.default, { data: this.state.content, templateName: this.state.templateName }),
 	            _react2.default.createElement(_RaisedButton2.default, { onClick: this.handlePrevSlide, label: 'Back', primary: true, style: { marginLeft: '80%' } })
 	          ),
 	          _react2.default.createElement(

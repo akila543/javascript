@@ -17,7 +17,7 @@ ReactDOM.render(<MuiThemeProvider>
 		<Route path={"/"} component={App} />
 		 <Route path={"/dashboard"} component={Dashboard} >
 			 <Route path={"/edit"} component={WorkFlowEdit} />
-			 <Route path={"/workflowlist"} component={WorkFlowList} />
+			 <Route path={"/workflows"} component={WorkFlowList} />
 			 <Route path={"/monitor"} component={Monitoring} />
 
 		</Route>
