@@ -13,7 +13,7 @@ class TransformationFunc extends React.Component
 		super(props);
 
 		this.updateCode = this.updateCode.bind(this);
-		this.handleChange = this.handleChange.bind(this);
+		//this.handleChange = this.handleChange.bind(this);
 		this.check = this.check.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.state={code:"//write js code here",isValid:false, isSubmit:false};
@@ -25,7 +25,7 @@ class TransformationFunc extends React.Component
 		this.setState({code:newcode});
 	}
 
-	handleChange()
+	/*handleChange()
 	{
 		var that = this;
 		var temp = document.getElementById('jsfiledata').files[0];
@@ -45,7 +45,7 @@ class TransformationFunc extends React.Component
 				reader.readAsText(temp);
 			}
 
-	}
+	}*/
 
 	handleSubmit()
 	{
@@ -116,12 +116,8 @@ class TransformationFunc extends React.Component
 					/>
 
 				<div className="row">
-					<div className="upload ">
-						<input type="file" name="upload" onChange={this.handleChange} id='jsfiledata' />
-					</div>
 					<RaisedButton label="Verify" secondary={true}  onClick={this.check} style={{marginLeft:"1%"}}/>
-					<RaisedButton label="Submit" secondary={true} onClick={this.handleSubmit} style={{marginLeft:"1%"}} />
-
+					<RaisedButton label="Submit" secondary={true} onClick={this.handleSubmit} />
 				</div>
 			</div>
 
