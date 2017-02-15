@@ -1,13 +1,13 @@
 //module imports
-const deleteWorkflow = require('express').Router();
+const getWorkflows = require('express').Router();
 const MongoClient = require('mongodb').MongoClient;
 //use a middleware
-deleteWorkflow.use(require('body-parser').json());
+getWorkflows.use(require('body-parser').json());
 
 // Connection URL
 var url = 'mongodb://localhost:27017/workflows';
 
-deleteWorkflow.post('/workflows/delete',function(req,res,next){
+getWorkflows.get('/workflows',function(req,res,next){
   console.log(req.body);
   next();
 },function(req,res,next){
@@ -19,13 +19,12 @@ deleteWorkflow.post('/workflows/delete',function(req,res,next){
     else{
       console.log('connected');
       var templates = db.collection('templates');
-      templates.deleteOne({_id:req.body.id,templateName:req.body.templateName},function(err,result){
+      templates.find({}).toArray(function(err,result){
         if (err) {
           console.log(err);
         }
         else {
-          console.log(result.result.n);
-          res.send('Successfully deleted.');
+          res.send(result);
           db.close();
         }
       });
@@ -34,4 +33,4 @@ deleteWorkflow.post('/workflows/delete',function(req,res,next){
 }
 );
 
-module.exports = deleteWorkflow;
+module.exports = getWorkflows;

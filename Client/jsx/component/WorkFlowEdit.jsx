@@ -20,7 +20,7 @@ class WorkFlowEdit extends React.Component
 		this.handleVerify = this.handleVerify.bind(this);
 		this.updateCode = this.updateCode.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.state={code:this.props.data,err:[],isValid:false, isSubmit:false}
+		this.state={templateName:this.props.templateName,code:this.props.data,err:[],isValid:false, isSubmit:false}
 
 	}
 
@@ -64,6 +64,17 @@ class WorkFlowEdit extends React.Component
 			{	alert('YAML file submitted');
 				this.setState({
 					isSubmit:true
+				});
+				request.post('/workflows/update')
+				.set('Content-Type', 'application/json')
+				.send({templateName:this.state.templateName,content:this.state.code})
+				.end(function(err,res){
+					if (err) {
+						console.log(err);
+					}
+					else {
+						console.log(res);
+					}
 				});
 			}
 

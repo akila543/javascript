@@ -5,7 +5,6 @@ import List_Dashboard from './List_Dashboard.jsx';
 import DashNavbar from './DashNavbar.jsx';
 import Paper from 'material-ui/Paper';
 const style = {
-
   paper:{height: 600,
   width: 800,
   margin: '50px 0 0 150px',

@@ -19,8 +19,8 @@ Router.post('/saveFile', function(req, res, next) {
 
 		    console.log("Connected successfully to server");
 
-		    insertDocuments(db, req.body.fileName,req.body.data,function() { 
-		    db.close();
+		    insertDocuments(db, req.body.fileName,req.body.data,function() {
+		        db.close();
 		    });
 		   });
 
@@ -31,10 +31,10 @@ Router.post('/saveFile', function(req, res, next) {
 
 var insertDocuments = function(db,fileName,fileData ,callback) {
   // Get the documents collection
-  var collection = db.collection('templates');
+  var templates = db.collection('templates');
   // Insert some documents
-  collection.insertOne(
-    {fileName : fileData}, function(err, result) {
+  templates.insertOne(
+    {templateName : fileName,content : fileData}, function(err, result) {
     console.log(result.result.n);
     callback(result);
   });

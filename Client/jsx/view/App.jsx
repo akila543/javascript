@@ -7,6 +7,7 @@ import List_Dashboard from '../component/List_Dashboard.jsx';
 import Login from '../component/Login.jsx';
 import {Grid,Row,Col} from 'react-flexbox-grid/lib';
 import Paper from 'material-ui/Paper';
+
 const style={
   margin:"25px 10px 0 50px",
 };
@@ -17,14 +18,12 @@ class App extends React.Component {
   {
     return (
       <div >
-
-        <DashNavbar/>
+        <DashNavbar />
         <Login />
-
       </div>
-
     );
   }
+
 }
 
 export default App;

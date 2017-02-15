@@ -9,27 +9,53 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import Divider from 'material-ui/Divider';
 import {GridList, GridTile} from 'material-ui/GridList';
+import request from 'superagent';
 
 const cellStyle={
   width:"30%"
 };
 
-const templist=[{id:1, name:"workflow1",content:"my content"},{id:2,name:"workflow2"},{id:3, name:"workflow3"}];
-
 class WorkFlowList extends React.Component{
   constructor(props){
     super(props);
-    this.state={name:'',worklist:templist, isEdit:{false}, slideIndex:0}
+    this.state={name:'',worklist:[], isEdit:{false}, slideIndex:0,content:''.templateName:""}
     this.handleDelete=this.handleDelete.bind(this);
     this.handleEdit=this.handleEdit.bind(this);
     this.handleAdd=this.handleAdd.bind(this);
     this.handlePrevSlide=this.handlePrevSlide.bind(this);
   }
 
+  componentWillMount(){
+  var that = this;
+  request
+   .get('/workflows')
+   .set({ 'API-Key': 'foobar', Accept: 'application/json' })
+   .end(function(err,res){
+     if (err) {
+       console.log(err);
+     }
+     else {
+       that.setState({worklist:JSON.parse(res.text)});
+     }
+   });
+  }
+
   handleDelete(e){
     var id=e.target.id;
     const a=this.state.worklist.filter(function(item) {
-        return item.id !== parseInt(id);                                //id is considered as integer
+        return item._id !== parseInt(id);                                //id is considered as integer
+    });
+    console.log(a);
+    request.post('/workflows/delete')
+    .set('Content-Type', 'application/json')
+    .send(a[0])
+    .end(function(err,res){
+      if (err) {
+        console.log(err);
+      }
+      else {
+        console.log(res);
+      }
     });
     this.setState({worklist:a});
   }
@@ -39,18 +65,21 @@ class WorkFlowList extends React.Component{
   }
 
   handleEdit(event)
-	{   var id=event.target.id;
+	{
+    var id=event.target.id;
+    console.log(id);
       const obj=this.state.worklist.filter(function(item){
-        return item.id == parseInt(id);
+        console.log(item._id);
+        return item._id === id;
       });
+      console.log(obj);
       var data=obj[0].content;
-	    this.setState({slideIndex:1,content: data});
+	    this.setState({slideIndex:1,templateName:obj[0].templateName,content: data});
       console.log(this.state.content);
-
 	}
 
   handleAdd()
-  { 
+  {
     this.setState({slideIndex:2})
   }
   render(){
@@ -74,12 +103,12 @@ class WorkFlowList extends React.Component{
                {this.state.worklist.map((item)=>(
                  <TableRow >
                    <TableRowColumn style={cellStyle}>
-                     {item.name}
+                     {item.templateName}
                    </TableRowColumn>
                    <TableRowColumn >
                        <FlatButton
                          label="Edit"
-                         id={item.id}
+                         id={item._id}
                          onClick={this.handleEdit}
                          primary={true}
                         />
@@ -87,7 +116,7 @@ class WorkFlowList extends React.Component{
                    <TableRowColumn >
                      <FlatButton
                        label="Delete"
-                       id={item.id}
+                       id={item._id}
                        secondary={true}
                        onClick={this.handleDelete}
                      />
@@ -99,7 +128,7 @@ class WorkFlowList extends React.Component{
            </Table>
          </div>
          <div>
-           <WorkFlowEdit data={this.state.content}/>
+           <WorkFlowEdit data={this.state.content} templateName={this.state.templateName}/>
            <RaisedButton  onClick = {this.handlePrevSlide} label="Back" primary={true} style ={{marginLeft:'80%'}}/>
          </div>
          <div>

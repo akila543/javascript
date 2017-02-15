@@ -50,7 +50,6 @@ return (
 
 <div>
 <RaisedButton label="Login"  style={{marginTop:"50px"}} labelStyle={{color:"white"}} buttonStyle={{background:"#3F51B5 "}} onClick={this.handleClick}/>
-
 </div>
 );
 }}
