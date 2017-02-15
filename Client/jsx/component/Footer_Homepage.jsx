@@ -3,6 +3,7 @@ import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui
 import FlatButton from 'material-ui/FlatButton';
 
 const style={
+  
 };
 
 export default class Footer_Homepage extends React.Component{
