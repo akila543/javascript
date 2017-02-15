@@ -1,5 +1,6 @@
 import React from 'react';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import FlatButton from 'material-ui/FlatButton';
 
 const style={
 };
@@ -10,13 +11,14 @@ render(){
 <div style={style}>
 
   <Toolbar style={{backgroundColor:'#8C9EFF'}} >
-  <ToolbarTitle text="Site Privacy Policy" />
+
+  <FlatButton label="Site Privacy" />
    <ToolbarSeparator />
-   <ToolbarTitle text="Advertise"/>
+   <FlatButton label="Advertise" />
    <ToolbarSeparator />
-   <ToolbarTitle text="Terms"/>
+   <FlatButton label="Terms" />
    <ToolbarSeparator />
-   <ToolbarTitle text="About Us"/>
+   <FlatButton label="About Us" />
 
 </Toolbar>
 </div>

@@ -9,7 +9,6 @@ const style = {
   background: 'white',
   textAlign: 'center',
   display: 'inline-block',
-  marginTop:'10%',
   };
 
 const styling = {
@@ -26,13 +25,16 @@ const styling = {
 export default class Homepage extends React.Component {
 render() {
 return (
-<div>
+<div style={{marginTop:'-5%'}}>
+
+
+  <h1 style={{color:'#FF7043',fontSize:'30px',marginTop:'10%'}}>Workflow Process</h1>
 
   <Paper style={style} zDepth={5}  circle={true} >
     <img style={{height:'50%',width:'50%',margin:'25% 10% 10% 10%'}} src="../jsx/images/Octocat.png" alt="git" /></Paper>
 
   <Paper style={style} zDepth={5} circle={true} >
-  <img style={{height:'50%',width:'50%',margin:'25% 10% 10% 10%'}} src="../jsx/images/build.png" alt="git" /> </Paper>
+  <img style={{height:'50%',width:'50%',margin:'25% 10% 10% 10%'}} src="../jsx/images/build.png"alt="git" /> </Paper>
 
   <Paper style={style} zDepth={5} circle={true} >
   <img style={{height:'50%',width:'50%',margin:'25% 10% 10% 10%'}} src="../jsx/images/eslint.png" alt="git" /> </Paper>
