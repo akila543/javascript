@@ -112619,7 +112619,7 @@
 	    value: function handleDelete(e) {
 	      var id = e.target.id;
 	      var a = this.state.worklist.filter(function (item) {
-	        return item._id !== parseInt(id); //id is considered as integer
+	        return item._id === id; //id is considered as integer
 	      });
 	      console.log(a);
 	      _superagent2.default.post('/workflows/delete').set('Content-Type', 'application/json').send(a[0]).end(function (err, res) {
@@ -112629,7 +112629,10 @@
 	          console.log(res);
 	        }
 	      });
-	      this.setState({ worklist: a });
+	      var b = this.state.worklist.filter(function (item) {
+	        return item._id !== id; //id is considered as integer
+	      });
+	      this.setState({ worklist: b });
 	    }
 	  }, {
 	    key: 'handlePrevSlide',

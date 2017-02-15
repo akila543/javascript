@@ -43,7 +43,7 @@ class WorkFlowList extends React.Component{
   handleDelete(e){
     var id=e.target.id;
     const a=this.state.worklist.filter(function(item) {
-        return item._id !== parseInt(id);                                //id is considered as integer
+        return item._id === id;                                //id is considered as integer
     });
     console.log(a);
     request.post('/workflows/delete')
@@ -57,7 +57,10 @@ class WorkFlowList extends React.Component{
         console.log(res);
       }
     });
-    this.setState({worklist:a});
+    const b=this.state.worklist.filter(function(item) {
+        return item._id !== id;                                //id is considered as integer
+    });
+    this.setState({worklist:b});
   }
 
   handlePrevSlide () {
