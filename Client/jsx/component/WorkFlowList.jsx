@@ -46,7 +46,7 @@ class WorkFlowList extends React.Component{
         return item._id !== parseInt(id);                                //id is considered as integer
     });
     console.log(a);
-    request.post('/delete')
+    request.post('/workflows/delete')
     .set('Content-Type', 'application/json')
     .send(a[0])
     .end(function(err,res){

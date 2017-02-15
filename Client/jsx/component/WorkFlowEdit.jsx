@@ -27,7 +27,7 @@ class WorkFlowEdit extends React.Component
 
 		componentWillReceiveProps(newProps)
 		{
-	   this.setState({code:newProps.data})
+	   this.setState({code:newProps.data,templateName:newProps.templateName})
 		}
 
 		handleVerify()
@@ -66,7 +66,7 @@ class WorkFlowEdit extends React.Component
 				this.setState({
 					isSubmit:true
 				});
-				request.post('/update')
+				request.post('/workflows/update')
 				.set('Content-Type', 'application/json')
 				.send({templateName:this.state.templateName,content:this.state.code})
 				.end(function(err,res){
