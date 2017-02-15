@@ -2,6 +2,9 @@
 var ts = new Date();
 const client = require('redis').createClient();
 const fs = require('fs');
+var MongoClient = require('mongodb').MongoClient;
+var url = 'mongodb://localhost:27017/workflows';
+
 var time,stages,stage,array=[];
 
 //worker specific functions
@@ -36,12 +39,20 @@ function createContext(jobId,callback)
 
 function readTemplate(jobId,templateName,callback)
 {
-		fs.readFile(__dirname+'/workflows/'+templateName+'.json','utf8',function(err,data)
- 			{
- 				if(!err)
- 				{
- 				var template = JSON.parse(data);
- 				stages=template.stages;
+
+
+	MongoClient.connect(url, function(err, db) {
+	  console.log("Connected correctly to server");
+
+	  var collection = db.collection('documents');
+	  // Find some documents
+	     collection.find({templateName: templateName}).toArray(function(err, docs) {
+	     	if(!err)
+	     	{
+	     		console.log("Found the following records");
+	    	    console.log(docs);
+	    	    var template = JSON.parse(docs);
+	    	    stages=template.stages;
  				stage = Object.getOwnPropertyNames(template.stages);
  				stage.map((item)=>{
  				   stages[item].status = 'Initialized';
@@ -50,10 +61,33 @@ function readTemplate(jobId,templateName,callback)
  				})
  				stages = JSON.stringify(stages);
  				dataPush(jobId,callback);
-				}
-				else
-					console.log(err);
-			});
+	     	}
+	     	else
+	     		console.log(err);
+	     
+	     
+	      db.close();
+	    
+	  
+	});
+		// fs.readFile(__dirname+'/workflows/'+templateName+'.json','utf8',function(err,data)
+ 	// 		{
+ 	// 			if(!err)
+ 	// 			{
+ 	// 			var template = JSON.parse(data);
+ 	// 			stages=template.stages;
+ 	// 			stage = Object.getOwnPropertyNames(template.stages);
+ 	// 			stage.map((item)=>{
+ 	// 			   stages[item].status = 'Initialized';
+ 	// 			   stages[item].ts_Initialized = ts.getHours() + ":" + ts.getMinutes() + ":" + ts.getSeconds();
+
+ 	// 			})
+ 	// 			stages = JSON.stringify(stages);
+ 	// 			dataPush(jobId,callback);
+		// 		}
+		// 		else
+		// 			console.log(err);
+		// 	});
 }
 
 
