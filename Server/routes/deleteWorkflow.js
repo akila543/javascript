@@ -19,7 +19,7 @@ deleteWorkflow.post('/workflows/delete',function(req,res,next){
     else{
       console.log('connected');
       var templates = db.collection('templates');
-      templates.deleteOne({_id:req.body.id,templateName:req.body.templateName},function(err,result){
+      templates.deleteOne({templateName:req.body.templateName},function(err,result){
         if (err) {
           console.log(err);
         }
