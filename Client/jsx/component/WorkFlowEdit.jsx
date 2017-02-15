@@ -11,6 +11,7 @@ import 'brace/theme/tomorrow';
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 import request from 'superagent';
+import TransformationFunc from './TransformationFunc.jsx';
 
 
 class WorkFlowEdit extends React.Component

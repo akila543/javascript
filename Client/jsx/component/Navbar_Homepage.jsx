@@ -3,6 +3,7 @@ import {AppBar, Tabs, Tab} from 'material-ui';
 import IconButton from 'material-ui/IconButton';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import FlatButton from 'material-ui/FlatButton';
+import Login from '../component/Login.jsx';
 
 const styles = {
   title: {
@@ -20,12 +21,7 @@ render(){
 return(
 
   <AppBar title="StagePiper" style={styles.appBar} >
-      <a href="https://github.com/login/oauth/authorize?client_id=58edf1ba4d5ee26c7673">
-    <Tabs>
-        <Tab label="Login" />
-    </Tabs>
-      </a>
-
+      <Login/>
 </AppBar>
 
 );}

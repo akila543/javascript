@@ -1,10 +1,11 @@
-  var React = require('react');
+var React = require('react');
   var ReactDOM = require('react-dom');
   import AceEditor from 'react-ace';
   var FlatButton = require('material-ui/FlatButton');
   import RaisedButton from 'material-ui/RaisedButton';
   import TextField from 'material-ui/TextField';
  import Request from 'superagent';
+ import AddTemplateEditor from './AddTemplateEditor.jsx';
 
 
   const styles = {
@@ -27,13 +28,12 @@
 
     constructor(props){
       super(props);
-      this.state = {filename:'',fileSelected:false, savPath:'./file.txt'};
+      this.state = {filename:'',fileSelected:false, savPath:'./file.txt', isValid:false, code:'fdvasfdtxy'};
       this.showFileName = this.showFileName.bind(this);
-      this.uploadFile=this.uploadFile.bind(this);
     }
 
-    showFileName() {
-      var temp = document.getElementById('myFile').files[0];
+    showFileName(e) {
+      var temp = e.target.files[0];
       var ext = temp.name.split('.').pop().toLowerCase();
       if(ext!="yml")
       {
@@ -41,28 +41,20 @@
       }
       else {
         var fil = document.getElementById("myFile");
+        var that = this;
         this.setState({filename:fil.value});
-        this.setState({fileSelected:true});
+        this.setState({isValid:true});
+        var reader = new FileReader();
+  			reader.onload = function(event) {
+            that.setState({code:event.target.result});
+  			};
+  			reader.readAsText(temp);
 
       }
     }
-    uploadFile()
+  /*  uploadFile()
   {
-      var that = this;
-      var temp = document.getElementById('myFile').files[0];
-      var ext = temp.name.split('.').pop().toLowerCase();
-      if(ext!="yml")
-      {
-        alert('Not a yml file');
-      }
-      else{
-        var reader = new FileReader();
-        reader.onload = function(e) {
-          that.setState({
-            code:reader.result
-          });
-
-        Request.post('/saveFile').send({ data: reader.result,fileName:temp.name}).set('Accept', 'application/json')
+        Request.post('/saveFile').send({ data:this.state.code,fileName:temp.name}).set('Accept', 'application/json')
         .end(function(err, res){
           if (err || !res.ok) {
             alert('Oh no! error');
@@ -70,17 +62,21 @@
           {
             console.log(res.text);
            }
-             });
-           }
-         reader.readAsText(temp);
-       }
-     }
+          });
+          alert('file uploaded');
 
-
+  }*/
 
     render () {
+      var box=null;
+      if(this.state.isValid)
+      {
+        box=<div>
+          <AddTemplateEditor data={this.state.code} filename={this.state.filename}/>
+        </div>
+      }
       return (
-                <div>
+            <div>
               <TextField
               hintText="Filename"
               floatingLabelText="File Name" disabled={true} value={this.state.filename}
@@ -90,9 +86,9 @@
                 labelPosition="before"
                 style={styles.button}
                 containerElement="label" primary={true}>
-                  <input type="file" id="myFile" style={styles.exampleImageInput} onChange={this.showFileName}/>
-          </RaisedButton>
-              <RaisedButton label="Upload" secondary={true} onClick={this.uploadFile} />
+                <input type="file" id="myFile" style={styles.exampleImageInput} onChange={this.showFileName}/>
+              </RaisedButton>
+              {box}
             </div>
         );
       }
