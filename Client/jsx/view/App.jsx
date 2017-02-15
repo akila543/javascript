@@ -5,7 +5,7 @@ import Dashboard from '../component/Dashboard.jsx';
 import DashNavbar from '../component/DashNavbar.jsx';
 import List_Dashboard from '../component/List_Dashboard.jsx';
 import Homepage from '../component/Homepage.jsx';
-import Login from '../component/Login.jsx';
+
 import {Grid,Row,Col} from 'react-flexbox-grid/lib';
 import Paper from 'material-ui/Paper';
 
@@ -19,8 +19,8 @@ class App extends React.Component {
   {
     return (
       <div >
-        <DashNavbar />
-        <Login />
+
+
         <Homepage />
       </div>
     );

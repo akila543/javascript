@@ -1,33 +1,43 @@
-const express = require('express'),
-    app = express(),
-    server = require('http').Server(app);
-var path = require('path');
-var oauth = require("oauth").OAuth2;
-var OAuth2 = new oauth("58edf1ba4d5ee26c7673", "71d2b7dd09f7086f4422b70c077ab4b5d089ef9c", "https://github.com/", "login/oauth/authorize", "login/oauth/access_token");
+var express = require('express');
+var hub = express();
+var bodyParser =require('body-parser');
+var session = require('express-session');
+var passport = require('passport');
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
-app.get('/dashboard', function(req, res) {
-    var code = req.query.code;
-    var token="";
-    OAuth2.getOAuthAccessToken(code, {}, function(err, access_token) {
-        if (err) {
-            console.log(err);
-        }
-        accessToken = access_token;
-        // authenticate github API
-        console.log("AccessToken: " + accessToken + "\n");
+var GitHubStrategy = require('passport-github2').Strategy;
+var user;
+hub.use(passport.initialize());
+hub.use(passport.session());
+hub.use(bodyParser.json());
 
-        var payload = accessToken;
-        var secretkey = "ourbobapplication";
-        res.redirect("http://localhost:8080/#/dashboard");
+hub.use(session({secret: 'keyboard cat', resave: true, saveUninitialized: true
+}));
 
-});
-});
-server.listen(3000, function() {
-    console.log('server===3000');
-});
-module.exports = app;
+var GITHUB_CLIENT_ID = "7342dac8b3d3acbcbe2c";
+var GITHUB_CLIENT_SECRET = "ab305c3809d3d1ed9a8c8ed0e0e54aeecc3e2e57";
+console.log(GITHUB_CLIENT_ID);
+//var origin = 'http://localhost:8080/#/';
+var gitOpts = {
+    clientID: GITHUB_CLIENT_ID,
+    clientSecret: GITHUB_CLIENT_SECRET,
+    callbackURL: "http://localhost:3000/dashboard"
+  };
+var gitCallback = function(accessToken, refreshToken, profile, done){
+
+
+console.log(accessToken, refreshToken, profile);
+done(null,profile.id);
+}
+passport.use(new GitHubStrategy(gitOpts,gitCallback));
+
+ hub.get('/dashboard',passport.authenticate('github',{
+   successRedirect: 'http://localhost:8080/#/dashboard',
+   failureRedirect: 'http://localhost:8080/#/',
+   failureFlash: true,
+   session: false
+ }));
+// hub.get('/logout', function(req, res){
+//   res.clearCookie('userid');
+// });
+hub.listen(3000);
+module.exports = hub;

@@ -40,18 +40,21 @@
     "babel-polyfill": "^6.23.0",
     "brace": "^0.9.1",
     "classnames": "^2.2.5",
+    "css-loader": "^0.26.1",
     "draft-js": "^0.9.1",
     "flexboxgrid": "^6.3.1",
     "js-yaml": "^3.7.0",
     "material-ui": "^0.16.7",
     "react-ace": "^4.1.1",
     "react-brace": "^3.6.6",
+    "react-cookie": "^1.0.4",
     "react-digraph": "^1.0.6",
     "react-flexbox-grid": "^0.10.2",
     "react-router": "^3.0.2",
     "react-rte": "^0.11.0",
     "react-sigma": "^1.2.15",
     "react-swipeable-views": "^0.10.7",
+    "style-loader": "^0.13.1",
     "superagent": "^3.3.2"
   }
 }

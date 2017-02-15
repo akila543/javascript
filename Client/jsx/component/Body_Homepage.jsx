@@ -13,7 +13,7 @@ render(){
 return(
   <div style={style}>
       <h1 style={{color:'#3F51B5',fontSize:'50px'}}>BUILD and TEST with Confidence</h1>
-      <p style={{fontSize:'25px',color:'#546E7A'}}>StagePiper unifies issues, code review, CI into a single UI</p>
+      <p style={{fontSize:'25px',color:'#004D40'}}>StagePiper unifies issues, code review, CI into a single UI</p>
   </div>
 );}
 }

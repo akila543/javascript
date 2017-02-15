@@ -36,6 +36,7 @@ class WorkFlowList extends React.Component{
      }
      else {
        that.setState({worklist:JSON.parse(res.text)});
+       console.log("___________________"+this.state.worklist);
      }
    });
   }
@@ -86,6 +87,7 @@ class WorkFlowList extends React.Component{
     this.setState({slideIndex:2})
   }
   render(){
+    console.log(this.state.worklist);
     var box=<FloatingActionButton mini={true} onClick={this.handleAdd} style={{marginTop:"2%",marginRight:"2%" }}>
       <ContentAdd />
     </FloatingActionButton>

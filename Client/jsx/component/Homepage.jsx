@@ -11,7 +11,7 @@ class Homepage extends React.Component {
   render()
   {
     return (
-      <div>
+
       <Grid style={{width:'100%'}}>
               <Row>
                 <Col xs={12} sm={12} md={12} lg={12}><Navbar_Homepage/> </Col>
@@ -40,7 +40,7 @@ class Homepage extends React.Component {
 
 
 
-      </div>
+      
     );
   }
 }
