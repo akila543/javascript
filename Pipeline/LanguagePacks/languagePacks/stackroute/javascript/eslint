@@ -2,6 +2,5 @@
 #The eslint script
 
 cd $WORKSPACE
-echo $EXCLUDE
-echo $EXCLUDE >> .eslintignore
-eslint --cache --parser esprima --format json $WORKSPACE
+echo $EXCLUDE > /tmp/.eslintignore
+eslint --cache --parser esprima --format json --ignore-path ../.eslintignore $WORKSPACE

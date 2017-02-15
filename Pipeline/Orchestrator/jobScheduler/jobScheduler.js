@@ -4,47 +4,45 @@ var retrieveAllstages = require('./stateServices/stages/retrieveAllStages');
 var updateStage = require('./stateServices/stages/updateStage');
 function scheduler(input, callback) {
     istage = Object.getOwnPropertyNames(input.stageName);
-  var job_count= istage.length;
-  var stage_counter = 0;
-  istage.map((elem)=>{
-    if(JSON.parse(input.stageName[elem]).status=== "Complete"){
-      stage_counter++;
+    var job_count = istage.length;
+    var stage_counter = 0;
+    istage.map((elem) => {
+        if (JSON.parse(input.stageName[elem]).status === "Complete") {
+            stage_counter++;
+        }
+    });
+    console.log("job STAGE current count is :" + stage_counter);
+    if (job_count === stage_counter) {
+        var temp = {
+            jobId: input.jobId,
+            status: 1
+        };
+        client.lpush('COMPLETE_RESULT', JSON.stringify(temp), function(err, reply) {
+            if (!err) {
+                console.log("COMPLETED DATA IS SENT");
+                callback();
+            } else {
+                console.log(err);
+            }
+        })
+        job_count = 0;
     }
-  });
-  console.log("job STAGE current count is :"+stage_counter);
-  if(job_count===stage_counter ){
-    var temp = {
-        jobId: input.jobId,
-        status:1
-    };
-    client.lpush('COMPLETE_RESULT',JSON.stringify(temp),function (err,reply) {
-      if(!err){
-        console.log("COMPLETED DATA IS SENT");
-        callback();
-      }
-      else {
-        console.log(err);
-      }
-    })
-    job_count=0;
-  }
-     istage.map((item) => {
+    istage.map((item) => {
         var dstage = JSON.parse(input.stageName[item]).depends_on;
         var stageStatus = JSON.parse(input.stageName[item]).status;
         if (stageStatus === "Failed") {
-          var temp = {
-              jobId: input.jobId,
-              status:-1
-          };
-          client.lpush('COMPLETE_RESULT',JSON.stringify(temp),function (err,reply) {
-            if(!err){
-              console.log("FAILED DATA SENT");
-              callback();
-            }
-            else {
-              console.log(err);
-            }
-          })
+            var temp = {
+                jobId: input.jobId,
+                status: -1
+            };
+            client.lpush('COMPLETE_RESULT', JSON.stringify(temp), function(err, reply) {
+                if (!err) {
+                    console.log("FAILED DATA SENT");
+                    callback();
+                } else {
+                    console.log(err);
+                }
+            })
             istage.map((stage) => {
                 var stageObj = JSON.parse(input.stageName[stage]);
                 if (stageObj.depends_on !== null && stageObj.depends_on.includes(item)) {
@@ -53,7 +51,7 @@ function scheduler(input, callback) {
                         if (err) {
                             console.log(err);
                         } else {
-                            console.log(input.jobId+' '+stage + ' is Blocked');
+                            console.log(input.jobId + ' ' + stage + ' is Blocked');
                         }
                     });
                 }
@@ -66,7 +64,7 @@ function scheduler(input, callback) {
             }
             client.lpush('STAGE_SCHEDULER', JSON.stringify(temp), function(err, reply) {
                 if (!err) {
-                    console.log(input.jobId+' '+item+' sent');
+                    console.log(input.jobId + ' ' + item + ' sent');
                     callback();
                 } else
                     console.log(err);
@@ -80,7 +78,7 @@ function scheduler(input, callback) {
                     if (err) {
                         console.log(err);
                     } else {
-                        console.log(input.jobId+' '+item + ' is Blocked');
+                        console.log(input.jobId + ' ' + item + ' is Blocked');
                     }
                 });
                 callback();
@@ -92,7 +90,7 @@ function scheduler(input, callback) {
                     }
                     client.lpush('STAGE_SCHEDULER', JSON.stringify(temp), function(err, reply) {
                         if (!err) {
-                          console.log(input.jobId+' '+item + ' sent');
+                            console.log(input.jobId + ' ' + item + ' sent');
                             callback();
                         } else
                             console.log(err);

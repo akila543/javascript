@@ -2,4 +2,9 @@
 #The testing script
 
 cd $WORKSPACE
-mocha test/ --reporter json
+if [ -d $WORKSPACE'/test']
+then
+  mocha --recursive --reporter json 
+else
+  echo "No test folder found."
+fi

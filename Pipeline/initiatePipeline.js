@@ -2,23 +2,25 @@ var client = require('redis').createClient();
 
 module.exports = function (input,callback)
 {
-    console.log('Initiate pipeline called');
+    console.log('Pipeline initiated...');
     client.lpush('QM',JSON.stringify(input),(err,reply)=>{
-        console.log(reply);
+      if (err) {
+        console.log(err);
+      }
+      else{
         result(function(resultArray){
             callback(null,resultArray);
         });
-
+      }
     });
 }
 
 function result(cb)
 {
-    console.log('result called');
-    client.brpop('COMPLETE_RESULT',0,1,function(err,reply){
+    client.brpop('COMPLETE_RESULT',0,function(err,reply){
         if(!err)
         {
-            console.log("=========="+reply);
+            console.log("Pipeline Result====>"+reply);
             if(reply!=null)
             {
             if(JSON.parse(reply[1]).status==1)
@@ -37,12 +39,10 @@ function result(cb)
                       }
                     });
                     cb(resultArray);
-
                 })
             }
             else
             {
-
                 cb("jobFailed");
             }
         }

@@ -2,4 +2,9 @@
 #The istanbul script
 
 cd $WORKSPACE
-istanbul cover . 
+if [ -d $WORKSPACE'/test']
+then
+  istanbul cover _mocha test --recursive .
+else
+  echo "No test folder found."
+fi
