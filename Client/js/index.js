@@ -35063,9 +35063,9 @@
 		switch (opts.arrayFormat) {
 			case 'index':
 				return function (key, value, accumulator) {
-					result = /\[(\d*)]$/.exec(key);
+					result = /\[(\d*)\]$/.exec(key);
 
-					key = key.replace(/\[\d*]$/, '');
+					key = key.replace(/\[\d*\]$/, '');
 
 					if (!result) {
 						accumulator[key] = value;
@@ -35081,9 +35081,9 @@
 
 			case 'bracket':
 				return function (key, value, accumulator) {
-					result = /(\[])$/.exec(key);
+					result = /(\[\])$/.exec(key);
 
-					key = key.replace(/\[]$/, '');
+					key = key.replace(/\[\]$/, '');
 
 					if (!result || accumulator[key] === undefined) {
 						accumulator[key] = value;
@@ -68820,11 +68820,13 @@
 	 */
 
 	Request.prototype.attach = function(field, file, options){
-	  if (this._data) {
-	    throw Error("superagent can't mix .send() and .attach()");
-	  }
+	  if (file) {
+	    if (this._data) {
+	      throw Error("superagent can't mix .send() and .attach()");
+	    }
 
-	  this._getFormData().append(field, file, options || file.name);
+	    this._getFormData().append(field, file, options || file.name);
+	  }
 	  return this;
 	};
 
@@ -69739,9 +69741,10 @@
 	 * @api public
 	 */
 
-	RequestBase.prototype.withCredentials = function(){
+	RequestBase.prototype.withCredentials = function(on){
 	  // This is browser-only functionality. Node side is no-op.
-	  this._withCredentials = true;
+	  if(on==undefined) on = true;
+	  this._withCredentials = on;
 	  return this;
 	};
 
