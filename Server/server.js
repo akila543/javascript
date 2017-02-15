@@ -8,6 +8,7 @@ const deleteWorkflow = require('./routes/deleteWorkflow');
 const jobList = require('./routes/loadJobList');
 const updateWorkflow = require('./routes/updateWorkflow');
 const getWorkflows = require('./routes/getWorkflows');
+const authentication = require('./routes/authentication.js');
 
 //request parsers
 app.use(bodyParser.json());
@@ -29,7 +30,7 @@ app.use(express.static('../Client/'));
 app.use('/',function(req,res,next){
 	console.log("got routed");
 	next();
-},results,saveFile,stageLister,deleteWorkflow,jobList,updateWorkflow,getWorkflows);
+},authentication,results,saveFile,stageLister,deleteWorkflow,jobList,updateWorkflow,getWorkflows);
 
 //server run
 app.listen(3000,console.log("Server is listening on port 3000..."));
