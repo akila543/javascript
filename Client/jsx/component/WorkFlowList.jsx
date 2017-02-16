@@ -64,6 +64,7 @@ class WorkFlowList extends React.Component{
   }
 
   handlePrevSlide () {
+    window.location.reload();
     this.setState({slideIndex:0 });
   }
 
