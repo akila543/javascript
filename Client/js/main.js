@@ -9,6 +9,7 @@ import Monitoring from "../jsx/component/Monitoring.jsx";
 import Dashboard from "../jsx/component/Dashboard.jsx";
 import WorkFlowEdit from "../jsx/component/WorkFlowEdit.jsx";
 import WorkFlowList from "../jsx/component/WorkFlowList.jsx";
+import Home from "../jsx/component/Home.jsx";
 import cookie from 'react-cookie';
 // import Dashboard from "../jsx/component/Dashboard.jsx";
 
@@ -24,6 +25,7 @@ injectTapEventPlugin();
 ReactDOM.render(<MuiThemeProvider>
 	<Router history={hashHistory}>
 		<Route path={"/"} component={App}/>
+		<Route path={"/user"} component={Home} onEnter={autherize}/>
 		 <Route path={"/dashboard"} component={Dashboard} onEnter={autherize}>
 			 <Route path={"/edit"} component={WorkFlowEdit} onEnter={autherize}/>
 			 <Route path={"/workflows"} component={WorkFlowList} onEnter={autherize}/>
