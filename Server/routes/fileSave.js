@@ -21,15 +21,14 @@ Router.post('/saveFile', function(req, res, next) {
 
 		    console.log("Connected successfully to server");
 
-<<<<<<< HEAD
+
 		    insertDocuments(db, req.body.templateName,req.body.data, req.body.transfunction ,function() {
-=======
-		    insertDocuments(db, req.body.fileName,data,function() {
->>>>>>> 5f7e9aaa76878e4c38d75ba4cf05edca6b01629b
+
+
 		        db.close();
 		    });
-		   });
 
+      });
 		}
 });
 
