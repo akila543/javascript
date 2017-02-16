@@ -5,7 +5,16 @@ Router.post('/jobList', function(req, res) {
   client.lrange('JOBLIST',0,-1,function(err,reply){
   	if(!err)
   	{
-  		res.send(reply);
+  		res.send(reply.map((job)=>{
+        client.hmget(job,'status',(err,result)=>{
+          if (err) {
+            console.log(err);
+          }
+          else {
+            return {jobId:job,status:result};
+          }
+        })
+      }));
   	}
   	else
   		console.log(err);

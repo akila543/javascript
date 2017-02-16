@@ -12,9 +12,6 @@ const styles = {
     align:"center"
   },
   paper:{
-    height: 800,
- width: 1000,
- margin: 100,
  textAlign: 'center',
  display: 'inline-block',
   },
@@ -29,12 +26,11 @@ const styles = {
     opacity: 1,
   },
   inputField:{
-    marginLeft:'400px',
-    width:'400px'
+    align:"center"
   },
   progress:{
     marginTop:'50px',
-    marginLeft:'500px'
+    marginLeft:'50px'
   }
 };
 
@@ -56,18 +52,19 @@ class Home extends React.Component{
     var that = this;
     this.setState({isSubmit:true});
 
-    Request.post('/results').send({ data: this.state.input }).set('Accept', 'application/json')
+    Request.post('/results').send({ data: this.state.input,templateName:"CI-Pipeline.yml"}).set('Accept', 'application/json')
            .end(function(err, res){
              if (err || !res.ok) {
                alert('Oh no! error');
              } else {
-               if(typeof res.text != String)
+               if(res.text !== 'jobFailed')
                     {
                     that.setState({output:JSON.parse(res.text)});
                     }
                   else
-                    {console.log(res.text);
-                    alert("Server error");
+                    {
+                    console.log(res.text);
+                    alert("Server error: "+res.text);
                   }
              }
            });

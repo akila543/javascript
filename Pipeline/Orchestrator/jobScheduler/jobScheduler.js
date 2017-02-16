@@ -2,6 +2,7 @@ const async = require('async');
 var client = require('redis').createClient();
 var retrieveAllstages = require('./stateServices/stages/retrieveAllStages');
 var updateStage = require('./stateServices/stages/updateStage');
+
 function scheduler(input, callback) {
     istage = Object.getOwnPropertyNames(input.stageName);
     var job_count = istage.length;
@@ -20,12 +21,27 @@ function scheduler(input, callback) {
         client.lpush('COMPLETE_RESULT', JSON.stringify(temp), function(err, reply) {
             if (!err) {
                 console.log("COMPLETED DATA IS SENT");
-                callback();
+                client.hmset(input.jobId, "status",'Complete', function(err, reply) {
+                    if (!err) {
+                        callback();
+                    } else {
+                        console.log(err);
+                    }
+                });
             } else {
                 console.log(err);
             }
         })
         job_count = 0;
+    } else {
+        client.hmset(input.jobId, "status",'Scheduled', function(err, reply) {
+            if (!err) {
+                console.log("SCHEDULED DATA IS SENT");
+                callback();
+            } else {
+                console.log(err);
+            }
+        })
     }
     istage.map((item) => {
         var dstage = JSON.parse(input.stageName[item]).depends_on;
@@ -38,7 +54,13 @@ function scheduler(input, callback) {
             client.lpush('COMPLETE_RESULT', JSON.stringify(temp), function(err, reply) {
                 if (!err) {
                     console.log("FAILED DATA SENT");
-                    callback();
+                    client.hmset(input.jobId, "status",'Failed', function(err, reply) {
+                        if (!err) {
+                            callback();
+                        } else {
+                            console.log(err);
+                        }
+                    });
                 } else {
                     console.log(err);
                 }
@@ -68,8 +90,7 @@ function scheduler(input, callback) {
                     callback();
                 } else
                     console.log(err);
-                }
-            );
+            });
         } else if (dstage != null && dstage.length < 2 && stageStatus === 'Initialized') {
             if (JSON.parse(input.stageName[dstage.toString()]).status === 'Blocked') {
                 var stageObj = JSON.parse(input.stageName[dstage.toString()]);
@@ -94,8 +115,7 @@ function scheduler(input, callback) {
                             callback();
                         } else
                             console.log(err);
-                        }
-                    );
+                    });
                 }
             }
         } else if (dstage != null && dstage.length > 1 && stageStatus === 'Initialized') {
@@ -128,8 +148,7 @@ function scheduler(input, callback) {
                         callback();
                     } else
                         console.log(err);
-                    }
-                );
+                });
             } else {
                 callback();
             }

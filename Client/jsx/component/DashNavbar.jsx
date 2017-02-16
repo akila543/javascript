@@ -5,7 +5,7 @@ class DashNavbar extends React.Component{
 render(){
 return(
   <AppBar
-      title="Stage Piper"
+      title="Orchestropus"
       iconClassNameRight="muidocs-icon-navigation-expand-more"
     />
 

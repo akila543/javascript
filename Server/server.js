@@ -8,7 +8,7 @@ const deleteWorkflow = require('./routes/deleteWorkflow');
 const jobList = require('./routes/loadJobList');
 const updateWorkflow = require('./routes/updateWorkflow');
 const getWorkflows = require('./routes/getWorkflows');
-const authentication = require('./routes/authentication.js');
+const authentication = require('./routes/authentication');
 
 //request parsers
 app.use(bodyParser.json());
@@ -24,11 +24,12 @@ app.use(function(req, res, next) {
 });
 
 //test get request
-app.get('/test',function(req,res){
+app.get('/test',function(req,res,next){
   console.log(req.fresh);
   setTimeout(()=>{
     res.send('<h1>got it</h1>');
   },120000);
+  next();
 });
 
 //static file service
