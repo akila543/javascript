@@ -127,24 +127,25 @@ class TransformationFunc extends React.Component
 	render () {
 
 		return (
-			<div className="container">
-				<AceEditor
-					className="row"
-					mode="javascript"
-					theme="tomorrow"
-					value={this.state.code}
-					onChange={this.updateCode}
-					name="ace"
-					id="ace"
-					editorProps={{$blockScrolling: true}}
-					style={{width:"500px"} ,{border:"1px solid black"}}
-					onLoad={(editor) => {
-						editor.focus();
-						editor.getSession();
-					}}
-					/>
+			<div className="container" style={{width:"auto"}}>
+        <div className="row">
+          <AceEditor
+  					mode="javascript"
+  					theme="tomorrow"
+  					value={this.state.code}
+  					onChange={this.updateCode}
+  					name="ace"
+  					id="ace"
+  					editorProps={{$blockScrolling: true}}
+  					style={{width:"60%",border:"1px solid black",margin:"10px"}}
+  					onLoad={(editor) => {
+  						editor.focus();
+  						editor.getSession();
+  					}}
+  					/>
+        </div>
 
-				<div className="row">
+				<div className="row" style={{textAlign:"left"}}>
 					<RaisedButton
 						label="Browse"
 						labelPosition="before"
