@@ -50,7 +50,6 @@ handleClick(){
 render() {
 
 return (
-
 <div>
 <RaisedButton label="Login"  href={"https://github.com/login/oauth/authorize?client_id=f04e898ce84f9ea04158&scope=user"} style={{marginTop:"50px"}} labelStyle={{color:"white"}} buttonStyle={{background:"#3F51B5 "}} onClick={this.handleClick}/>
 </div>

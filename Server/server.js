@@ -9,9 +9,8 @@ const jobList = require('./routes/loadJobList');
 const updateWorkflow = require('./routes/updateWorkflow');
 const getWorkflows = require('./routes/getWorkflows');
 const authentication = require('./routes/authentication.js');
-const logout = require('./routes/logout.js');
 
-const authentication = require('./routes/authentication');
+
 
 //request parsers
 app.use(bodyParser.json());
@@ -43,7 +42,7 @@ app.use(express.static('../Client/'));
 app.use('/',function(req,res,next){
 	console.log("into the routes...");
 	next();
-},authentication,results,saveFile,stageLister,deleteWorkflow,jobList,updateWorkflow,getWorkflows,logout);
+},authentication,results,saveFile,stageLister,deleteWorkflow,jobList,updateWorkflow,getWorkflows);
 
 //server run
 app.listen(3000,console.log("Server is listening on port 3000..."));

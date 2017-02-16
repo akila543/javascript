@@ -9,9 +9,9 @@ const OAuth2 = new oauth(Client_ID,Client_Secret,"https://github.com/","login/oa
 
 const secretCode = "E7r9t8@Q#h%Hy+M";
 
-const adminList=['kritiraj','nishauttawani','dsrini94','varun7777','rsunray','su']
+const adminList=['kritiraj','nishauttawani','dsrini94','varun7777','rsunray','subashchandarsiva'];
 
-Router.get('/authentication', function(req, res, next) {
+Router.get('/authentication', function(req, response, next) {
   var userName;
     console.log('inside authentication');
     var code = req.query.code;
@@ -21,6 +21,7 @@ Router.get('/authentication', function(req, res, next) {
         console.log(err);
       else
       {
+        console.log(req);
         Request.get('https://api.github.com/user?access_token='+access_token).set('Accept', 'application/json')
         .end(function(err, res){
           if (err || !res.ok) {
@@ -28,14 +29,16 @@ Router.get('/authentication', function(req, res, next) {
           } else
           {
             userName=res.body.login;
+            console.log(typeof userName);
+             var encoded_accestoken = jwt.sign('ihtlto1a2wmfVaA.',secretCode);
+            response.cookie("access_token",encoded_accestoken);
+            if(adminList.includes(userName))
+                response.redirect("http://localhost:3000/#/monitor");
+            else
+                response.redirect("http://localhost:3000/#/user");
            }
           });
-        var encoded_accestoken = jwt.sign('ihtlto1a2wmfVaA.',secretCode);
-        res.cookie("access_token",encoded_accestoken);
-        if(adminList.includes(userName))
-            res.redirect("http://localhost:3000/#/monitor");
-        else
-            res.redirect("http://localhost:3000/#/user");
+       
       }
     })
 
