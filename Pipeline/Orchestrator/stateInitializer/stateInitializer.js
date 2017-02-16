@@ -110,7 +110,7 @@ function dataPush(jobId, callback) {
                 console.log('data sent to JOB_SCHEDULER');
                 client.lpush('JOBLIST', jobId, (err, reply)=>{
                     if (!err) {
-                        client.hmset(jobId, 'status', 'Initialized', function(err, reply) {
+                        client.hmset(jobId,'status','Initialized', function(err, reply) {
                             if (!err)
                                 callback();
                             else
