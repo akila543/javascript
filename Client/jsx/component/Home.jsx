@@ -5,7 +5,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Results from './Results.jsx';
 import Request from 'superagent';
 import CircularProgress from 'material-ui/CircularProgress';
-
+import AppBar from 'material-ui/AppBar';
+import cookie from 'react-cookie';
 const styles = {
   button: {
     margin: 12,
@@ -40,11 +41,18 @@ class Home extends React.Component{
     this.state = {input:'',completed:0, isSubmit:false,output:null};
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   handleChange(e){
     e.preventDefault();
     this.setState({input:e.target.value});
+  }
+
+  handleLogout()
+  {
+    cookie.remove("access_token");
+
   }
 
   handleSubmit(e){
@@ -85,6 +93,7 @@ class Home extends React.Component{
     }
 
     return (<div>
+      <AppBar title="Stage Piper"   iconElementRight={ <Link to="/"><FlatButton label="Logout" onClick={this.handleLogout}/></Link> }/>
       <TextField
         id="repoUrl" value={this.state.input} onChange={this.handleChange}
         floatingLabelText="Repo URL"
