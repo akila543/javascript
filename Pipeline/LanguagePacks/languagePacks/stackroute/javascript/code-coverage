@@ -2,4 +2,4 @@
 #The istanbul script
 
 cd $WORKSPACE
-istanbul cover . 
+istanbul cover --recursive .

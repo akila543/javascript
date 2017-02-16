@@ -15,9 +15,10 @@ const styles = {
         width: '1200px',
         height: 'auto',
         overflowY: 'auto',
-        marginTop: 50
+        marginTop: 20
         }
 };
+
   class Results extends React.Component {
       constructor(props) {
       super(props);

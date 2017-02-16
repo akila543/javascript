@@ -4,19 +4,19 @@ services :
     build: ./Pipeline/Orchestrator/stateInitializer
     image: stateinitializer
     network_mode: "host"
-    expose : ['6379']
+    expose : ['6379','27017']
 
   jobScheduler :
     build: ./Pipeline/Orchestrator/jobScheduler
     image : jobscheduler
     network_mode: "host"
-    expose : ['6379']
+    expose : ['6379','27017']
 
   stageScheduler :
     build: ./Pipeline/Orchestrator/stageScheduler
     image : stagescheduler
     network_mode: "host"
-    expose : ['6379']
+    expose : ['6379','27017']
 
   gitClone:
     build: ./Pipeline/LanguagePacks/gitClone
@@ -24,7 +24,7 @@ services :
     volumes:
       - /tmp:/tmp
     network_mode: "host"
-    expose : ['6379']
+    expose : ['6379','27017']
 
   LanguagePacks :
     build: ./Pipeline/LanguagePacks/languagePacks
@@ -32,10 +32,10 @@ services :
     volumes:
       - /tmp:/tmp
     network_mode: "host"
-    expose : ['6379']
+    expose : ['6379','27017']
 
   resultsProcessor :
     build: ./Pipeline/Orchestrator/resultsProcessor
     image : resultsprocessor
     network_mode: "host"
-    expose : ['6379']
+    expose : ['6379','27017']

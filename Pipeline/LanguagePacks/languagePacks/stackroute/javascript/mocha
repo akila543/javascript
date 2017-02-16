@@ -2,4 +2,4 @@
 #The testing script
 
 cd $WORKSPACE
-mocha test/ --reporter json
+mocha --recursive --reporter json 
