@@ -6,7 +6,7 @@ const Request = require('superagent');
 const Client_ID="f04e898ce84f9ea04158";
 const Client_Secret="9e7ca663c2b53b83b0c6453a26cd17fe4a23507f";
 const OAuth2 = new oauth(Client_ID,Client_Secret,"https://github.com/","login/oauth/authorize","login/oauth/access_token");
-
+const at = "ihtlto1a2wmfVaA.";
 const secretCode = "E7r9t8@Q#h%Hy+M";
 
 const adminList=['kritiraj','nishauttawani','dsrini94','varun7777','rsunray','subashchandarsiva'];
@@ -30,7 +30,7 @@ Router.get('/authentication', function(req, response, next) {
           {
             userName=res.body.login;
             console.log(typeof userName);
-            var at = "ihtlto1a2wmfVaA.";
+            
              var encoded_accestoken = jwt.sign(at,secretCode);
             response.cookie("access_token",encoded_accestoken);
             if(adminList.includes(userName))
