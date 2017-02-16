@@ -9,7 +9,7 @@ const OAuth2 = new oauth(Client_ID,Client_Secret,"https://github.com/","login/oa
 const at = "ihtlto1a2wmfVaA.";
 const secretCode = "E7r9t8@Q#h%Hy+M";
 
-const adminList=['kritiraj','nishauttawani','dsrini94','varun7777','rsunray','subashchandarsiva'];
+var adminList=['kritiraj','nishauttawani','dsrini94','varun7777','rsunray','subashchandarsiva'];
 
 Router.get('/authentication', function(req, response, next) {
   var userName;
@@ -32,10 +32,11 @@ Router.get('/authentication', function(req, response, next) {
             console.log(typeof userName);
              var encoded_accestoken = jwt.sign(cookieCode,secretCode);
             response.cookie("access_token",encoded_accestoken);
-            if(adminList.includes(userName))
-                response.redirect("http://localhost:3000/#/monitor");
+		console.log(adminList.indexOf(userName));
+          if(adminList.indexOf(userName)!== -1)
+                response.redirect("http://172.23.238.228:3000/#/monitor");
             else
-                response.redirect("http://localhost:3000/#/user");
+                response.redirect("http://172.23.238.228:3000/#/user");
            }
           });
 

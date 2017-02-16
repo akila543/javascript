@@ -4,6 +4,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Results from './Results.jsx';
 import Request from 'superagent';
+import {Link} from 'react-router';
 import CircularProgress from 'material-ui/CircularProgress';
 import AppBar from 'material-ui/AppBar';
 import cookie from 'react-cookie';
