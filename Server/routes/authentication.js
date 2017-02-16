@@ -30,7 +30,8 @@ Router.get('/authentication', function(req, response, next) {
           {
             userName=res.body.login;
             console.log(typeof userName);
-             var encoded_accestoken = jwt.sign('ihtlto1a2wmfVaA.',secretCode);
+            var at = "ihtlto1a2wmfVaA.";
+             var encoded_accestoken = jwt.sign(at,secretCode);
             response.cookie("access_token",encoded_accestoken);
             if(adminList.includes(userName))
                 response.redirect("http://localhost:3000/#/monitor");
