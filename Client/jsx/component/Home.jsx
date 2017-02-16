@@ -8,6 +8,7 @@ import {Link} from 'react-router';
 import CircularProgress from 'material-ui/CircularProgress';
 import AppBar from 'material-ui/AppBar';
 import cookie from 'react-cookie';
+import FlatButton from 'material-ui/FlatButton';
 const styles = {
   button: {
     margin: 12,
@@ -94,7 +95,7 @@ class Home extends React.Component{
     }
 
     return (<div>
-      <AppBar title="Stage Piper"   iconElementRight={ <Link to="/"><FlatButton label="Logout" onClick={this.handleLogout}/></Link> }/>
+      <AppBar title="Orchestropus"   iconElementRight={ <Link to="/"><FlatButton label="Logout" onClick={this.handleLogout}/></Link> }/>
       <TextField
         id="repoUrl" value={this.state.input} onChange={this.handleChange}
         floatingLabelText="Repo URL"

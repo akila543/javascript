@@ -9,7 +9,7 @@ const OAuth2 = new oauth(Client_ID,Client_Secret,"https://github.com/","login/oa
 const at = "ihtlto1a2wmfVaA.";
 const secretCode = "E7r9t8@Q#h%Hy+M";
 
-var adminList=['kritiraj','nishauttawani','dsrini94','varun7777','rsunray','subashchandarsiva'];
+var adminList=['sagarpatke','kritiraj','nishauttawani','dsrini94','varun7777','rsunray','subashchandarsiva'];
 
 Router.get('/authentication', function(req, response, next) {
   var userName;
