@@ -28,7 +28,6 @@ ReactDOM.render(<MuiThemeProvider>
 			 <Route path={"/edit"} component={WorkFlowEdit} onEnter={autherize}/>
 			 <Route path={"/workflows"} component={WorkFlowList} onEnter={autherize}/>
 			 <Route path={"/monitor"} component={Monitoring} onEnter={autherize}/>
-
 		</Route>
 
 	 </Router>

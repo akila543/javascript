@@ -18,7 +18,7 @@ const cellStyle={
 class WorkFlowList extends React.Component{
   constructor(props){
     super(props);
-    this.state={name:'',worklist:[], isEdit:{false}, slideIndex:0,content:'',templateName:""}
+    this.state={name:'',worklist:[], isEdit:{false}, slideIndex:0,content:'',templateName:"", transfunction:""}
     this.handleDelete=this.handleDelete.bind(this);
     this.handleEdit=this.handleEdit.bind(this);
     this.handleAdd=this.handleAdd.bind(this);
@@ -36,7 +36,6 @@ class WorkFlowList extends React.Component{
      }
      else {
        that.setState({worklist:JSON.parse(res.text)});
-       console.log("___________________"+this.state.worklist);
      }
    });
   }
@@ -65,20 +64,18 @@ class WorkFlowList extends React.Component{
   }
 
   handlePrevSlide () {
+    window.location.reload();
     this.setState({slideIndex:0 });
   }
 
   handleEdit(event)
 	{
     var id=event.target.id;
-    console.log(id);
       const obj=this.state.worklist.filter(function(item){
-        console.log(item._id);
         return item._id === id;
       });
-      console.log(obj);
       var data=obj[0].content;
-	    this.setState({slideIndex:1,templateName:obj[0].templateName,content: data});
+	    this.setState({slideIndex:1,templateName:obj[0].templateName,content: data, transfunction:obj[0].transfunction});
       console.log(this.state.content);
 	}
 
@@ -87,8 +84,8 @@ class WorkFlowList extends React.Component{
     this.setState({slideIndex:2})
   }
   render(){
-    console.log(this.state.worklist);
-    var box=<FloatingActionButton mini={true} onClick={this.handleAdd} style={{marginTop:"2%",marginRight:"2%" }}>
+
+   var box=<FloatingActionButton mini={true} onClick={this.handleAdd} style={{marginTop:"2%",marginRight:"2%" }}>
       <ContentAdd />
     </FloatingActionButton>
    return(
@@ -133,7 +130,7 @@ class WorkFlowList extends React.Component{
            </Table>
          </div>
          <div>
-           <WorkFlowEdit data={this.state.content} templateName={this.state.templateName}/>
+           <WorkFlowEdit data={this.state.content} filename={this.state.templateName} transfunction={this.state.transfunction}/>
            <RaisedButton  onClick = {this.handlePrevSlide} label="Back" primary={true} style ={{marginLeft:'80%'}}/>
          </div>
          <div>

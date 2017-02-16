@@ -1,14 +1,16 @@
 const Router = require('express').Router()
 const fs = require('fs');
 const MongoClient = require('mongodb').MongoClient;
+const yaml = require('js-yaml');
+
 
 var url = 'mongodb://localhost:27017/workflows';
 
 Router.use(require('body-parser').json());
 
 Router.post('/saveFile', function(req, res, next) {
-
-  fs.writeFile("./workflows/"+req.body.fileName, req.body.data,'utf8', function(err) {
+  var data = yaml.safeLoad(req.body.data);
+  fs.writeFile("./workflows/"+req.body.fileName,data,'utf8', function(err) {
     if(err) {
         return console.log(err);
         }
@@ -19,22 +21,25 @@ Router.post('/saveFile', function(req, res, next) {
 
 		    console.log("Connected successfully to server");
 
-		    insertDocuments(db, req.body.fileName,req.body.data,function() {
+
+		    insertDocuments(db, req.body.templateName,req.body.data, req.body.transfunction ,function() {
+
+
 		        db.close();
 		    });
-		   });
 
+      });
 		}
 });
 
 });
 
-var insertDocuments = function(db,fileName,fileData ,callback) {
+var insertDocuments = function(db,fileName,fileData,transfunc ,callback) {
   // Get the documents collection
   var templates = db.collection('templates');
   // Insert some documents
   templates.insertOne(
-    {templateName : fileName,content : fileData}, function(err, result) {
+    {templateName : fileName,content : fileData, transfunction : transfunc}, function(err, result) {
     console.log(result.result.n);
     callback(result);
   });

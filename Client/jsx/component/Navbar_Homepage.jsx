@@ -20,7 +20,7 @@ class Navbar_Homepage extends React.Component{
 render(){
 return(
 
-  <AppBar title="StagePiper" style={styles.appBar} >
+  <AppBar title="Orchestropus" style={styles.appBar} >
       <Login/>
 </AppBar>
 

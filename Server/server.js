@@ -11,6 +11,8 @@ const getWorkflows = require('./routes/getWorkflows');
 const authentication = require('./routes/authentication.js');
 const logout = require('./routes/logout.js');
 
+const authentication = require('./routes/authentication');
+
 //request parsers
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -22,6 +24,16 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
+});
+
+
+//test get request
+app.get('/test',function(req,res,next){
+  console.log(req.fresh);
+  setTimeout(()=>{
+    res.send('<h1>got it</h1>');
+  },120000);
+  next();
 });
 
 //static file service

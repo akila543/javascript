@@ -52,20 +52,20 @@ export default class Monitoring extends React.Component {
     var that = this;
         Request.post('/jobList').set('Accept', 'application/json')
         .end(function(err, res){
-          if (err || !res.ok) 
+          if (err || !res.ok)
             alert('Oh no! error');
           else
           {
               that.setState({data:JSON.parse(res.text)})
-             JSON.parse(res.text).map((item,i)=>{        
+             JSON.parse(res.text).map((item,i)=>{
               jobListArray.push(
               <TableRow key={i}>
-                <TableRowColumn key={i+"shd"}>{item}</TableRowColumn>
+                <TableRowColumn key={i+"shd"}>{item.jobId}</TableRowColumn>
                 <TableRowColumn key={i+"hbx"}>DISTRIBUTED-PIPELINE</TableRowColumn>
-                <TableRowColumn key={i+"uwhu2"}>Complete</TableRowColumn>
+                <TableRowColumn key={i+"uwhu2"}>{item.status}</TableRowColumn>
               </TableRow>);
              })
-             
+
              that.setState({jobTable:jobListArray});
           }
              });
@@ -104,7 +104,7 @@ export default class Monitoring extends React.Component {
 				    <TableBody  showRowHover={true} displayRowCheckbox={false}>
 
 				      {this.state.jobTable}
-				      
+
 				    </TableBody>
 				  </Table>
           </div>

@@ -5,6 +5,23 @@ var FlatButton = require('material-ui/FlatButton');
 import RaisedButton from 'material-ui/RaisedButton';
 import 'brace/mode/javascript';
 import 'brace/theme/tomorrow';
+import request from 'superagent';
+
+const styles = {
+	 button: {
+		 margin: 20,
+	 },
+	 exampleImageInput: {
+		 cursor: 'pointer',
+		 position: 'absolute',
+		 top: 0,
+		 bottom: 0,
+		 right: 20,
+		 left: 0,
+		 width: '100%',
+		 opacity: 0,
+	 },
+};
 
 class TransformationFunc extends React.Component
 {
@@ -13,10 +30,10 @@ class TransformationFunc extends React.Component
 		super(props);
 
 		this.updateCode = this.updateCode.bind(this);
-		//this.handleChange = this.handleChange.bind(this);
+		this.handleChange = this.handleChange.bind(this);
 		this.check = this.check.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.state={code:"//write js code here",isValid:false, isSubmit:false};
+		this.state={code:"//write js transformation function here",isValid:false, isSubmit:false};
 
 	}
 
@@ -25,7 +42,7 @@ class TransformationFunc extends React.Component
 		this.setState({code:newcode});
 	}
 
-	/*handleChange()
+	handleChange()
 	{
 		var that = this;
 		var temp = document.getElementById('jsfiledata').files[0];
@@ -45,15 +62,25 @@ class TransformationFunc extends React.Component
 				reader.readAsText(temp);
 			}
 
-	}*/
+	}
 
 	handleSubmit()
 	{
 		if(this.state.isValid)
-		{	alert('Transformation function submitted');
+		{
 			this.setState({
 				isSubmit:true
 			});
+			request.post('/saveFile').send({ data:this.props.content,templateName:this.props.fileName, transfunction:this.state.code}).set('Accept', 'application/json')
+			.end(function(err, res){
+				if (err || !res.ok) {
+					alert('Oh no! error');
+				} else
+				{
+					console.log(res.text);
+					alert("Successfully uploaded");
+				 }
+				});
 		}
 
 		else{
@@ -116,8 +143,15 @@ class TransformationFunc extends React.Component
 					/>
 
 				<div className="row">
+					<RaisedButton
+						label="Browse"
+						labelPosition="before"
+						style={styles.button}
+						containerElement="label" primary={true}>
+						<input type="file" id="jsfiledata" style={styles.exampleImageInput} onChange={this.handleChange}/>
+					</RaisedButton>
 					<RaisedButton label="Verify" secondary={true}  onClick={this.check} style={{marginLeft:"1%"}}/>
-					<RaisedButton label="Submit" secondary={true} onClick={this.handleSubmit} />
+					<RaisedButton label="Submit" secondary={true} onClick={this.handleSubmit} style={{marginLeft:"1%"}} />
 				</div>
 			</div>
 

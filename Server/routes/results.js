@@ -11,9 +11,10 @@ Router.post('/results', function(req, res, next) {
         payload: {
             repoUrl: req.body.data
         },
-        templateName: "CI-Pipeline"
+        templateName: req.body.templateName
     }
     initiatePipeline(input, function(err, reply) {
+        console.log('final reply======================================>>>>>',reply);
         res.send(reply);
     });
 });

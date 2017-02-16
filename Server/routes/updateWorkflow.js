@@ -2,6 +2,8 @@
 const fs = require('fs');
 const updateWorkflow = require('express').Router();
 const MongoClient = require('mongodb').MongoClient;
+const yaml = require('js-yaml');
+
 //use a middleware
 updateWorkflow.use(require('body-parser').json());
 
@@ -9,8 +11,8 @@ updateWorkflow.use(require('body-parser').json());
 var url = 'mongodb://localhost:27017/workflows';
 
 updateWorkflow.post('/workflows/update', function(req, res, next) {
-    console.log(req.body);
-    fs.writeFile("./workflows/" + req.body.templateName, req.body.content, 'utf8', function(err) {
+    var content = yaml.safeLoad(req.body.content);
+    fs.writeFile("./workflows/" + req.body.templateName,content, 'utf8', function(err) {
         if (err) {
             console.log(err);
         } else {
@@ -22,20 +24,24 @@ updateWorkflow.post('/workflows/update', function(req, res, next) {
     MongoClient.connect(url, function(err, db) {
         if (err) {
             console.log('could not connect to mongodb');
-        } else {
+        }
+        else {
             console.log('connected');
             var template = db.collection('templates');
-            template.updateOne({templateName:req.body.templateName},{$set:{content:req.body.content}}, function(err, result) {
-                if (err) {
+
+            template.updateOne({templateName:req.body.templateName},{$set:{content:req.body.content,transfunction:req.body.transfunction}}, function(err, result) {
+                if (err)
+                {
                     console.log(err);
-                } else {
+                }
+                 else {
                     console.log(result.result.n);
                     res.send('Successfully updated.');
                     db.close();
                 }
             });
-        }
-    });
+        }//end of else
+    });//end of MongoClient
 });
 
 module.exports = updateWorkflow;

@@ -23,8 +23,18 @@ module.exports = function(reply,callback){
       };
       try{
       //// run the appropriate script
-      var res = spawn("/"+ipl.cmd,{cwd:'/tmp/',env:ipl.input});
+      var res = spawn(ipl.cmd,{cwd:'/tmp/',env:ipl.input});
       //// send the exit code as response to the result processor
+      res.stdout.on('data', (data) => {
+        console.log(ipl.jobId+" "+result.stageName+' stdout=====>',` ${data}`);
+          result.stdout = `${data}`;
+      });
+
+      res.stderr.on('data', (data) => {
+        console.log(ipl.jobId+" "+result.stageName+' stderr=====>',`${data}`);
+          result.stderr = `${data}`;
+      });
+
       res.on('close',(code)=>{
         console.log(ipl.jobId+` clone process exited with code ${code}`);
         result.exitCode = code;

@@ -17,10 +17,8 @@ class DashNavbar extends React.Component{
 	}
 render(){
 return(
-  <AppBar
-      title="Stage Piper"   iconElementRight={ <Link to="/"><FlatButton label="Logout" onClick={this.handleLogout}/></Link> }/>
-
-
+  <AppBar title="Stage Piper"   iconElementRight={ <Link to="/"><FlatButton label="Logout" onClick={this.handleLogout}/></Link> }/>
+            
 );}
 }
 export default DashNavbar;
