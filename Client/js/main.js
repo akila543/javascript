@@ -23,7 +23,7 @@ function autherize(nextState,replace)
 injectTapEventPlugin();
 ReactDOM.render(<MuiThemeProvider>
 	<Router history={hashHistory}>
-		<Route path={"/"} component={App} />
+		<Route path={"/"} component={App}/>
 		 <Route path={"/dashboard"} component={Dashboard} onEnter={autherize}>
 			 <Route path={"/edit"} component={WorkFlowEdit} onEnter={autherize}/>
 			 <Route path={"/workflows"} component={WorkFlowList} onEnter={autherize}/>

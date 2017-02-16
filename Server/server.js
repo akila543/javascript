@@ -8,7 +8,9 @@ const deleteWorkflow = require('./routes/deleteWorkflow');
 const jobList = require('./routes/loadJobList');
 const updateWorkflow = require('./routes/updateWorkflow');
 const getWorkflows = require('./routes/getWorkflows');
-const authentication = require('./routes/authentication');
+const authentication = require('./routes/authentication.js');
+
+
 
 //request parsers
 app.use(bodyParser.json());
@@ -22,6 +24,7 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
+
 
 //test get request
 app.get('/test',function(req,res,next){
