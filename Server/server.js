@@ -9,6 +9,7 @@ const jobList = require('./routes/loadJobList');
 const updateWorkflow = require('./routes/updateWorkflow');
 const getWorkflows = require('./routes/getWorkflows');
 const authentication = require('./routes/authentication.js');
+const logout = require('./routes/logout.js');
 
 //request parsers
 app.use(bodyParser.json());
@@ -23,14 +24,6 @@ app.use(function(req, res, next) {
     next();
 });
 
-//test get request
-app.get('/test',function(req,res){
-  console.log(req.fresh);
-  setTimeout(()=>{
-    res.send('<h1>got it</h1>');
-  },120000);
-});
-
 //static file service
 app.use(express.static('../Client/'));
 
@@ -38,7 +31,7 @@ app.use(express.static('../Client/'));
 app.use('/',function(req,res,next){
 	console.log("into the routes...");
 	next();
-},authentication,results,saveFile,stageLister,deleteWorkflow,jobList,updateWorkflow,getWorkflows);
+},authentication,results,saveFile,stageLister,deleteWorkflow,jobList,updateWorkflow,getWorkflows,logout);
 
 //server run
 app.listen(3000,console.log("Server is listening on port 3000..."));

@@ -1,12 +1,18 @@
 const Router = require('express').Router();
 const oauth = require("oauth").OAuth2;
-const OAuth2 = new oauth("f04e898ce84f9ea04158","9e7ca663c2b53b83b0c6453a26cd17fe4a23507f","https://github.com/","login/oauth/authorize","login/oauth/access_token");
 const jwt = require('jsonwebtoken');
+const Request = require('superagent');
+
 const Client_ID="f04e898ce84f9ea04158";
 const Client_Secret="9e7ca663c2b53b83b0c6453a26cd17fe4a23507f";
+const OAuth2 = new oauth(Client_ID,Client_Secret,"https://github.com/","login/oauth/authorize","login/oauth/access_token");
+
 const secretCode = "E7r9t8@Q#h%Hy+M";
 
+const adminList=['kritiraj','nishauttawani','dsrini94','varun7777','rsunray','su']
+
 Router.get('/authentication', function(req, res, next) {
+  var userName;
     console.log('inside authentication');
     var code = req.query.code;
     console.log("code :"+code);
@@ -15,10 +21,21 @@ Router.get('/authentication', function(req, res, next) {
         console.log(err);
       else
       {
-        console.log(access_token);
-        var encoded_accestoken = jwt.sign(access_token,secretCode);
+        Request.get('https://api.github.com/user?access_token='+access_token).set('Accept', 'application/json')
+        .end(function(err, res){
+          if (err || !res.ok) {
+            alert('Oh no! error');
+          } else
+          {
+            userName=res.body.login;
+           }
+          });
+        var encoded_accestoken = jwt.sign('ihtlto1a2wmfVaA.',secretCode);
         res.cookie("access_token",encoded_accestoken);
-        res.redirect("http://localhost:3000/#/monitor");
+        if(adminList.includes(userName))
+            res.redirect("http://localhost:3000/#/monitor");
+        else
+            res.redirect("http://localhost:3000/#/user");
       }
     })
 
