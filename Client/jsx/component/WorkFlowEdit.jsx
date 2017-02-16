@@ -202,19 +202,21 @@ class WorkFlowEdit extends React.Component
 			}
 			else
 			{
-				box= <div className="container">
-					<AceEditor
-						className="row"
-						mode="yaml"
-						theme="tomorrow"
-						value={this.state.code}
-						onChange={this.updateCode}
-						name="UNIQUE_ID_OF_DIV"
-						annotations={this.state.err}
-						editorProps={{$blockScrolling: true}}
-						style={{width:"500px"} ,{border:"1px solid black"}}
-						/>
-					<div className="row">
+				box= <div className="container" style={{width:"auto"}}>
+					<div className="row" >
+						<AceEditor
+							mode="yaml"
+							theme="tomorrow"
+							value={this.state.code}
+							onChange={this.updateCode}
+							name="UNIQUE_ID_OF_DIV"
+							annotations={this.state.err}
+							editorProps={{$blockScrolling: true}}
+							style={{width:"60%",border:"1px solid black",margin:"10px"}}
+							/>
+					</div>
+
+					<div className="row" style={{textAlign:"left"}}>
 						<RaisedButton label="Verify" secondary={true}  onClick={this.handleVerify} style={{marginLeft:"1%"}}/>
 						<RaisedButton label="Submit" secondary={true} onClick={this.handleSubmit} style={{marginLeft:"1%"}} />
 						<RaisedButton label="Visualise" secondary={true} disabled={this.state.buttonState}onClick={this.handleVisualise} style={{marginLeft:"1%"}} />

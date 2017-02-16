@@ -8,7 +8,7 @@ import Home from './Home.jsx';
 
 const style = {
   paper:{height: 'auto',
-  width: 800,
+  width: "80%",
   margin: '50px 0 0 150px',
   textAlign: 'center',
   display: 'inline-block',

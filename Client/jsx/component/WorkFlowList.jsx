@@ -130,12 +130,12 @@ class WorkFlowList extends React.Component{
            </Table>
          </div>
          <div>
-           <WorkFlowEdit data={this.state.content} filename={this.state.templateName} transfunction={this.state.transfunction}/>
-           <RaisedButton  onClick = {this.handlePrevSlide} label="Back" primary={true} style ={{marginLeft:'80%'}}/>
+           <WorkFlowEdit data={this.state.content} filename={this.state.templateName} transfunction={this.state.transfunction} />
+           <RaisedButton  onClick = {this.handlePrevSlide} label="Back" primary={true}/>
          </div>
          <div>
            <AddTemplate/>
-           <RaisedButton  onClick = {this.handlePrevSlide} label="Back" primary={true} style ={{marginLeft:'80%'}}/>
+           <RaisedButton  onClick = {this.handlePrevSlide} label="Back" primary={true}/>
          </div>
        </SwipeableViews>
 
