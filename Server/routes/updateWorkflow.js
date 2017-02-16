@@ -24,20 +24,24 @@ updateWorkflow.post('/workflows/update', function(req, res, next) {
     MongoClient.connect(url, function(err, db) {
         if (err) {
             console.log('could not connect to mongodb');
-        } else {
+        }
+        else {
             console.log('connected');
             var template = db.collection('templates');
-            template.updateOne({templateName:req.body.templateName},{$set:{content:content}}, function(err, result) {
-                if (err) {
+
+            template.updateOne({templateName:req.body.templateName},{$set:{content:req.body.content,transfunction:req.body.transfunction}}, function(err, result) {
+                if (err)
+                {
                     console.log(err);
-                } else {
+                }
+                 else {
                     console.log(result.result.n);
                     res.send('Successfully updated.');
                     db.close();
                 }
             });
-        }
-    });
+        }//end of else
+    });//end of MongoClient
 });
 
 module.exports = updateWorkflow;
