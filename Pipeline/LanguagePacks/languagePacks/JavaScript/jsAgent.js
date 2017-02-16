@@ -21,7 +21,7 @@ module.exports = function(reply,callback){
             ipl.input.ID = ipl.jobId;
             console.log(ipl.cmd);
             try{
-            var res = spawn('/'+ipl.cmd, {
+            var res = spawn(ipl.cmd, {
                 cwd: '/tmp/',
                 env: ipl.input,
             });

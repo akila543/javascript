@@ -50,7 +50,6 @@ return(
         <Link to='/workflows'>
             <ListItem primaryText="Workflow" leftIcon={<ActionGrade />} />
         </Link>
-
         <ListItem primaryText="Admin Setting" leftIcon={<ContentSend />} />
       </List>
 
