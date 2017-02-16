@@ -5,7 +5,8 @@ var React = require('react');
   import RaisedButton from 'material-ui/RaisedButton';
   import TextField from 'material-ui/TextField';
  import Request from 'superagent';
- import AddTemplateEditor from './AddTemplateEditor.jsx';
+ //import AddTemplateEditor from './AddTemplateEditor.jsx';
+ import AddTemplateEdit from './AddTemplateEdit.jsx';
 
 
   const styles = {
@@ -72,7 +73,7 @@ var React = require('react');
       if(this.state.isValid)
       {
         box=<div>
-          <AddTemplateEditor data={this.state.code} filename={this.state.filename}/>
+          <AddTemplateEdit data={this.state.code} filename={this.state.filename}/>
         </div>
       }
       return (

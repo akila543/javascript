@@ -195,7 +195,6 @@ class TemplateEditor extends React.Component
 					onTouchTap={this.handleClose}
 					/>,
 			];
-			var myerr=[{ row: 1, column: 2, type: 'error', text: 'Some error.'}];
 
 			var box=null;
 

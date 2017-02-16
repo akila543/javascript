@@ -25,7 +25,7 @@ updateWorkflow.post('/workflows/update', function(req, res, next) {
         } else {
             console.log('connected');
             var template = db.collection('templates');
-            template.updateOne({templateName:req.body.templateName},{$set:{content:req.body.content}}, function(err, result) {
+            template.updateOne({templateName:req.body.templateName},{$set:{content:req.body.content,transfunction:req.body.transfunction}}, function(err, result) {
                 if (err) {
                     console.log(err);
                 } else {
