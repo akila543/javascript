@@ -10,6 +10,7 @@ import AceEditor from 'react-ace';
 import 'brace/mode/yaml';
 import 'brace/theme/tomorrow';
 import AppBar from 'material-ui/AppBar';
+import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import TransformationFunc from './TransformationFunc.jsx';
 
@@ -18,6 +19,21 @@ var doc;
 var edge = new Array();
 var node = new Array();
 var x1 = 100,y1=100;
+const styles = {
+	 button: {
+		 margin: 20,
+	 },
+	 exampleImageInput: {
+		 cursor: 'pointer',
+		 position: 'absolute',
+		 top: 0,
+		 bottom: 0,
+		 right: 20,
+		 left: 0,
+		 width: '100%',
+		 opacity: 0,
+	 },
+};
 
 class AddTemplateEdit extends React.Component
 {
@@ -25,24 +41,23 @@ class AddTemplateEdit extends React.Component
 	{
 		super(props);
 
-		this.handleVerify = this.handleVerify.bind(this);
 		this.updateCode = this.updateCode.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleVisualise = this.handleVisualise.bind(this);
+		this.updateFilename=this.updateFilename.bind(this);
 		this.handleClose = this.handleClose.bind(this);
-		this.state={open:false,graph:'',jsonCode:'',templateName:this.props.filename,code:this.props.data ,err:[],isValid:false, isSubmit:false,buttonState:true}
+		this.showFileName=this.showFileName.bind(this);
+		this.state={open:false,graph:'',jsonCode:'',filename:'',code:"write your workflow here",err:[],isValid:false, isSubmit:false}
 
 	}
 
-  componentWillReceiveProps(newProps)
-  {
-   this.setState({code:newProps.data,templateName:newProps.filename})
-  }
+
 
 	handleClose()
 	{
 		this.setState({open:false});
 	}
+
 
 
 	split()
@@ -62,8 +77,11 @@ class AddTemplateEdit extends React.Component
 			y:y1,
 			type:"empty"
 		}
+
 		x1+=100;
-		y1+=70;
+		y1=y1+(Math.random()* (100 - (-100)) + (-100));
+		console.log("y1"+y1);
+
 		incr++;
 		json.nodes.push(temp);
 		node.push(item);
@@ -119,16 +137,17 @@ class AddTemplateEdit extends React.Component
 	}
 
 
-		handleVerify()
+		handleSubmit()
 		{
-			this.setState({buttonState:false});
+
 			var that = this;
 			yamlLint.lint(this.state.code).then(function () {
 				that.setState({
-					isValid: true
+					isValid: true,
+					isSubmit:true,
 				});
 				that.setState({err:[]	})
-				alert('Valid File');
+				alert('Valid File!!! File Submitted');
 			}).catch(function (error) {
 				var errtext=error.message;
 				var startindex=error.message.indexOf("at line") + 8;
@@ -149,14 +168,14 @@ class AddTemplateEdit extends React.Component
 			this.setState({code:newCode});
 		}
 
-    handleSubmit()
+  /*  handleSubmit()
 		{	if(this.state.isValid)
 			{
 				this.setState({
 					isSubmit:true
 				});
 				alert('File Submitted');
-				/*request.post('/saveFile').send({ data:this.state.code,fileName:this.props.filename}).set('Accept', 'application/json')
+				request.post('/saveFile').send({ data:this.state.code,fileName:this.props.filename}).set('Accept', 'application/json')
         .end(function(err, res){
           if (err || !res.ok) {
             alert('Oh no! error');
@@ -165,7 +184,7 @@ class AddTemplateEdit extends React.Component
             console.log(res.text);
 						alert("File uploaded");
            }
-          });*/
+          });
 
 
 			}
@@ -174,9 +193,32 @@ class AddTemplateEdit extends React.Component
 				alert("Yaml is Still Not Verified");
 			}
 
+		}*/
+		showFileName(e) {
+      var temp = e.target.files[0];
+      var ext = temp.name.split('.').pop().toLowerCase();
+      if(ext!="yml")
+      {
+        alert('Not a yml file');
+      }
+      else {
+        var fil = document.getElementById("myFile");
+        var that = this;
+        this.setState({filename:fil.value});
+        this.setState({isValid:true});
+        var reader = new FileReader();
+  			reader.onload = function(event) {
+            that.setState({code:event.target.result});
+  			};
+  			reader.readAsText(temp);
+
+      }
+    }
+
+		updateFilename(e)
+		{
+			this.setState({filename:e.target.value});
 		}
-
-
 		render () {
 
 			const actions = [
@@ -198,7 +240,7 @@ class AddTemplateEdit extends React.Component
 
 			if(this.state.isSubmit)
 			{
-				box= <TransformationFunc fileName={this.props.filename} content={this.state.code}/>;
+				box= <TransformationFunc fileName={this.state.filename} content={this.state.code}/>;
 			}
 			else
 			{
@@ -212,14 +254,29 @@ class AddTemplateEdit extends React.Component
 							name="UNIQUE_ID_OF_DIV"
 							annotations={this.state.err}
 							editorProps={{$blockScrolling: true}}
-							style={{width:"60%",border:"1px solid black",margin:"10px"}}
+							style={{border:"1px solid black",margin:"10px"}}
 							/>
+					</div>
+					<div className="row">
+						<TextField
+				      hintText="Enter File Name"
+				      floatingLabelText="File Name"
+				      floatingLabelFixed={true}
+							value={this.state.filename}
+							onChange={this.updateFilename}
+				    />
+						<RaisedButton
+							label="Browse Template"
+							labelPosition="before"
+							style={styles.button}
+							containerElement="label" primary={true}>
+							<input type="file" id="myFile" style={styles.exampleImageInput} onChange={this.showFileName}/>
+						</RaisedButton>
 					</div>
 
 					<div className="row" style={{textAlign:"left"}}>
-						<RaisedButton label="Verify" secondary={true}  onClick={this.handleVerify} style={{marginLeft:"1%"}}/>
-						<RaisedButton label="Submit" secondary={true} onClick={this.handleSubmit} style={{marginLeft:"1%"}} />
-						<RaisedButton label="Visualise" secondary={true} disabled={this.state.buttonState}onClick={this.handleVisualise} style={{marginLeft:"1%"}} />
+						<RaisedButton label="Submit" secondary={true} onClick={this.handleSubmit} style={{margin:"1%"}} />
+						<RaisedButton label="Visualise" primary={true} onClick={this.handleVisualise} style={{margin:"1%"}} />
 
 						<Dialog
 							title="Dialog With Actions"

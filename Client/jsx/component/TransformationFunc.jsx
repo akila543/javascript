@@ -31,7 +31,6 @@ class TransformationFunc extends React.Component
 
 		this.updateCode = this.updateCode.bind(this);
 		this.handleChange = this.handleChange.bind(this);
-		this.check = this.check.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.state={code:"//write js transformation function here",isValid:false, isSubmit:false};
 
@@ -64,7 +63,7 @@ class TransformationFunc extends React.Component
 
 	}
 
-	handleSubmit()
+	/*handleSubmit()
 	{
 		if(this.state.isValid)
 		{
@@ -87,10 +86,10 @@ class TransformationFunc extends React.Component
 			alert("Transformation Function is still Invalid");
 		}
 
-	}
+	}*/
 
 
-	check(e) {
+	handleSubmit(e) {
 
 		e.preventDefault();
 		var editwrap = document.getElementById("ace");
@@ -117,7 +116,23 @@ class TransformationFunc extends React.Component
 			this.setState({
 				isValid:true
 			});
-			alert('Valid js!!! ');
+
+			if(this.state.isValid)
+			{
+				this.setState({
+					isSubmit:true
+				});
+				request.post('/saveFile').send({ data:this.props.content,templateName:this.props.fileName, transfunction:this.state.code}).set('Accept', 'application/json')
+				.end(function(err, res){
+					if (err || !res.ok) {
+						alert('Oh no! error');
+					} else
+					{
+						console.log(res.text);
+						alert("Valid js!!! Successfully uploaded");
+					 }
+					});
+			}
 
 		}
 	}
@@ -135,7 +150,7 @@ class TransformationFunc extends React.Component
 						name="ace"
 						id="ace"
 						editorProps={{$blockScrolling: true}}
-						style={{width:"60%",border:"1px solid black",margin:"10px"}}
+						style={{border:"1px solid black",margin:"10px"}}
 						onLoad={(editor) => {
 							editor.focus();
 							editor.getSession();
@@ -151,7 +166,6 @@ class TransformationFunc extends React.Component
 						containerElement="label" primary={true}>
 						<input type="file" id="jsfiledata" style={styles.exampleImageInput} onChange={this.handleChange}/>
 					</RaisedButton>
-					<RaisedButton label="Verify" secondary={true}  onClick={this.check} style={{marginLeft:"1%"}}/>
 					<RaisedButton label="Submit" secondary={true} onClick={this.handleSubmit} style={{marginLeft:"1%"}} />
 				</div>
 			</div>

@@ -30,8 +30,6 @@ class TransformationFunc extends React.Component
 		super(props);
 
 		this.updateCode = this.updateCode.bind(this);
-		this.handleChange = this.handleChange.bind(this);
-		this.check = this.check.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.state={code:this.props.transfunction,isValid:false, isSubmit:false};
 
@@ -42,57 +40,7 @@ class TransformationFunc extends React.Component
 		this.setState({code:newcode});
 	}
 
-	handleChange()
-	{
-		var that = this;
-		var temp = document.getElementById('jsfiledata').files[0];
-		var ext = temp.name.split('.').pop().toLowerCase();
-		if(ext!="js")
-		{
-			alert('Not a js file');
-		}
-		else{
-
-			var reader = new FileReader();
-			reader.onload = function(e) {
-				console.log(reader.result);
-				that.setState({
-					code:reader.result });
-				}
-				reader.readAsText(temp);
-			}
-
-	}
-
-	handleSubmit()
-	{
-		if(this.state.isValid)
-		{
-			this.setState({
-				isSubmit:true
-			});
-      request.post('/workflows/update')
-				.set('Content-Type', 'application/json')
-				.send({templateName:this.props.fileName,content:this.props.content,transfunction:this.state.code})
-				.end(function(err,res){
-					if (err) {
-						console.log(err);
-					}
-					else {
-						console.log(res);
-            alert('Successfully Updated ');
-					}
-				});
-		}
-
-		else{
-			alert("Transformation Function is still Invalid");
-		}
-
-	}
-
-
-	check(e) {
+	handleSubmit(e) {
 
 		e.preventDefault();
 		var editwrap = document.getElementById("ace");
@@ -109,18 +57,36 @@ class TransformationFunc extends React.Component
 			}
 		}
 
-		if(has_error){
+		if(has_error)
+		{
 			this.setState({
 				isValid:false
 			});
 			alert("Its Invalid!!! Check the errors");
 		}
-		else{
+		else
+		{
 			this.setState({
 				isValid:true
 			});
-			alert('Valid js!!! ');
-
+			if(this.state.isValid)
+			{
+				this.setState({
+					isSubmit:true
+				});
+	      request.post('/workflows/update')
+					.set('Content-Type', 'application/json')
+					.send({templateName:this.props.fileName,content:this.props.content,transfunction:this.state.code})
+					.end(function(err,res){
+						if (err) {
+							console.log(err);
+						}
+						else {
+							console.log(res);
+	            alert('Valid js!!! Successfully Updated ');
+						}
+					});
+			}
 		}
 	}
 
@@ -146,15 +112,7 @@ class TransformationFunc extends React.Component
         </div>
 
 				<div className="row" style={{textAlign:"left"}}>
-					<RaisedButton
-						label="Browse"
-						labelPosition="before"
-						style={styles.button}
-						containerElement="label" primary={true}>
-						<input type="file" id="jsfiledata" style={styles.exampleImageInput} onChange={this.handleChange}/>
-					</RaisedButton>
-					<RaisedButton label="Verify" secondary={true}  onClick={this.check} style={{marginLeft:"1%"}}/>
-					<RaisedButton label="Submit" secondary={true} onClick={this.handleSubmit} style={{marginLeft:"1%"}} />
+					<RaisedButton label="Submit" secondary={true} onClick={this.handleSubmit} style={{margin:"1%"}} />
 				</div>
 			</div>
 

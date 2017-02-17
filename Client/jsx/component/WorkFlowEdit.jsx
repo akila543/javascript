@@ -25,12 +25,11 @@ class WorkFlowEdit extends React.Component
 	{
 		super(props);
 
-		this.handleVerify = this.handleVerify.bind(this);
 		this.updateCode = this.updateCode.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleVisualise = this.handleVisualise.bind(this);
 		this.handleClose = this.handleClose.bind(this);
-		this.state={open:false,graph:'',jsonCode:'',templateName:this.props.filename,code:this.props.data ,err:[],isValid:false, isSubmit:false,buttonState:true}
+		this.state={open:false,graph:'',jsonCode:'',templateName:this.props.filename,code:this.props.data ,err:[],isValid:false, isSubmit:false}
 
 	}
 
@@ -119,16 +118,16 @@ class WorkFlowEdit extends React.Component
 	}
 
 
-		handleVerify()
+		handleSubmit()
 		{
-			this.setState({buttonState:false});
 			var that = this;
 			yamlLint.lint(this.state.code).then(function () {
 				that.setState({
-					isValid: true
+					isValid: true,
+					isSubmit:true,
 				});
 				that.setState({err:[]	})
-				alert('Valid File');
+				alert('Valid File!!! File Submitted');
 			}).catch(function (error) {
 				var errtext=error.message;
 				var startindex=error.message.indexOf("at line") + 8;
@@ -149,36 +148,8 @@ class WorkFlowEdit extends React.Component
 			this.setState({code:newCode});
 		}
 
-    handleSubmit()
-		{	if(this.state.isValid)
-			{
-				this.setState({
-					isSubmit:true
-				});
-				alert('File Submitted');
-				/*request.post('/saveFile').send({ data:this.state.code,fileName:this.props.filename}).set('Accept', 'application/json')
-        .end(function(err, res){
-          if (err || !res.ok) {
-            alert('Oh no! error');
-          } else
-          {
-            console.log(res.text);
-						alert("File uploaded");
-           }
-          });*/
-
-
-			}
-
-			else{
-				alert("Yaml is Still Not Verified");
-			}
-
-		}
-
 
 		render () {
-
 			const actions = [
 				<FlatButton
 					label="Cancel"
@@ -192,7 +163,6 @@ class WorkFlowEdit extends React.Component
 					onTouchTap={this.handleClose}
 					/>,
 			];
-			var myerr=[{ row: 1, column: 2, type: 'error', text: 'Some error.'}];
 
 			var box=null;
 
@@ -217,9 +187,8 @@ class WorkFlowEdit extends React.Component
 					</div>
 
 					<div className="row" style={{textAlign:"left"}}>
-						<RaisedButton label="Verify" secondary={true}  onClick={this.handleVerify} style={{marginLeft:"1%"}}/>
-						<RaisedButton label="Submit" secondary={true} onClick={this.handleSubmit} style={{marginLeft:"1%"}} />
-						<RaisedButton label="Visualise" secondary={true} disabled={this.state.buttonState}onClick={this.handleVisualise} style={{marginLeft:"1%"}} />
+						<RaisedButton label="Submit" secondary={true} onClick={this.handleSubmit} style={{margin:"1%"}} />
+						<RaisedButton label="Visualise" primary={true} onClick={this.handleVisualise} style={{margin:"1%"}} />
 
 						<Dialog
 							title="Dialog With Actions"

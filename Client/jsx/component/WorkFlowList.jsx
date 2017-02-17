@@ -4,7 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import SwipeableViews from 'react-swipeable-views';
 import WorkFlowEdit from './WorkFlowEdit.jsx';
-import AddTemplate from './AddTemplate.jsx';
+import AddTemplateEdit from './AddTemplateEdit.jsx';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import Divider from 'material-ui/Divider';
@@ -131,11 +131,11 @@ class WorkFlowList extends React.Component{
          </div>
          <div>
            <WorkFlowEdit data={this.state.content} filename={this.state.templateName} transfunction={this.state.transfunction} />
-           <RaisedButton  onClick = {this.handlePrevSlide} label="Back" primary={true}/>
+           <RaisedButton  onClick = {this.handlePrevSlide} label="Back" primary={true} style={{marginLeft:"1%"}}/>
          </div>
          <div>
-           <AddTemplate/>
-           <RaisedButton  onClick = {this.handlePrevSlide} label="Back" primary={true}/>
+           <AddTemplateEdit/>
+           <RaisedButton  onClick = {this.handlePrevSlide} label="Back" primary={true} style={{marginLeft:"1%"}}/>
          </div>
        </SwipeableViews>
 
