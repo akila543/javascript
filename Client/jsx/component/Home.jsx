@@ -4,9 +4,11 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Results from './Results.jsx';
 import Request from 'superagent';
+import FlatButton from 'material-ui/FlatButton';
 import CircularProgress from 'material-ui/CircularProgress';
 import AppBar from 'material-ui/AppBar';
 import cookie from 'react-cookie';
+import {Link} from 'react-router';
 const styles = {
   button: {
     margin: 12,
