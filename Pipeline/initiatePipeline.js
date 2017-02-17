@@ -2,7 +2,7 @@ var client = require('redis').createClient();
 
 module.exports = function (input,callback)
 {
-    console.log('Pipeline initiated...');
+    console.log('Pipeline initiated...',input.payload.repoUrl);
     client.lpush('QM',JSON.stringify(input),(err,reply)=>{
       if (err) {
         console.log(err);
