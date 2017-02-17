@@ -46,7 +46,7 @@ function readTemplate(jobId, templateName, callback) {
         }).toArray(function(err, docs) {
             if (!err) {
                 console.log("Found the following records");
-                console.log(docs);
+		console.log(docs);
                 var template = docs[0].content;
                 stages = template.stages;
                 stage = Object.getOwnPropertyNames(template.stages);
@@ -62,24 +62,6 @@ function readTemplate(jobId, templateName, callback) {
             db.close();
         });
     });
-    /* fs.readFile(__dirname+'/workflows/'+templateName+'.json','utf8',function(err,data)
- 			{
- 				if(!err)
- 				{
- 				var template = JSON.parse(data);
- 				stages=template.stages;
- 				stage = Object.getOwnPropertyNames(template.stages);
- 				stage.map((item)=>{
- 				   stages[item].status = 'Initialized';
- 				   stages[item].ts_Initialized = ts.getHours() + ":" + ts.getMinutes() + ":" + ts.getSeconds();
-
- 				})
- 				stages = JSON.stringify(stages);
- 				dataPush(jobId,callback);
-				}
-				else
-					console.log(err);
-			});*/
 }
 
 function pushIstages(jobId, callback) {
@@ -88,8 +70,7 @@ function pushIstages(jobId, callback) {
             console.log(err);
         else {
             client.set(jobId, jobId + '_stages', function(err, reply) {
-                if (err)
-                    console.log(err);
+                if (err)                    console.log(err);
                 else {
                     callback(jobId);
                 }
