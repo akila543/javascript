@@ -32,9 +32,9 @@ Router.get('/authentication', function(req, response, next) {
             response.cookie("access_token",encoded_accestoken);
 		console.log(adminList.indexOf(userName));
           if(adminList.indexOf(userName)!== -1)
-                response.redirect("http://172.23.238.228:3000/#/monitor");
+                response.redirect("http://localhost:3000/#/monitor");
             else
-                response.redirect("http://172.23.238.228:3000/#/user");
+                response.redirect("http://localhost:3000/#/user");
            }
           });
 
