@@ -22,9 +22,8 @@ Router.post('/saveFile', function(req, res, next) {
 		    console.log("Connected successfully to server");
 
 
+
 		    insertDocuments(db, req.body.templateName,data,req.body.transfunction ,function() {
-
-
 		        db.close();
 		    });
 
@@ -41,7 +40,7 @@ var insertDocuments = function(db,fileName,fileData,transfunc ,callback) {
   templates.insertOne(
     {templateName : fileName,content : fileData, transfunction : transfunc}, function(err, result) {
     console.log(result.result.n);
-    callback(result);
+    callback();
   });
 }
 

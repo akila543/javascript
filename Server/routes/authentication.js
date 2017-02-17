@@ -15,13 +15,11 @@ Router.get('/authentication', function(req, response, next) {
   var userName;
     console.log('inside authentication');
     var code = req.query.code;
-    console.log("code :"+code);
     OAuth2.getOAuthAccessToken(code,{},(err,access_token,refresh_token)=>{
       if(err)
         console.log(err);
       else
       {
-        console.log(req);
         Request.get('https://api.github.com/user?access_token='+access_token).set('Accept', 'application/json')
         .end(function(err, res){
           if (err || !res.ok) {
@@ -34,9 +32,9 @@ Router.get('/authentication', function(req, response, next) {
             response.cookie("access_token",encoded_accestoken);
 		console.log(adminList.indexOf(userName));
           if(adminList.indexOf(userName)!== -1)
-                response.redirect("http://172.23.238.228:3000/#/monitor");
+                response.redirect("http://localhost:3000/#/monitor");
             else
-                response.redirect("http://172.23.238.228:3000/#/user");
+                response.redirect("http://localhost:3000/#/user");
            }
           });
 

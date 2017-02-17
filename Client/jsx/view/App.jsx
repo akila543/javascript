@@ -5,7 +5,7 @@ import Dashboard from '../component/Dashboard.jsx';
 import DashNavbar from '../component/DashNavbar.jsx';
 import List_Dashboard from '../component/List_Dashboard.jsx';
 import Homepage from '../component/Homepage.jsx';
-
+import cookie from 'react-cookie';
 import {Grid,Row,Col} from 'react-flexbox-grid/lib';
 import Paper from 'material-ui/Paper';
 
@@ -17,11 +17,19 @@ class App extends React.Component {
 
   render()
   {
-    return (
+    if(cookie.load('access_token')===undefined)
+    {return (
       <div >
         <Homepage />
       </div>
-    );
+    );}
+    else {
+      return(
+        <div>
+          <Dashboard />
+        </div>
+      );
+    }
   }
 
 }
