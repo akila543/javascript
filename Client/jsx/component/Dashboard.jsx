@@ -4,7 +4,7 @@ import {Grid,Row,Col} from 'react-flexbox-grid/lib';
 import List_Dashboard from './List_Dashboard.jsx';
 import DashNavbar from './DashNavbar.jsx';
 import Paper from 'material-ui/Paper';
-import Home from './Home.jsx';
+// import Home from './Home.jsx';
 
 const style = {
   paper:{height: 'auto',

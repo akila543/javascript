@@ -18,9 +18,11 @@ class Eslint extends React.Component {
   { console.log("gjg");
     avatar="./images/avatar1.jpg";
   }
+  {this.props.output.map((tile) => (
+    if(Object.keys(tile)[0]=='eslint'){
 
-    return (
-      <Card >
+  return(
+          <Card >
         <CardHeader
           title="ES-LINT"
           avatar= {avatar}
@@ -37,6 +39,6 @@ class Eslint extends React.Component {
       </Card>
     );
 
-  }
+  })}
 }
 export default Eslint;
