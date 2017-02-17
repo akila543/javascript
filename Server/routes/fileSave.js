@@ -22,7 +22,7 @@ Router.post('/saveFile', function(req, res, next) {
 		    console.log("Connected successfully to server");
 
 
-		    insertDocuments(db, req.body.templateName,req.body.data, req.body.transfunction ,function() {
+		    insertDocuments(db, req.body.templateName,data,req.body.transfunction ,function() {
 
 
 		        db.close();
