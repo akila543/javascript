@@ -21,6 +21,7 @@ class App extends React.Component {
   {
     if(cookie.load('type')==="user")
     {return (
+      
       <div >
         <User_Dashboard />
       </div>

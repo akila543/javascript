@@ -13,32 +13,33 @@ class Eslint extends React.Component {
   }
 
   render() {
-    var avatar="./images/avatar2.jpg";
-    if(this.state.result)
-  { console.log("gjg");
-    avatar="./images/avatar1.jpg";
-  }
-  {this.props.output.map((tile) => (
-    if(Object.keys(tile)[0]=='eslint'){
-
-  return(
-          <Card >
-        <CardHeader
-          title="ES-LINT"
-          avatar= {avatar}
-          actAsExpander={true}
-          showExpandableButton={true}
-        />
-      <CardTitle title="ES-LINT Report" expandable={true} />
-        <CardText expandable={true}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-          Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-          Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
-        </CardText>
-      </Card>
-    );
-
-  })}
+  //   var avatar="./images/avatar2.jpg";
+  //   if(this.state.result)
+  // { console.log("gjg");
+  //   avatar="./images/avatar1.jpg";
+  // }
+  // {this.props.output.map((tile) => (
+  //   if(Object.keys(tile)[0]=='eslint'){
+  //
+  // return(
+  //         <Card >
+  //       <CardHeader
+  //         title="ES-LINT"
+  //         avatar= {avatar}
+  //         actAsExpander={true}
+  //         showExpandableButton={true}
+  //       />
+  //     <CardTitle title="ES-LINT Report" expandable={true} />
+  //       <CardText expandable={true}>
+  //         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+  //         Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
+  //         Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
+  //         Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+  //       </CardText>
+  //     </Card>
+  //   );
+  //
+  // })}
+}
 }
 export default Eslint;

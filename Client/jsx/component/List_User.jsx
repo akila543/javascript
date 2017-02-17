@@ -18,7 +18,7 @@ class List_User extends React.Component{
   return(
   <div >
         <List style={style}>
-          <Link to="/monitor">
+          <Link to="/monitori">
             <ListItem primaryText="Monitoring" leftIcon={<ContentInbox />} />
           </Link>
           <Link to="/pipeline">
