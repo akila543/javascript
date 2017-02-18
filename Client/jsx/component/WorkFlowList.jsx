@@ -74,9 +74,9 @@ class WorkFlowList extends React.Component{
       const obj=this.state.worklist.filter(function(item){
         return item._id === id;
       });
-      var data=obj[0].content;
+      var data=(obj[0].content);
+      console.log(data);
 	    this.setState({slideIndex:1,templateName:obj[0].templateName,content: data, transfunction:obj[0].transfunction});
-      console.log(this.state.content);
 	}
 
   handleAdd()

@@ -3,7 +3,6 @@ const fs = require('fs');
 const MongoClient = require('mongodb').MongoClient;
 const yaml = require('js-yaml');
 
-
 var url = 'mongodb://localhost:27017/workflows';
 
 Router.use(require('body-parser').json());

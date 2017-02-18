@@ -6,6 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import 'brace/mode/javascript';
 import 'brace/theme/tomorrow';
 import request from 'superagent';
+var YAML=require('yamljs');
 
 const styles = {
 	 button: {
@@ -28,7 +29,8 @@ class TransformationFunc extends React.Component
 	constructor(props)
 	{
 		super(props);
-
+		console.log("should be json");
+		console.log(YAML.parse(this.props.content));
 		this.updateCode = this.updateCode.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.state={code:this.props.transfunction,isValid:false, isSubmit:false};
@@ -76,7 +78,7 @@ class TransformationFunc extends React.Component
 				});
 	      request.post('/workflows/update')
 					.set('Content-Type', 'application/json')
-					.send({templateName:this.props.fileName,content:this.props.content,transfunction:this.state.code})
+					.send({templateName:this.props.fileName,content:YAML.parse(this.props.content),transfunction:this.state.code})
 					.end(function(err,res){
 						if (err) {
 							console.log(err);

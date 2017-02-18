@@ -12,7 +12,7 @@ import 'brace/theme/tomorrow';
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 import TransfuncEdit from './TransfuncEdit.jsx';
-
+var YAML = require('json2yaml');
 
 var doc;
 var edge = new Array();
@@ -24,7 +24,6 @@ class WorkFlowEdit extends React.Component
 	constructor(props)
 	{
 		super(props);
-
 		this.updateCode = this.updateCode.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleVisualise = this.handleVisualise.bind(this);
@@ -35,7 +34,7 @@ class WorkFlowEdit extends React.Component
 
   componentWillReceiveProps(newProps)
   {
-   this.setState({code:newProps.data,templateName:newProps.filename})
+   this.setState({code:YAML.stringify(newProps.data),templateName:newProps.filename})
   }
 
 	handleClose()

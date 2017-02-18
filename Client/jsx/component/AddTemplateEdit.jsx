@@ -168,32 +168,7 @@ class AddTemplateEdit extends React.Component
 			this.setState({code:newCode});
 		}
 
-  /*  handleSubmit()
-		{	if(this.state.isValid)
-			{
-				this.setState({
-					isSubmit:true
-				});
-				alert('File Submitted');
-				request.post('/saveFile').send({ data:this.state.code,fileName:this.props.filename}).set('Accept', 'application/json')
-        .end(function(err, res){
-          if (err || !res.ok) {
-            alert('Oh no! error');
-          } else
-          {
-            console.log(res.text);
-						alert("File uploaded");
-           }
-          });
 
-
-			}
-
-			else{
-				alert("Yaml is Still Not Verified");
-			}
-
-		}*/
 		showFileName(e) {
       var temp = e.target.files[0];
       var ext = temp.name.split('.').pop().toLowerCase();

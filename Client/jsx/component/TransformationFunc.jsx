@@ -63,31 +63,6 @@ class TransformationFunc extends React.Component
 
 	}
 
-	/*handleSubmit()
-	{
-		if(this.state.isValid)
-		{
-			this.setState({
-				isSubmit:true
-			});
-			request.post('/saveFile').send({ data:this.props.content,templateName:this.props.fileName, transfunction:this.state.code}).set('Accept', 'application/json')
-			.end(function(err, res){
-				if (err || !res.ok) {
-					alert('Oh no! error');
-				} else
-				{
-					console.log(res.text);
-					alert("Successfully uploaded");
-				 }
-				});
-		}
-
-		else{
-			alert("Transformation Function is still Invalid");
-		}
-
-	}*/
-
 
 	handleSubmit(e) {
 
@@ -122,6 +97,7 @@ class TransformationFunc extends React.Component
 				this.setState({
 					isSubmit:true
 				});
+
 				request.post('/saveFile').send({ data:this.props.content,templateName:this.props.fileName, transfunction:this.state.code}).set('Accept', 'application/json')
 				.end(function(err, res){
 					if (err || !res.ok) {

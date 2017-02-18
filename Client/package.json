@@ -44,6 +44,7 @@
     "draft-js": "^0.9.1",
     "flexboxgrid": "^6.3.1",
     "js-yaml": "^3.7.0",
+    "json2yaml": "^1.1.0",
     "material-ui": "^0.16.7",
     "react-ace": "^4.1.1",
     "react-brace": "^3.6.6",
