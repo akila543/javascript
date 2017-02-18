@@ -20,9 +20,7 @@ Router.post('/saveFile', function(req, res, next) {
     		MongoClient.connect(url, function(err, db) {
 
 		    console.log("Connected successfully to server");
-
-
-
+        
 		    insertDocuments(db, req.body.templateName,data,req.body.transfunction ,function() {
 		        db.close();
 		    });
