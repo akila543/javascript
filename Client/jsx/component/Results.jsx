@@ -1,7 +1,6 @@
 import React from 'react';
 import {GridList, GridTile} from 'material-ui/GridList';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import Eslint from './Eslint.jsx';
 import Htmlhint from './HtmlHint.jsx';
 import Mocha from './Mocha.jsx';
 import CodeCoverage from './CodeCoverage.jsx';

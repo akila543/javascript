@@ -13,12 +13,13 @@ class DashNavbar extends React.Component{
 	handleLogout()
 	{
 		cookie.remove("access_token");
+		cookie.remove("type");
 
 	}
 render(){
 return(
   <AppBar title="Stage Piper"   iconElementRight={ <Link to="/"><FlatButton label="Logout" onClick={this.handleLogout}/></Link> }/>
-            
+
 );}
 }
 export default DashNavbar;

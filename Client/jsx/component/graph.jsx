@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-
 import GraphView from './graph-view.jsx'
 import GraphConfig from './graph-config.jsx' // Configures node/edge types
 
