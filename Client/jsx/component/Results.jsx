@@ -1,9 +1,11 @@
 import React from 'react';
 import {GridList, GridTile} from 'material-ui/GridList';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import Htmlhint from './HtmlHint.jsx';
-import Mocha from './Mocha.jsx';
-import CodeCoverage from './CodeCoverage.jsx';
+import Mocha from '../component/Mocha.jsx';
+import Eslint from '../component/Eslint.jsx';
+import Build from '../component/Build.jsx';
+import CodeCoverage from '../component/CodeCoverage.jsx';
+import HtmlHint from '../component/HtmlHint.jsx';
 const styles = {
     root: {
         display: 'flex',
@@ -30,20 +32,11 @@ const styles = {
             return (
                 <div style={styles.root}>
                     <GridList cellHeight='auto' style={styles.gridList} cols={1}>
-                      {this.props.output.map((tile) => (
-
-                        <Card >
-                          <CardHeader
-                            title={Object.keys(tile)[0]}
-                            actAsExpander={true}
-                            showExpandableButton={true}
-                          />
-                        <CardTitle title="Report" expandable={true} />
-                          <CardText expandable={true}>
-                          {tile[Object.keys(tile)[0]]}
-                            </CardText>
-                        </Card>
-))}
+                      <Mocha />
+                      <Build />
+                      <CodeCoverage />
+                      <HtmlHint />
+                      <Eslint />
                       </GridList>
                 </div>
             );

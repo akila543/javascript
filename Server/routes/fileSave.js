@@ -26,7 +26,6 @@ Router.post('/saveFile', function(req, res, next) {
 
 		        db.close();
 		    });
-
       });
 		}
 });
