@@ -30,6 +30,7 @@
     "react-dom": "^15.4.2",
     "react-icons": "^2.2.3",
     "react-tap-event-plugin": "^2.0.1",
+    "required-loader": "^1.1.11",
     "style-loader": "^0.13.1",
     "webpack": "^1.14.0",
     "webpack-dev-server": "^1.16.2",
@@ -56,6 +57,7 @@
     "react-sigma": "^1.2.15",
     "react-swipeable-views": "^0.10.7",
     "style-loader": "^0.13.1",
-    "superagent": "^3.3.2"
+    "superagent": "^3.3.2",
+    "yamljs": "^0.2.8"
   }
 }
