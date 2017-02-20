@@ -5,11 +5,10 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 //socket namespace handlers imports
 const home = require('./sockets/homeSocket');
-const stageStatusRoom = require('./sockets/stageStatusSocket');
+const redisChangeListener = require('./sockets/redisChangeListener');
 //pipeline routes imports
 const initiateJob = require('./routes/initiateJob');
-const stageLister = require('./routes/stageList');
-const jobList = require('./routes/loadJobList');
+const getJobList = require('./routes/getJobList');
 const authentication = require('./routes/authentication.js');
 //workflow routes imports
 const updateWorkflow = require('./routes/workflowRoutes/updateWorkflow');
@@ -40,15 +39,14 @@ app.use(express.static('../Client/'));
 app.use('/',function(req,res,next){
 	console.log("Into the routes...");
 	next();
-},authentication,initiateJob,stageLister,jobList,updateWorkflow,getAllWorkflows,deleteWorkflow,getOneWorkflow,addWorkflow);
+},authentication,initiateJob,getJobList,updateWorkflow,getAllWorkflows,deleteWorkflow,getOneWorkflow,addWorkflow);
 
-
-//===================experiment====================================//
+//socket listeners
 io.on('connection',home);
-io.of('/status').on('connection',stageStatusRoom)
-//=================================================================//
+io.of('/monitor').on('connection',redisChangeListener);
 
-//server run
+//server setup
 server.listen(3000,console.log("Server is listening on port 3000..."));
 
+//server export
 module.exports = server;

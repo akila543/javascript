@@ -26,7 +26,6 @@ class Dashboard extends React.Component {
 
         <Grid style={{width:'100%'}}>
                 <Row>
-                  <Col xs={12} sm={3} md={2} lg={2}>   <List_Dashboard/> </Col>
                   <Col xs={12} sm={12} md={12} lg={12}>   <DashNavbar /> {this.props.children} </Col>
                 </Row>
               </Grid>

@@ -11,7 +11,7 @@ initiateJob.post('/initiate', function(req, res, next) {
         payload: {
             repoUrl: req.body.data
         },
-        templateName: req.body.templateName
+        templateName: req.body.templateName.split('.')[0]
     };
     initiatePipeline(input,req.body.userName,function(err, reply) {
         res.send(reply);
