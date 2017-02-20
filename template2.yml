@@ -1,0 +1,51 @@
+version: '1'
+templateName: CI-Pipeline
+stages:
+  gitClone:
+    type: "/stackroute/git/clone"
+    input:
+      REPOSITORY_URL: "{{payload.repo_url}}"
+      BRANCH: "{{payload.repo_ref}}"
+      WORKSPACE: "{{context.workspace}}"
+    output:
+    context:
+    depends_on:
+  build:
+    type: "/stackroute/javascript/build"
+    input:
+      WORKSPACE: "{{context.workspace}}"
+    output:
+    context:
+    depends_on:
+    - gitClone
+  whitebox:
+    type: "/stackroute/javascript/mocha"
+    input:
+      INCLUDE: "{{payload.whitebox.include}}"
+      EXCLUDE: "{{payload.whitebox.exclude}}"
+    output:
+      payload:
+        output:
+          unittest: "{{OUTPUT}}"
+    context:
+    depends_on:
+    - build
+  execute:
+    type: "/stackroute/javascript/build"
+    input:
+      WORKSPACE: "{{context.workspace}}"
+    output:
+    context:
+    depends_on:
+    - code-review
+
+  code-review:
+    type: "/stackroute/ext/code-review"
+    input:
+    output:
+      payload:
+        output:
+          code-review: "{{OUTPUT}}"
+    context:
+    depends_on:
+    - build
