@@ -10,6 +10,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import Divider from 'material-ui/Divider';
 import {GridList, GridTile} from 'material-ui/GridList';
 import request from 'superagent';
+import {Grid,Row,Col} from 'react-flexbox-grid/lib';
 
 const cellStyle={
   width:"30%"
@@ -74,9 +75,9 @@ class WorkFlowList extends React.Component{
       const obj=this.state.worklist.filter(function(item){
         return item._id === id;
       });
-      var data=obj[0].content;
+      var data=(obj[0].content);
+      console.log(data);
 	    this.setState({slideIndex:1,templateName:obj[0].templateName,content: data, transfunction:obj[0].transfunction});
-      console.log(this.state.content);
 	}
 
   handleAdd()
@@ -134,7 +135,13 @@ class WorkFlowList extends React.Component{
            <RaisedButton  onClick = {this.handlePrevSlide} label="Back" primary={true} style={{marginLeft:"1%"}}/>
          </div>
          <div>
-           <AddTemplateEdit/>
+           <Grid style={{width:'100%'}}>
+                   <Row>
+                     <Col xs={12} sm={12} md={12} lg={12}>  <AddTemplateEdit/>  </Col>
+
+                   </Row>
+                 </Grid>
+
            <RaisedButton  onClick = {this.handlePrevSlide} label="Back" primary={true} style={{marginLeft:"1%"}}/>
          </div>
        </SwipeableViews>

@@ -34,7 +34,15 @@ var config = {
               test: /\.css$/,
               loader: 'style!css?modules',
                 include: /flexboxgrid/,
-            }
+            },
+            {
+test: /\.css$/,
+  loader: 'required',
+},
+{
+test: /\.js$/,
+  loader: 'required?import[]=angular',
+}
       ]
    }
 }

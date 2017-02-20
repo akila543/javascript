@@ -7,7 +7,7 @@ const io = require('socket.io')(server);
 const home = require('./sockets/homeSocket');
 const stageStatusRoom = require('./sockets/stageStatusSocket');
 //pipeline routes imports
-const results = require('./routes/results');
+const initiateJob = require('./routes/initiateJob');
 const stageLister = require('./routes/stageList');
 const jobList = require('./routes/loadJobList');
 const authentication = require('./routes/authentication.js');
@@ -40,14 +40,13 @@ app.use(express.static('../Client/'));
 app.use('/',function(req,res,next){
 	console.log("Into the routes...");
 	next();
-},authentication,results,stageLister,jobList,updateWorkflow,getAllWorkflows,deleteWorkflow,getOneWorkflow,addWorkflow);
+},authentication,initiateJob,stageLister,jobList,updateWorkflow,getAllWorkflows,deleteWorkflow,getOneWorkflow,addWorkflow);
 
 
 //===================experiment====================================//
 io.on('connection',home);
 io.of('/status').on('connection',stageStatusRoom)
 //=================================================================//
-
 
 //server run
 server.listen(3000,console.log("Server is listening on port 3000..."));

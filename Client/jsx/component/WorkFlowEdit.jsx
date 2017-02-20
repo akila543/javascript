@@ -12,7 +12,7 @@ import 'brace/theme/tomorrow';
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 import TransfuncEdit from './TransfuncEdit.jsx';
-
+var YAML = require('json2yaml');
 
 var doc;
 var edge = new Array();
@@ -24,7 +24,6 @@ class WorkFlowEdit extends React.Component
 	constructor(props)
 	{
 		super(props);
-
 		this.updateCode = this.updateCode.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleVisualise = this.handleVisualise.bind(this);
@@ -35,7 +34,7 @@ class WorkFlowEdit extends React.Component
 
   componentWillReceiveProps(newProps)
   {
-   this.setState({code:newProps.data,templateName:newProps.filename})
+   this.setState({code:YAML.stringify(newProps.data),templateName:newProps.filename})
   }
 
 	handleClose()
@@ -53,7 +52,11 @@ class WorkFlowEdit extends React.Component
 
 		var array = Object.getOwnPropertyNames(obj);
 		var json= {"nodes":[],"edges":[]};
+		var xaxis=[0,0,130,200,500,240,180,310,370,400,440,480,520,560,600] ;
+		var yaxis=[0,0,-50,0,100,-200,100,0,100,-200,-100,0,100,-150,200];
 		array.map(function(item){
+		x1=(xaxis[incr]*3);
+		y1=(yaxis[incr]*2);
 		var temp = {
 			id : incr,
 			title:item,
@@ -61,8 +64,6 @@ class WorkFlowEdit extends React.Component
 			y:y1,
 			type:"empty"
 		}
-		x1+=100;
-		y1+=70;
 		incr++;
 		json.nodes.push(temp);
 		node.push(item);

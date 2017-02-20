@@ -62,7 +62,7 @@ class Initiate extends React.Component{
     var that = this;
     this.setState({isSubmit:true});
 
-    Request.post('/results').send({ data: this.state.input,templateName:"CI-Pipeline.yml"}).set('Accept', 'application/json')
+    Request.post('/initiate').send({ data: this.state.input,templateName:"CI-Pipeline.yml",userName:"Someone"}).set('Accept', 'application/json')
            .end(function(err, res){
              if (err || !res.ok) {
                alert('Oh no! error');
