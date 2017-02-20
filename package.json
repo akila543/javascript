@@ -1,5 +1,5 @@
 {
-  "name": "stagepiper",
+  "name": "orchestropus",
   "version": "1.0.0",
   "description": "a distributed pipeline orchestrator",
   "main": "index.js",
@@ -33,5 +33,9 @@
     "concurrently": "^3.3.0",
     "js-yaml": "^3.8.1",
     "redis": "^2.6.5"
+  },
+  "directories": {
+    "doc": "docs",
+    "test": "test"
   }
 }

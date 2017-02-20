@@ -60,9 +60,9 @@ export default class Monitoring extends React.Component {
              JSON.parse(res.text).map((item,i)=>{
               jobListArray.push(
               <TableRow key={i}>
-                <TableRowColumn key={i+"shd"}>{item.jobId}</TableRowColumn>
-                <TableRowColumn key={i+"hbx"}>DISTRIBUTED-PIPELINE</TableRowColumn>
-                <TableRowColumn key={i+"uwhu2"}>{item.status}</TableRowColumn>
+                <TableRowColumn key={i+"1"}>{item.jobId}</TableRowColumn>
+                <TableRowColumn key={i+"2"}>{item.jobId.split('_')[0]}</TableRowColumn>
+                <TableRowColumn key={i+"3"}>{item.status}</TableRowColumn>
               </TableRow>);
              })
 
