@@ -7,6 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import Request from 'superagent';
+import io from 'socket.io-client';
 
 const styles = {
   headline: {
@@ -28,6 +29,7 @@ export default class Monitoring extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      //socket:io.connect('http://localhost:3000/status'),message:"",
       slideIndex: 0,
       jobId:'',
       stageName:'',
@@ -47,6 +49,14 @@ export default class Monitoring extends React.Component {
     this.setState({slideIndex: value });
   }
 
+  // componentDidMount(){
+  //   var that = this;
+  //   var socket = this.state.socket;
+  //   //socket.emit('report-request', {jobId: 'CI-Pipeline.yml_6_stages',stage:'build'});
+  //   socket.on('report', function (data) {
+  //    that.setState({message:JSON.stringify(data,null,'\t\n')});
+  //   });
+  // }
   componentDidMount()
   {
     var that = this;

@@ -54,6 +54,8 @@
     "react-rte": "^0.11.0",
     "react-sigma": "^1.2.15",
     "react-swipeable-views": "^0.10.7",
+    "socket.io": "^1.7.3",
+    "socket.io-client": "^1.7.3",
     "style-loader": "^0.13.1",
     "superagent": "^3.3.2"
   }

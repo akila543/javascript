@@ -6,7 +6,7 @@ Router.post('/jobList', function(req, res) {
   	if(!err)
   	{
   		res.send(reply.map((job)=>{
-        client.hgetall(job,'status',(err,result)=>{
+        client.hmget(job,'status',(err,result)=>{
           if (err) {
             console.log(err);
           }

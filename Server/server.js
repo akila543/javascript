@@ -1,16 +1,24 @@
+//module imports
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+//socket namespace handlers imports
+const home = require('./sockets/homeSocket');
+const stageStatusRoom = require('./sockets/stageStatusSocket');
+//pipeline routes imports
 const results = require('./routes/results');
-const saveFile = require('./routes/fileSave');
 const stageLister = require('./routes/stageList');
-const deleteWorkflow = require('./routes/deleteWorkflow');
 const jobList = require('./routes/loadJobList');
-const updateWorkflow = require('./routes/updateWorkflow');
-const getWorkflows = require('./routes/getWorkflows');
 const authentication = require('./routes/authentication.js');
-
-
+//workflow routes imports
+const updateWorkflow = require('./routes/workflowRoutes/updateWorkflow');
+const getAllWorkflows = require('./routes/workflowRoutes/getAllWorkflows');
+const deleteWorkflow = require('./routes/workflowRoutes/deleteWorkflow');
+const addWorkflow = require('./routes/workflowRoutes/addWorkflow');
+const getOneWorkflow = require('./routes/workflowRoutes/getOneWorkflow');
+//parser imports
+const bodyParser = require('body-parser');
 
 //request parsers
 app.use(bodyParser.json());
@@ -25,26 +33,23 @@ app.use(function(req, res, next) {
     next();
 });
 
-
-//test get request
-app.get('/test',function(req,res,next){
-  console.log(req.fresh);
-  setTimeout(()=>{
-    res.send('<h1>got it</h1>');
-  },120000);
-  next();
-});
-
 //static file service
 app.use(express.static('../Client/'));
 
 //routes list
 app.use('/',function(req,res,next){
-	console.log("into the routes...");
+	console.log("Into the routes...");
 	next();
-},authentication,results,saveFile,stageLister,deleteWorkflow,jobList,updateWorkflow,getWorkflows);
+},authentication,results,stageLister,jobList,updateWorkflow,getAllWorkflows,deleteWorkflow,getOneWorkflow,addWorkflow);
+
+
+//===================experiment====================================//
+io.on('connection',home);
+io.of('/status').on('connection',stageStatusRoom)
+//=================================================================//
+
 
 //server run
-app.listen(3000,console.log("Server is listening on port 3000..."));
+server.listen(3000,console.log("Server is listening on port 3000..."));
 
-module.exports = app;
+module.exports = server;
