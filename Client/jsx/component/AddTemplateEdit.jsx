@@ -15,6 +15,7 @@ import FlatButton from 'material-ui/FlatButton';
 import TransformationFunc from './TransformationFunc.jsx';
 
 
+
 var doc;
 var edge = new Array();
 var node = new Array();
@@ -219,6 +220,7 @@ class AddTemplateEdit extends React.Component
 			}
 			else
 			{
+
 				box= <div className="container" style={{width:"auto"}}>
 					<div className="row" >
 						<AceEditor
@@ -229,7 +231,7 @@ class AddTemplateEdit extends React.Component
 							name="UNIQUE_ID_OF_DIV"
 							annotations={this.state.err}
 							editorProps={{$blockScrolling: true}}
-							style={{border:"1px solid black",margin:"10px"}}
+							style={{border:"1px solid black",margin:"1%",width:"60%"}}
 							/>
 					</div>
 					<div className="row">
