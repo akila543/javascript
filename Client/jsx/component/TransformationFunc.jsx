@@ -126,7 +126,7 @@ class TransformationFunc extends React.Component
 						name="ace"
 						id="ace"
 						editorProps={{$blockScrolling: true}}
-						style={{border:"1px solid black",margin:"10px"}}
+						style={{border:"1px solid black",margin:"1%",width:"60%"}}
 						onLoad={(editor) => {
 							editor.focus();
 							editor.getSession();

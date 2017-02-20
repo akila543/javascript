@@ -20,7 +20,7 @@ import ActionSearch from 'material-ui/svg-icons/action/search';
 
 import IconButton from 'material-ui/IconButton';
 
-class DashNavbar extends React.Component{
+class DashNavbar_user extends React.Component{
 
 constructor(){
 
@@ -69,7 +69,7 @@ iconElementRight={ <Link to="/"><FlatButton label="Logout" onClick={this.handleL
 
 <Drawer docked={false} width={250} open={this.state.open} >
 
-<Link to="/monitor">
+<Link to="/monitori">
 
 <MenuItem onTouchTap={this.handleToggle}>
 
@@ -91,13 +91,13 @@ marginTop: '4px'
 
 </Link>
 
-<Link to='/workflows'>
+<Link to='/pipeline'>
 
 <MenuItem onTouchTap={this.handleToggle}>
 
 <IconButton><ActionDashboard/></IconButton>
 
-<FlatButton label='Workflow' hoverColor='#e8f1fb ' labelStyle={{
+<FlatButton label='Initiate' hoverColor='#e8f1fb ' labelStyle={{
 
 textAlign: 'left'
 
@@ -111,21 +111,7 @@ marginTop: '4px'
 
 </Link>
 
-<MenuItem onTouchTap={this.handleToggle}>
 
-<IconButton><ActionDashboard/></IconButton>
-
-<FlatButton label='Jump to job' hoverColor='#e8f1fb ' labelStyle={{
-
-textAlign: 'left'
-
-}} style={{
-
-fontSize: '50px',
-
-marginTop: '4px'
-
-}}/></MenuItem>
 
 </Drawer>
 
@@ -137,4 +123,4 @@ marginTop: '4px'
 
 }
 
-export default DashNavbar;
+export default DashNavbar_user;
