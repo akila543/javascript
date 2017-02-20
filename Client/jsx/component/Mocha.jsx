@@ -3,7 +3,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import FlatButton from 'material-ui/FlatButton';
 import Toggle from 'material-ui/Toggle';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
-const data1={
+const res={
 	"status": "failed",
 	"stdout": [],
 	"stderr": "",
@@ -16,11 +16,10 @@ class Mocha extends React.Component {
 
   constructor(props) {
     super(props);
-		this.state({data:this.props.res});
   }
 
   render() {
-    if(data.status==='Complete')
+    if(res.status==='Complete')
     var avatar="../jsx/images/avatar1.jpeg";
   else
     var avatar="../jsx/images/avatar2.jpeg";
@@ -29,16 +28,16 @@ class Mocha extends React.Component {
         <CardHeader
           title="Mocha"
           avatar={avatar}
-          subtitle={data.status}
+          subtitle={res.status}
           actAsExpander={true}
           showExpandableButton={true}
         />
       <CardTitle title="Report" expandable={true} />
         <CardText expandable={true}>
-        Status = {data.status}<br/>
-        Initialized@= {data.initialized}<br />
-        scheduled@= {data.scheduled}<br />
-        completed@={data.completed}
+        Status = {res.status}<br/>
+        Initialized@= {res.initialized}<br />
+        scheduled@= {res.scheduled}<br />
+        completed@={res.completed}
 
         <br/>
         <div>
@@ -52,7 +51,7 @@ class Mocha extends React.Component {
           </TableRow>
           </TableHeader>
            <TableBody showRowHover={true} displayRowCheckbox={false}>
-          {data.stdout.map((tile) => (
+          {res.stdout.map((tile) => (
      <TableRow>
        <TableRowColumn> {tile[Object.keys(tile)[0]]}</TableRowColumn>
        <TableRowColumn> {tile[Object.keys(tile)[1]]}</TableRowColumn>

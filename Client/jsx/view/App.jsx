@@ -4,8 +4,9 @@ import React from 'react';
 import Dashboard from '../component/Dashboard.jsx';
 import DashNavbar from '../component/DashNavbar.jsx';
 import List_Dashboard from '../component/List_Dashboard.jsx';
-import Homepage from '../component/Homepage.jsx';
+import NewHomePage from '../component/NewHomePage.jsx';
 import User_Dashboard from '../component/User_Dashboard.jsx';
+
 import cookie from 'react-cookie';
 import {Grid,Row,Col} from 'react-flexbox-grid/lib';
 import Paper from 'material-ui/Paper';
@@ -15,9 +16,6 @@ const style={
 };
 
 class App extends React.Component {
-  constructor(props){
-    super(props);
-  }
 
   render()
   {
@@ -38,7 +36,7 @@ class App extends React.Component {
     }
     else {
       return(
-      <Homepage />
+      <NewHomePage />
       );
     }
   }

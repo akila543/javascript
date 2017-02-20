@@ -33,7 +33,7 @@ class TransformationFunc extends React.Component
 		console.log(YAML.parse(this.props.content));
 		this.updateCode = this.updateCode.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.state={code:this.props.transfunction};
+		this.state={code:this.props.transfunction,isValid:false, isSubmit:false};
 
 	}
 
@@ -61,24 +61,35 @@ class TransformationFunc extends React.Component
 
 		if(has_error)
 		{
+			this.setState({
+				isValid:false
+			});
 			alert("Its Invalid!!! Check the errors");
 		}
 		else
 		{
-			request.post('/workflows/update')
-			.set('Content-Type', 'application/json')
-			.send({templateName:this.props.fileName,content:YAML.parse(this.props.content),transfunction:this.state.code})
-			.end(function(err,res){
-				if (err) {
-					console.log(err);
-				}
-				else {
-					console.log(res);
-	        alert('Valid js!!! Successfully Updated ');
-				}
-  		});
-
-		} //end of else
+			this.setState({
+				isValid:true
+			});
+			if(this.state.isValid)
+			{
+				this.setState({
+					isSubmit:true
+				});
+	      request.post('/workflows/update')
+					.set('Content-Type', 'application/json')
+					.send({templateName:this.props.fileName,content:YAML.parse(this.props.content),transfunction:this.state.code})
+					.end(function(err,res){
+						if (err) {
+							console.log(err);
+						}
+						else {
+							console.log(res);
+	            alert('Valid js!!! Successfully Updated ');
+						}
+					});
+			}
+		}
 	}
 
 	render () {
