@@ -7,7 +7,7 @@ class Hero_Homepage extends React.Component{
 render(){
 return(
   <div >
-  <img src="../jsx/images/hero2.png" style={{height:'700px',width:'100%'}}/>
+  <img src="../jsx/images/5.jpg" style={{height:'700px',width:'100%',marginTop:-'80%'}}/>
   </div>
   );}
 }
