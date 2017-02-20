@@ -3,7 +3,7 @@
 	import FlatButton from 'material-ui/FlatButton';
 	import Toggle from 'material-ui/Toggle';
 	import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
-	const res={
+	const data1={
 		"status": "Complete",
 		"stdout": [
 			{
@@ -59,10 +59,11 @@
 
 	  constructor(props) {
 	    super(props);
+			this.state({data:this.props.res});
 		}
 
 	  render() {
-			if(res.status==='Complete')
+			if(data.status==='Complete')
 	    var avatar="../jsx/images/avatar1.jpeg";
 	  else
 	    var avatar="../jsx/images/avatar2.jpeg";
@@ -71,16 +72,16 @@
 	        <CardHeader
 	          title="Eslint"
 	          avatar={avatar}
-						subtitle={res.status}
+						subtitle={data.status}
 	          actAsExpander={true}
 	          showExpandableButton={true}
 	        />
 	      <CardTitle title="Report" expandable={true} />
 	        <CardText expandable={true}>
-	        Status = {res.status}<br/>
-					Initialized@= {res.initialized}<br />
-					scheduled@= {res.scheduled}<br />
-					completed@={res.completed}
+	        Status = {data.status}<br/>
+					Initialized@= {data.initialized}<br />
+					scheduled@= {data.scheduled}<br />
+					completed@={data.completed}
 
 	        <br/>
 					<div>
@@ -94,7 +95,7 @@
 		 				</TableRow>
 	 					</TableHeader>
 						 <TableBody showRowHover={true} displayRowCheckbox={false}>
-						{res.stdout.map((tile) => (
+						{data.stdout.map((tile) => (
 			 <TableRow>
 				 <TableRowColumn> {tile[Object.keys(tile)[0]]}</TableRowColumn>
 				 <TableRowColumn> {tile[Object.keys(tile)[1]]}</TableRowColumn>

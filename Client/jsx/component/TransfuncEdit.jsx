@@ -7,6 +7,7 @@ import 'brace/mode/javascript';
 import 'brace/theme/tomorrow';
 import request from 'superagent';
 var YAML=require('yamljs');
+import {hashHistory} from 'react-router';
 
 const styles = {
 	 button: {
@@ -86,6 +87,8 @@ class TransformationFunc extends React.Component
 						else {
 							console.log(res);
 	            alert('Valid js!!! Successfully Updated ');
+							hashHistory.push('/dashboard');
+
 						}
 					});
 			}

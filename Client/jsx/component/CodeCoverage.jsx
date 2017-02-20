@@ -3,7 +3,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import FlatButton from 'material-ui/FlatButton';
 import Toggle from 'material-ui/Toggle';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
-const res={
+const data1={
 	"status": "Complete",
 	"stdout": "No test folder found.\n",
 	"stderr": "//stackroute/javascript/code-coverage: line 5: [: missing `]'\n",
@@ -17,10 +17,11 @@ class CodeCoverage extends React.Component {
 
   constructor(props) {
     super(props);
-  }
+			this.state({data:this.props.res});
 
+		}
   render() {
-    if(res.status==='Complete')
+    if(data.status==='Complete')
     var avatar="../jsx/images/avatar1.jpeg";
   else
     var avatar="../jsx/images/avatar2.jpeg";
@@ -29,20 +30,20 @@ class CodeCoverage extends React.Component {
         <CardHeader
           title="CodeCoverage"
           avatar={avatar}
-          subtitle={res.status}
+          subtitle={.status}
           actAsExpander={true}
           showExpandableButton={true}
         />
       <CardTitle title="Report" expandable={true} />
         <CardText expandable={true}>
-        Status = {res.status}<br/>
-      Output={res.stdout}<br /><br />
-        Errors={res.stderr}<br />
-        ExitCode={res.exitCode}<br/>
-        Initialized@= {res.initialized}<br />
+        Status = {data.status}<br/>
+      Output={data.stdout}<br /><br />
+        Errors={data.stderr}<br />
+        ExitCode={data.exitCode}<br/>
+        Initialized@= {data.initialized}<br />
 
-        scheduled@= {res.scheduled}<br />
-        completed@={res.completed}
+        scheduled@= {data.scheduled}<br />
+        completed@={data.completed}
         <br/>
         </CardText>
       </Card>

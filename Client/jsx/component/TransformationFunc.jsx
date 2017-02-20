@@ -6,6 +6,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import 'brace/mode/javascript';
 import 'brace/theme/tomorrow';
 import request from 'superagent';
+import {hashHistory} from 'react-router';
+
 
 const styles = {
 	 button: {
@@ -106,7 +108,8 @@ class TransformationFunc extends React.Component
 					{
 						console.log(res.text);
 						alert("Valid js!!! Successfully uploaded");
-					 }
+						hashHistory.push('/dashboard');
+						}
 					});
 			}
 
