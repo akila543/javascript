@@ -97,7 +97,7 @@ class DashNavbar extends React.Component {
                             }}/></MenuItem>
 
                     </Link>
-                    <Link to='/pipeline'>
+                    <Link to='/AdminPipeline'>
 
                         <MenuItem onTouchTap={this.handleToggle}>
 

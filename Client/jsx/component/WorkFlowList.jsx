@@ -77,7 +77,7 @@ class WorkFlowList extends React.Component{
       });
       var data=(obj[0].content);
       console.log(data);
-	    this.setState({slideIndex:1,templateName:obj[0].templateName,content: data, transfunction:obj[0].transfunction});
+	    this.setState({slideIndex:1,templateName:obj[0].templateName,content: data, transfunction:obj[0].transFunction});
 	}
 
   handleAdd()
@@ -154,3 +154,4 @@ class WorkFlowList extends React.Component{
 }
 
 export default WorkFlowList;
+
