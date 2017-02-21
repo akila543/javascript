@@ -22,7 +22,7 @@ export default class HomePageUpdated extends React.Component
 				<Grid style={{width:'98%'}}>
                 <Row className="hero">
 
-                  <h1 className="AppTitle">Orchestropus</h1>
+                  <h1 className="AppTitle">Octopus</h1>
 									<Col xs={12} sm={12} md={12} lg={12}>
                   <img src="../jsx/images/hand.jpg"/>
 
