@@ -33,12 +33,12 @@ Router.get('/authentication', function(req, response, next) {
           if(adminList.indexOf(userName)!== -1)
           {
             response.cookie("type","admin");
-            response.redirect("http://localhost:3000/#/dashboard");
+            response.redirect("http://172.23.238.228:3000/#/dashboard");
           }
             else
             {
               response.cookie("type","user");
-              response.redirect("http://localhost:3000/#/user");
+              response.redirect("http://172.23.238.228:3000/#/user");
 
             }
            }
