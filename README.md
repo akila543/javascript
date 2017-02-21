@@ -1,2 +1,2 @@
-# Distributed Pipeline-as-a-Serice
+# Distributed Pipeline-as-a-Service
 Distributed Pipeline as a Service
