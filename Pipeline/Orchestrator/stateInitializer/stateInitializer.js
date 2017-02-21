@@ -69,12 +69,7 @@ function pushIstages(jobId, callback) {
         if (err)
             console.log(err);
         else {
-            client.set(jobId, jobId + '_stages', function(err, reply) {
-                if (err)                    console.log(err);
-                else {
                     callback(jobId);
-                }
-            })
         }
     });
 }

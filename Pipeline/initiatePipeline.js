@@ -16,7 +16,7 @@ module.exports = function (input,userName,callback)
                         console.log(err);
                       }
                       else{
-                            callback(null,'Pipeline is initiated.');
+                            callback(null,jobId);
                       }
                     });
                 } else

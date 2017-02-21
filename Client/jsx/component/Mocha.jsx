@@ -64,7 +64,7 @@ class Mocha extends React.Component {
                                 {(typeof this.state.data.stdout === 'string')?
                                     (
                                         <h1>{this.state.data.stdout}{count++}</h1>
-                                    ): this.state.data.stdout.map((tile) => (
+                                    ): Object.getOwnPropertyNames(this.state.data.stdout) .map((tile) => (
                                         <TableRow>
                                             <TableRowColumn>
                                                 {tile[Object.keys(tile)[0]]}</TableRowColumn>

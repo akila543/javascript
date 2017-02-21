@@ -98,7 +98,7 @@ class TransformationFunc extends React.Component
 					isSubmit:true
 				});
 
-				request.post('/saveFile').send({ data:this.props.content,templateName:this.props.fileName, transfunction:this.state.code}).set('Accept', 'application/json')
+				request.post('/workflows/add').send({ data:this.props.content,templateName:this.props.fileName, transfunction:this.state.code}).set('Accept', 'application/json')
 				.end(function(err, res){
 					if (err || !res.ok) {
 						alert('Oh no! error');

@@ -62,7 +62,7 @@ class Initiate extends React.Component{
     var that = this;
     this.setState({isSubmit:true});
 
-    Request.post('/results').send({ data: this.state.input,templateName:"CI-Pipeline.yml"}).set('Accept', 'application/json')
+    Request.post('/initiate').send({ data: this.state.input,templateName:"CI-Pipeline.yml"}).set('Accept', 'application/json')
            .end(function(err, res){
              if (err || !res.ok) {
                alert('Oh no! error');
@@ -73,8 +73,7 @@ class Initiate extends React.Component{
                     }
                   else
                     {
-                    console.log(res.text);
-                    alert("Server error: "+res.text);
+                    console.log(res.text);//getting the jobId
                   }
              }
            });
@@ -84,6 +83,14 @@ class Initiate extends React.Component{
     var box=null;
     if(this.state.isSubmit && this.state.output==null){
       box=<div >
+      <Link to="/monitori">
+              <FlatButton label='Click to monitor' hoverColor='#e8f1fb ' labelStyle={{
+                  textAlign: 'left'
+              }} style={{
+                  fontSize: '50px',
+                  marginTop: '4px'
+              }}/>
+      </Link>
             <CircularProgress size={80} thickness={5} style={styles.progress} />
             </div>
     }

@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Grid,Row,Col} from 'react-flexbox-grid/lib';
-import DashNavbar from './DashNavbar.jsx';
+import DashNavbar_user from './DashNavbar_user.jsx';
 import Paper from 'material-ui/Paper';
-import List_User from './List_User.jsx';
+
 
 const style = {
   paper:{height: 'auto',
@@ -22,15 +22,13 @@ class Dashboard extends React.Component {
 
   render()
   {
-    
+
     return (
       <div>
-        <DashNavbar />
+
         <Grid style={{width:'100%'}}>
                 <Row>
-                  <Col xs={12} sm={3} md={2} lg={2}>   <List_User/> </Col>
-                  <Col xs={6} sm={6} md={8} lg={10}> <Paper style={style.paper}>{this.props.children}</Paper> </Col>
-                </Row>
+                  <Col xs={12} sm={12} md={12} lg={12}><DashNavbar_user/>{this.props.children}</Col>               </Row>
               </Grid>
       </div>
     );

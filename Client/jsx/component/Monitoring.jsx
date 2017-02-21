@@ -78,6 +78,7 @@ export default class Monitoring extends React.Component {
                     data: JSON.parse(res.text)
                 })
                 JSON.parse(res.text).map((item, i) => {
+                  console.log(item);
                     jobListArray.push(
                         <TableRow key={i}>
                             <TableRowColumn key={i + "1"}>{item.jobId}</TableRowColumn>

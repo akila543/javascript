@@ -229,7 +229,7 @@ class AddTemplateEdit extends React.Component
 							name="UNIQUE_ID_OF_DIV"
 							annotations={this.state.err}
 							editorProps={{$blockScrolling: true}}
-							style={{border:"1px solid black",margin:"10px"}}
+							style={{border:"1px solid black",margin:"2%",width:"60%"}}
 							/>
 					</div>
 					<div className="row">

@@ -22,9 +22,13 @@ export default class HomePageUpdated extends React.Component
 				<Grid style={{width:'98%'}}>
                 <Row className="hero">
 
-                  <h1 className="AppTitle">Octopus</h1>
+                  <h1 className="AppTitle">Orchestropus</h1>
 									<Col xs={12} sm={12} md={12} lg={12}>
                   <img src="../jsx/images/hand.jpg"/>
+
+									</Col>
+									<Col xs={3} sm={3} md={3} lg={3}>
+									<img src="../jsx/images/logo.png" style={{width:'60%',height:'80%',position:'relative',bottom:'260%',left:'90%'}}/>
 									</Col>
                    <h1 className="heroPhrase">BUILD and TEST with Confidence</h1>
                    <h1 className="heroPhrase2">Octopus unifies issues, code review, CI into a single UI</h1>
