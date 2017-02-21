@@ -175,6 +175,7 @@ import AppBar from 'material-ui/AppBar';
 import {List, ListItem} from 'material-ui/List';
 import SwipeableViews from 'react-swipeable-views';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import {
     Table,
     TableBody,
@@ -186,11 +187,11 @@ import {
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import Request from 'superagent';
 import io from 'socket.io-client';
-import {HtmlHint} from './HtmlHint.jsx';
-import {Build} from './Build.jsx';
-import {Eslint} from './Eslint.jsx';
-import {Mocha} from './Mocha.jsx';
-import {CodeCoverage} from './CodeCoverage.jsx';
+import HtmlHint from './HtmlHint.jsx';
+import Build from './Build.jsx';
+import Eslint from './Eslint.jsx';
+import Mocha from './Mocha.jsx';
+import CodeCoverage from './CodeCoverage.jsx';
 
 const styles = {
     headline: {
@@ -282,27 +283,33 @@ export default class Monitoring extends React.Component {
                         <h1>Monitoring Stopped</h1>
                     )});
             } else {
+                console.log(data.stageName);
                 switch (data.stageName) {
                     case 'build':
-                        that.setState({stageArr: (<Build res={data}/>)});
+                        that.setState({stageArr1: (<Build res={data} />)});
                         break;
                     case 'eslint':
-                        that.setState({stageArr: (<Eslint res={data}/>)});
+                        that.setState({stageArr2: (<Eslint res={data} />)});
                         break;
                     case 'htmlhint':
-                        that.setState({stageArr: (<HtmlHint res={data}/>)});
+                        that.setState({stageArr3: (<HtmlHint res={data} />)});
                         break;
                     case 'code-coverage':
-                        that.setState({stageArr: (<CodeCoverage res={data}/>)});
+                        that.setState({stageArr4: (<CodeCoverage res={data} />)});
                         break;
-                    case 'white-box':
-                        that.setState({stageArr: (<Mocha res={data}/>)});
+                    case 'whitebox':
+                        that.setState({stageArr5: (<Mocha res={data} />)});
                         break;
                     default:
                         console.log('Not a valid stage.');
-                });
+                }
             }
         });
+    }
+
+    componentWillUnmount(){
+      console.log('Stopping the monitoring...');
+      this.state.socket.emit('stop', 'Stop monitoring');
     }
 
     render() {
@@ -331,7 +338,12 @@ export default class Monitoring extends React.Component {
 
                     <div style={styles.slide}>
                         <h1>Report</h1>
-                        <FlatButton label="Stop Monitoring" onClick={this.clickHandler1}/> {this.state.stageArr}
+                        <FlatButton label="Stop Monitoring" onClick={this.clickHandler1}/>
+                        {this.state.stageArr1}
+                        {this.state.stageArr2}
+                        {this.state.stageArr3}
+                        {this.state.stageArr4}
+                        {this.state.stageArr5}
                     </div>
                 </SwipeableViews>
             </div>

@@ -1,14 +1,9 @@
 import React from 'react';
-
 import AppBar from 'material-ui/AppBar';
-
 import FlatButton from 'material-ui/FlatButton';
-
 import Request from 'superagent';
-
 import cookie from 'react-cookie';
-
-import {Link,hashHistory} from 'react-router';
+import {Link, hashHistory} from 'react-router';
 
 import Drawer from 'material-ui/Drawer';
 
@@ -20,121 +15,107 @@ import ActionSearch from 'material-ui/svg-icons/action/search';
 
 import IconButton from 'material-ui/IconButton';
 
-class DashNavbar extends React.Component{
+class DashNavbar extends React.Component {
 
-constructor(){
+    constructor() {
 
-super();
+        super();
 
-this.state = {
+        this.state = {
 
-open: false
+            open: false
 
-};
+        };
 
-this.handleLogout = this.handleLogout.bind(this);
+        this.handleLogout = this.handleLogout.bind(this);
 
-this.handleToggle=this.handleToggle.bind(this);
+        this.handleToggle = this.handleToggle.bind(this);
 
-}
+    }
 
-handleToggle(){
+    handleToggle() {
 
-this.setState({
+        this.setState({
 
-open: !this.state.open
-
-});
-
-}
-
-handleLogout()
-
-{
-
-cookie.remove("access_token");
-cookie.remove("type");
-
-}
-
-render(){
-
-return(
-
-<div>
-
-<AppBar title="Octopus"   onLeftIconButtonTouchTap={this.handleToggle}
-
-iconElementRight={ <Link to="/"><FlatButton label="Logout" onClick={this.handleLogout}/></Link> }/>
-
+<<<<<<< HEAD
 <Drawer docked={false} width={250}open={this.state.open} onRequestChange={(open) => this.setState({open})} >
+=======
+            open: !this.state.open
+>>>>>>> 7e4bb5e05532817f9f467f1bd7208122e9864594
 
-<Link to="/monitor">
+        });
 
-<MenuItem onTouchTap={this.handleToggle}>
+    }
 
-<IconButton><ActionSearch/></IconButton>
+    handleLogout()
 
-<FlatButton label='Monitoring' hoverColor='#e8f1fb ' labelStyle={{
+    {
 
-textAlign: 'left'
+        cookie.remove("access_token");
+        cookie.remove("type");
 
-}} style={{
+    }
 
-fontSize: '50px',
+    render() {
 
-marginTop: '4px'
+        return (
 
-}}/>
+            <div>
 
-</MenuItem>
+                <AppBar title="Octopus" onLeftIconButtonTouchTap={this.handleToggle} iconElementRight={< Link to = "/" > <FlatButton label="Logout" onClick={this.handleLogout}/> < /Link>}/>
 
-</Link>
+                <Drawer docked={false} width={250} open={this.state.open}>
 
-<Link to='/workflows'>
+                    <Link to="/monitor">
 
-<MenuItem onTouchTap={this.handleToggle}>
+                        <MenuItem onTouchTap={this.handleToggle}>
 
-<IconButton><ActionDashboard/></IconButton>
+                            <IconButton><ActionSearch/></IconButton>
 
-<FlatButton label='Workflow' hoverColor='#e8f1fb ' labelStyle={{
+                            <FlatButton label='Monitoring' hoverColor='#e8f1fb ' labelStyle={{
+                                textAlign: 'left'
+                            }} style={{
+                                fontSize: '50px',
+                                marginTop: '4px'
+                            }}/>
 
-textAlign: 'left'
+                        </MenuItem>
 
-}} style={{
+                    </Link>
 
-fontSize: '50px',
+                    <Link to='/workflows'>
 
-marginTop: '4px'
+                        <MenuItem onTouchTap={this.handleToggle}>
 
-}}/></MenuItem>
+                            <IconButton><ActionDashboard/></IconButton>
 
-</Link>
+                            <FlatButton label='Workflow' hoverColor='#e8f1fb ' labelStyle={{
+                                textAlign: 'left'
+                            }} style={{
+                                fontSize: '50px',
+                                marginTop: '4px'
+                            }}/></MenuItem>
 
-<MenuItem onTouchTap={this.handleToggle}>
+                    </Link>
 
-<IconButton><ActionDashboard/></IconButton>
+                    <MenuItem onTouchTap={this.handleToggle}>
 
-<FlatButton label='Jump to job' hoverColor='#e8f1fb ' labelStyle={{
+                        <IconButton><ActionDashboard/></IconButton>
 
-textAlign: 'left'
+                        <FlatButton label='Jump to job' hoverColor='#e8f1fb ' labelStyle={{
+                            textAlign: 'left'
+                        }} style={{
+                            fontSize: '50px',
+                            marginTop: '4px'
+                        }}/></MenuItem>
 
-}} style={{
+                </Drawer>
 
-fontSize: '50px',
+                {this.props.children}
 
-marginTop: '4px'
+            </div>
 
-}}/></MenuItem>
-
-</Drawer>
-
-{this.props.children}
-
-</div>
-
-);}
-
+        );
+    }
 }
-
 export default DashNavbar;

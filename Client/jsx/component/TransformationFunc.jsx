@@ -83,23 +83,26 @@ class TransformationFunc extends React.Component
 			}
 		}
 
-		if(has_error)
-		{
+		if(has_error){
+			this.setState({
+				isValid:false
+			});
 			alert("Its Invalid!!! Check the errors");
 		}
-		else
-		{
-			request.post('/saveFile').send({ data:this.props.content,templateName:this.props.fileName, transfunction:this.state.code}).set('Accept', 'application/json')
-			.end(function(err, res){
-				if (err || !res.ok) {
-			 		alert('Oh no! error');
-				} else
-				{
-					console.log(res.text);
-					alert("Valid js!!! Successfully uploaded");
-				 }
+		else{
+			this.setState({
+				isValid:true
+			});
+
+			if(this.state.isValid)
+			{
+				this.setState({
+					isSubmit:true
 				});
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 7e4bb5e05532817f9f467f1bd7208122e9864594
 
 				request.post('/saveFile').send({ data:this.props.content,templateName:this.props.fileName, transfunction:this.state.code}).set('Accept', 'application/json')
 				.end(function(err, res){
@@ -109,6 +112,7 @@ class TransformationFunc extends React.Component
 					{
 						console.log(res.text);
 						alert("Valid js!!! Successfully uploaded");
+<<<<<<< HEAD
 						hashHistory.push('/dashboard');
 						}
 					});
@@ -116,6 +120,12 @@ class TransformationFunc extends React.Component
 
 =======
 >>>>>>> 4f0027c26128b00c22f0e2dd321f33782b3f47dd
+=======
+					 }
+					});
+			}
+
+>>>>>>> 7e4bb5e05532817f9f467f1bd7208122e9864594
 		}
 	}
 
@@ -132,7 +142,7 @@ class TransformationFunc extends React.Component
 						name="ace"
 						id="ace"
 						editorProps={{$blockScrolling: true}}
-						style={{border:"1px solid black",margin:"1%",width:"60%"}}
+						style={{border:"1px solid black",margin:"10px"}}
 						onLoad={(editor) => {
 							editor.focus();
 							editor.getSession();
