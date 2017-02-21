@@ -37,11 +37,7 @@ class DashNavbar extends React.Component {
 
         this.setState({
 
-<<<<<<< HEAD
-<Drawer docked={false} width={250}open={this.state.open} onRequestChange={(open) => this.setState({open})} >
-=======
             open: !this.state.open
->>>>>>> 7e4bb5e05532817f9f467f1bd7208122e9864594
 
         });
 
@@ -64,7 +60,8 @@ class DashNavbar extends React.Component {
 
                 <AppBar title="Octopus" onLeftIconButtonTouchTap={this.handleToggle} iconElementRight={< Link to = "/" > <FlatButton label="Logout" onClick={this.handleLogout}/> < /Link>}/>
 
-                <Drawer docked={false} width={250} open={this.state.open}>
+                  <Drawer docked={false} width={250}open={this.state.open} onRequestChange={(open) => this.setState({open})} >
+
 
                     <Link to="/monitor">
 

@@ -69,11 +69,7 @@ return(
 
 iconElementRight={ <Link to="/"><FlatButton label="Logout" onClick={this.handleLogout}/></Link> }/>
 
-<<<<<<< HEAD
 <Drawer docked={false} width={250} open={this.state.open} onRequestChange={(open) => this.setState({open})} >
-=======
-<Drawer docked={false} width={250} open={this.state.open} onRequestChange={(open) => this.setState({open})}>
->>>>>>> 4f0027c26128b00c22f0e2dd321f33782b3f47dd
 
 <Link to="/monitori">
 

@@ -99,11 +99,6 @@ class TransformationFunc extends React.Component
 				this.setState({
 					isSubmit:true
 				});
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 7e4bb5e05532817f9f467f1bd7208122e9864594
-
 				request.post('/saveFile').send({ data:this.props.content,templateName:this.props.fileName, transfunction:this.state.code}).set('Accept', 'application/json')
 				.end(function(err, res){
 					if (err || !res.ok) {
@@ -112,22 +107,14 @@ class TransformationFunc extends React.Component
 					{
 						console.log(res.text);
 						alert("Valid js!!! Successfully uploaded");
-<<<<<<< HEAD
 						hashHistory.push('/dashboard');
 						}
 					});
 			}
 
-=======
->>>>>>> 4f0027c26128b00c22f0e2dd321f33782b3f47dd
-=======
 					 }
-					});
-			}
+					}
 
->>>>>>> 7e4bb5e05532817f9f467f1bd7208122e9864594
-		}
-	}
 
 	render () {
 
