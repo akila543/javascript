@@ -135,8 +135,9 @@ export default class Monitoring extends React.Component {
             }
         });
     }
+
     componentWillUnmount(){
-      console.log('UNMOUNTING the component.');
+      console.log('Stopping the monitoring...');
       this.state.socket.emit('stop', 'Stop monitoring');
     }
 

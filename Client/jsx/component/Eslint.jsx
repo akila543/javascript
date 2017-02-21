@@ -8,6 +8,7 @@
 
 	  constructor(props) {
 	    super(props);
+
 			this.state = {data:this.props.res};
 	  }
 
@@ -36,7 +37,6 @@
 					Initialized@= {this.state.data.initialized}<br />
 					scheduled@= {this.state.data.scheduled}<br />
 					completed@={this.state.data.completed}
-
 	        <br/>
 					<div>
 						<Table showCheckbox={false}>

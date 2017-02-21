@@ -1,13 +1,8 @@
 import React from 'react';
-
 import AppBar from 'material-ui/AppBar';
-
 import FlatButton from 'material-ui/FlatButton';
-
 import Request from 'superagent';
-
 import cookie from 'react-cookie';
-
 import {Link, hashHistory} from 'react-router';
 
 import Drawer from 'material-ui/Drawer';
@@ -118,7 +113,5 @@ class DashNavbar extends React.Component {
 
         );
     }
-
 }
-
 export default DashNavbar;

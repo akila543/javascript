@@ -38,7 +38,6 @@ class CodeCoverage extends React.Component {
         Errors={this.state.data.stderr}<br />
         ExitCode={this.state.data.exitCode}<br/>
         Initialized@= {this.state.data.initialized}<br />
-
         scheduled@= {this.state.data.scheduled}<br />
         completed@={this.state.data.completed}
         <br/>

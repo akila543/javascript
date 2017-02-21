@@ -12,7 +12,6 @@ import 'brace/theme/tomorrow';
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 import TransformationFunc from './TransformationFunc.jsx';
-import {Grid,Row,Col} from 'react-flexbox-grid/lib';
 
 
 var doc;
@@ -201,13 +200,7 @@ class TemplateEditor extends React.Component
 
 			if(this.state.isSubmit)
 			{
-				Grid style={{width:'100%'}}>
-							<Row>
-								<Col xs={12} sm={12} md={12} lg={12}>  box= <TransformationFunc/> </Col>
-
-							</Row>
-						</Grid>
-
+				box= <TransformationFunc/>;
 			}
 			else
 			{

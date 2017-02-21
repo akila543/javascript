@@ -49,7 +49,6 @@ class Mocha extends React.Component {
                     Initialized@= {this.state.data.initialized}<br/>
                     scheduled@= {this.state.data.scheduled}<br/>
                     completed@={this.state.data.completed}
-
                     <br/>
                     <div>
                         <Table showCheckbox={false}>
