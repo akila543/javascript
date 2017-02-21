@@ -111,11 +111,13 @@ marginTop: '4px'
 
 </Link>
 
+
+
 <MenuItem onTouchTap={this.handleToggle}>
 
 <IconButton><ActionDashboard/></IconButton>
 
-<FlatButton label='Jump to job' hoverColor='#e8f1fb ' labelStyle={{
+<FlatButton label='Jump to Initiate' hoverColor='#e8f1fb ' labelStyle={{
 
 textAlign: 'left'
 
@@ -126,6 +128,8 @@ fontSize: '50px',
 marginTop: '4px'
 
 }}/></MenuItem>
+
+
 
 </Drawer>
 
