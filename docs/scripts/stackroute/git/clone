@@ -1,4 +1,0 @@
-#!/bin/bash
-#The git clone script
-
-git clone $REPO_URL $WORKSPACE

@@ -1,5 +1,0 @@
-#!/bin/bash
-#The htmlhint script
-
-cd $WORKSPACE
-htmlhint --format json
