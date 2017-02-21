@@ -110,31 +110,16 @@ function dataPush(jobId, callback) {
 
 }
 
-function Initiate(msg, callback) {
-    client.get('counter', function(err, reply) {
-        if (!err) {
-
-            var jobId = JSON.parse(msg).templateName + '_' + (++reply);
-            client.set('counter', reply, function(err, reply) {
-                if (!err) {
-                    console.log(jobId);
-                    createPayload(jobId, JSON.parse(msg).payload, function() {
-                        createContext(jobId, function() {
-                            readTemplate(jobId, JSON.parse(msg).templateName, callback);
-                        })
-                    })
-                } else
-                    console.log(err);
-            })
-
-        } else
-            console.log(err);
-    })
-
+function Initiate(input, callback) {
+  createPayload(input.jobId,input.payload, function() {
+      createContext(input.jobId, function() {
+          readTemplate(input.jobId, input.templateName, callback);
+      });
+  });
 }
 
 //module exports
 module.exports = function(msg, callback) {
     console.log("it is called");
-    Initiate(msg, callback);
+    Initiate(JSON.parse(msg), callback);
 };

@@ -83,22 +83,23 @@ class TransformationFunc extends React.Component
 			}
 		}
 
-		if(has_error){
-			this.setState({
-				isValid:false
-			});
+		if(has_error)
+		{
 			alert("Its Invalid!!! Check the errors");
 		}
-		else{
-			this.setState({
-				isValid:true
-			});
-
-			if(this.state.isValid)
-			{
-				this.setState({
-					isSubmit:true
+		else
+		{
+			request.post('/saveFile').send({ data:this.props.content,templateName:this.props.fileName, transfunction:this.state.code}).set('Accept', 'application/json')
+			.end(function(err, res){
+				if (err || !res.ok) {
+			 		alert('Oh no! error');
+				} else
+				{
+					console.log(res.text);
+					alert("Valid js!!! Successfully uploaded");
+				 }
 				});
+<<<<<<< HEAD
 
 				request.post('/saveFile').send({ data:this.props.content,templateName:this.props.fileName, transfunction:this.state.code}).set('Accept', 'application/json')
 				.end(function(err, res){
@@ -113,6 +114,8 @@ class TransformationFunc extends React.Component
 					});
 			}
 
+=======
+>>>>>>> 4f0027c26128b00c22f0e2dd321f33782b3f47dd
 		}
 	}
 

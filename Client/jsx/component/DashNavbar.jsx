@@ -63,7 +63,7 @@ return(
 
 <div>
 
-<AppBar title="Stage Piper"   onLeftIconButtonTouchTap={this.handleToggle}
+<AppBar title="Octopus"   onLeftIconButtonTouchTap={this.handleToggle}
 
 iconElementRight={ <Link to="/"><FlatButton label="Logout" onClick={this.handleLogout}/></Link> }/>
 

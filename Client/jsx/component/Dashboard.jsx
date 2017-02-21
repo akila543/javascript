@@ -5,7 +5,6 @@ import List_Dashboard from './List_Dashboard.jsx';
 import DashNavbar from './DashNavbar.jsx';
 import Paper from 'material-ui/Paper';
 
-
 const style = {
   paper:{height: 'auto',
   width: "80%",
@@ -18,18 +17,16 @@ const style = {
 class Dashboard extends React.Component {
   constructor(props){
     super(props);
-    this.state = {};
   }
 
   render()
   {
     return (
       <div>
-        
+
         <Grid style={{width:'100%'}}>
                 <Row>
                   <Col xs={12} sm={12} md={12} lg={12}>   <DashNavbar /> {this.props.children} </Col>
-                 
                 </Row>
               </Grid>
       </div>
