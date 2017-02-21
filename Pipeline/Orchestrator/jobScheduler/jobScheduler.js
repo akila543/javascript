@@ -21,7 +21,7 @@ function scheduler(input, callback) {
         client.lpush('COMPLETE_RESULT', JSON.stringify(temp), function(err, reply) {
             if (!err) {
                 console.log("COMPLETED DATA IS SENT");
-                client.hmset(input.jobId, "status",'Complete', function(err, reply) {
+                client.hmset(input.jobId, "status", 'Complete', function(err, reply) {
                     if (!err) {
                         callback();
                     } else {
@@ -34,7 +34,7 @@ function scheduler(input, callback) {
         })
         job_count = 0;
     } else {
-        client.hmset(input.jobId, "status",'Scheduled', function(err, reply) {
+        client.hmset(input.jobId, "status", 'Scheduled', function(err, reply) {
             if (!err) {
                 console.log("SCHEDULED DATA IS SENT");
                 callback();
@@ -54,7 +54,7 @@ function scheduler(input, callback) {
             client.lpush('COMPLETE_RESULT', JSON.stringify(temp), function(err, reply) {
                 if (!err) {
                     console.log("FAILED DATA SENT");
-                    client.hmset(input.jobId, "status",'Failed', function(err, reply) {
+                    client.hmset(input.jobId, "status", 'Failed', function(err, reply) {
                         if (!err) {
                             callback();
                         } else {
@@ -90,7 +90,8 @@ function scheduler(input, callback) {
                     callback();
                 } else
                     console.log(err);
-            });
+                }
+            );
         } else if (dstage != null && dstage.length < 2 && stageStatus === 'Initialized') {
             if (JSON.parse(input.stageName[dstage.toString()]).status === 'Blocked') {
                 var stageObj = JSON.parse(input.stageName[dstage.toString()]);
@@ -115,7 +116,8 @@ function scheduler(input, callback) {
                             callback();
                         } else
                             console.log(err);
-                    });
+                        }
+                    );
                 }
             }
         } else if (dstage != null && dstage.length > 1 && stageStatus === 'Initialized') {
@@ -148,7 +150,8 @@ function scheduler(input, callback) {
                         callback();
                     } else
                         console.log(err);
-                });
+                    }
+                );
             } else {
                 callback();
             }
