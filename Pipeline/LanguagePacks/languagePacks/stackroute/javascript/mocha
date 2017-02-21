@@ -1,0 +1,5 @@
+#!/bin/bash
+#The testing script
+
+cd $WORKSPACE
+mocha --recursive --reporter json 

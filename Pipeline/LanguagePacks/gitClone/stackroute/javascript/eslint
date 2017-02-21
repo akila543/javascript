@@ -1,0 +1,7 @@
+#!/bin/bash
+#The eslint script
+
+cd $WORKSPACE
+echo $EXCLUDE
+echo $EXCLUDE >> .eslintignore
+eslint --cache --parser esprima --format json $WORKSPACE

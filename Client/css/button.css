@@ -1,0 +1,230 @@
+.upload {
+    width: 157px !important;
+    height: 57px !important;
+    background: url(../images/upload.png) !important;
+    margin-left: 10px;
+    overflow: hidden;
+}
+
+.upload input {
+    display: block !important;
+    width: 157px !important;
+    height: 57px !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+}
+
+.hero{
+    /*max-width:auto;
+    height:auto;*/
+    filter: brightness(70%);
+
+}
+.hero img{
+  width:105%;
+		height:105%;
+    margin-left: -4%
+
+}
+
+
+.AppTitle
+{
+    font-family: 'Caveat Brush', cursive;
+    position: absolute;
+    top:-30px;
+    left:30px;
+    color: white;
+    font-size: 64px;
+}
+
+.heroPhrase
+{
+    position: absolute;
+    top:275px !important;
+    left:175px !important;
+    color: white;
+    font-family: 'Dosis', sans-serif;
+}
+
+.heroPhrase2
+{
+    position: absolute;
+    top:325px !important;
+    left:50px !important;
+    color: white;
+    font-family: 'Dosis', sans-serif;
+}
+
+.GithubLink
+{
+  position: absolute;
+  top:410px !important ;
+  left:280px !important;
+
+}
+
+.build
+{
+    margin-top: 5%;
+}
+
+.AppDesc
+{
+    text-align: center;
+    margin-top: 5%;
+    margin-left: 5%;
+}
+.AppHeading
+{
+    color: #0D47A1;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 30px;
+}
+.AppText
+{
+    font-family: 'Droid Sans', sans-serif;
+}
+
+.Features
+{
+    margin-top: 4%;
+    font-family: 'Muli', sans-serif;
+    color: #283593;
+}
+.iconRow
+{
+    margin-top: 4%;
+}
+
+.FeaturesDesc
+{
+    color: #78909C;
+}
+
+.footer {
+    padding: 1em;
+    color: white;
+    background-color: black;
+    clear: left;
+    text-align: center;
+}
+
+.upload {
+    width: 157px !important;
+    height: 57px !important;
+    background: url(../images/upload.png) !important;
+    margin-left: 10px;
+    overflow: hidden;
+}
+
+.upload input {
+    display: block !important;
+    width: 157px !important;
+    height: 57px !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+}.upload {
+    width: 157px !important;
+    height: 57px !important;
+    background: url(../images/upload.png) !important;
+    margin-left: 10px;
+    overflow: hidden;
+}
+
+.upload input {
+    display: block !important;
+    width: 157px !important;
+    height: 57px !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+}
+
+.hero{
+    max-width:auto;
+    height:auto;
+    filter: brightness(70%);
+    margin-left: 1% !important;
+}
+
+.AppTitle
+{
+    font-family: 'Caveat Brush', cursive;
+    position: absolute;
+    top:-30px;
+    left:30px;
+    color: white;
+    font-size: 64px;
+}
+
+.heroPhrase
+{
+    position: absolute;
+    top:180px;
+    left:400px;
+    color: white;
+    font-family: 'Dosis', sans-serif;
+}
+
+.heroPhrase2
+{
+    position: absolute;
+    top:230px;
+    left:250px;
+    color: white;
+    font-family: 'Dosis', sans-serif;
+}
+
+.GithubLink
+{
+  position: absolute;
+  top:300px;
+  left:530px;
+
+}
+
+.build
+{
+    margin-top: 5%;
+}
+
+.AppDesc
+{
+    text-align: center;
+    margin-top: 5%;
+    margin-left: 5%;
+}
+.AppHeading
+{
+    color: #0D47A1;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 30px;
+}
+.AppText
+{
+    font-family: 'Droid Sans', sans-serif;
+}
+
+.Features
+{
+    margin-top: 4%;
+    font-family: 'Muli', sans-serif;
+    color: #283593;
+}
+.iconRow
+{
+    margin-top: 4%;
+}
+
+.FeaturesDesc
+{
+    color: #78909C;
+}
+
+footer {
+    padding: 1em;
+    color: white;
+    background-color: black;
+    clear: left;
+    text-align: center;
+}

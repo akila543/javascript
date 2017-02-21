@@ -1,0 +1,5 @@
+#!/bin/bash
+#The whitebox testing script
+
+cd $WORKSPACE
+mocha

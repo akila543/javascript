@@ -1,0 +1,5 @@
+#!/bin/bash
+#The eslint script
+
+cat >> .eslintignore
+eslint --cache --parser esprima $WORKSPACE
