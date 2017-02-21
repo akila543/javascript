@@ -54,6 +54,7 @@ class Initiate extends React.Component{
   handleLogout()
   {
     cookie.remove("access_token");
+    cookie.remove("type");
 
   }
 

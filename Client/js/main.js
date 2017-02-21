@@ -10,6 +10,7 @@ import WorkFlowEdit from "../jsx/component/WorkFlowEdit.jsx";
 import WorkFlowList from "../jsx/component/WorkFlowList.jsx";
 import List_User from "../jsx/component/List_User.jsx";
 import Initiate from "../jsx/component/Initiate.jsx";
+import AdminInitiate from "../jsx/component/AdminInitiate.jsx";
 import User_Dashboard from "../jsx/component/User_Dashboard.jsx";
 import cookie from 'react-cookie';
 // import Dashboard from "../jsx/component/Dashboard.jsx";
@@ -34,6 +35,7 @@ ReactDOM.render(<MuiThemeProvider>
 			  <Route path={"/monitor"} component={Monitoring} onEnter={autherize}/>
 			 <Route path={"/edit"} component={WorkFlowEdit} onEnter={autherize}/>
 			 <Route path={"/workflows"} component={WorkFlowList} onEnter={autherize}/>
+			 <Route path={"/AdminPipeline"} component={AdminInitiate} onEnter={autherize}/>
 
 		</Route>
 
