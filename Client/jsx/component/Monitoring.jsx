@@ -42,7 +42,7 @@ export default class Monitoring extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            socket: io.connect('http://172.23.238.228:3000/monitor'),
+            socket: io.connect('http://localhost:3000/monitor'),
             slideIndex: 0,
             jobId: '',
             stageName: '',
