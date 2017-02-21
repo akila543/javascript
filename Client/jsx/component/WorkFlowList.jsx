@@ -9,8 +9,8 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import Divider from 'material-ui/Divider';
 import {GridList, GridTile} from 'material-ui/GridList';
-import {Grid,Row,Col} from 'react-flexbox-grid/lib';
 import request from 'superagent';
+import {Grid,Row,Col} from 'react-flexbox-grid/lib';
 
 const cellStyle={
   width:"30%"
@@ -135,12 +135,13 @@ class WorkFlowList extends React.Component{
            <RaisedButton  onClick = {this.handlePrevSlide} label="Back" primary={true} style={{marginLeft:"1%"}}/>
          </div>
          <div>
-         <Grid style={{width:'100%'}}>
-                  <Row>
-                    <Col xs={12} sm={12} md={12} lg={12}>  <AddTemplateEdit/>  </Col>
+           <Grid style={{width:'100%'}}>
+                   <Row>
+                     <Col xs={12} sm={12} md={12} lg={12}>  <AddTemplateEdit/>  </Col>
 
-                  </Row>
-                </Grid>
+                   </Row>
+                 </Grid>
+
            <RaisedButton  onClick = {this.handlePrevSlide} label="Back" primary={true} style={{marginLeft:"1%"}}/>
          </div>
        </SwipeableViews>

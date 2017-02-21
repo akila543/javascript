@@ -15,10 +15,11 @@ import FlatButton from 'material-ui/FlatButton';
 import TransformationFunc from './TransformationFunc.jsx';
 
 
+
 var doc;
 var edge = new Array();
 var node = new Array();
-var x1 = 100,y1=100;
+var x1 = -100,y1=-100;
 const styles = {
 	 button: {
 		 margin: 20,
@@ -69,7 +70,13 @@ class AddTemplateEdit extends React.Component
 
 		var array = Object.getOwnPropertyNames(obj);
 		var json= {"nodes":[],"edges":[]};
+		var xaxis=[0,0,130,200,500,240,180,310,370,400,440,480,520,560,600] ;
+		var yaxis=[0,0,-50,0,100,-200,100,0,100,-200,-100,0,100,-150,200];
+		//var a=1;
 		array.map(function(item){
+		x1=(xaxis[incr]*4);
+		y1=(yaxis[incr]*2);
+
 		var temp = {
 			id : incr,
 			title:item,
@@ -77,10 +84,6 @@ class AddTemplateEdit extends React.Component
 			y:y1,
 			type:"empty"
 		}
-
-		x1+=100;
-		y1=y1+(Math.random()* (100 - (-100)) + (-100));
-		console.log("y1"+y1);
 
 		incr++;
 		json.nodes.push(temp);
@@ -139,7 +142,6 @@ class AddTemplateEdit extends React.Component
 
 		handleSubmit()
 		{
-
 			var that = this;
 			yamlLint.lint(this.state.code).then(function () {
 				that.setState({
@@ -215,10 +217,12 @@ class AddTemplateEdit extends React.Component
 
 			if(this.state.isSubmit)
 			{
+				console.log(this.state.filename);
 				box= <TransformationFunc fileName={this.state.filename} content={this.state.code}/>;
 			}
 			else
 			{
+
 				box= <div className="container" style={{width:"auto"}}>
 					<div className="row" >
 						<AceEditor
@@ -229,7 +233,7 @@ class AddTemplateEdit extends React.Component
 							name="UNIQUE_ID_OF_DIV"
 							annotations={this.state.err}
 							editorProps={{$blockScrolling: true}}
-							style={{border:"1px solid black",margin:"2%",width:"60%"}}
+							style={{border:"1px solid black",margin:"1%",width:"60%"}}
 							/>
 					</div>
 					<div className="row">
