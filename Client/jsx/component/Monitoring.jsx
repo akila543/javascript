@@ -168,6 +168,7 @@ export default class Monitoring extends React.Component {
 
                     <div style={styles.slide}>
                         <h1>Report</h1>
+
                         <FlatButton label="Stop Monitoring" onClick={this.clickHandler1}/>
                         <form method="get" action="../../../Server/workflows/CI-Pipeline.yml">
                             <button type="submit">Download!</button>
@@ -177,6 +178,7 @@ export default class Monitoring extends React.Component {
                         {this.state.stageArr3}
                         {this.state.stageArr4}
                         {this.state.stageArr5}
+                        <RaisedButton onClick = {this.handlePrevSlide} label="Back" primary={true} style ={{marginLeft:'80%'}}  />
                     </div>
                 </SwipeableViews>
             </div>
