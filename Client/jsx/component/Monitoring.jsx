@@ -35,7 +35,7 @@ const styles = {
 };
 
 var value = 0;
-var jobListArray = [];
+//var jobListArray = [];
 var jobComponent = [];
 export default class Monitoring extends React.Component {
 
@@ -77,13 +77,14 @@ export default class Monitoring extends React.Component {
                 that.setState({
                     data: JSON.parse(res.text)
                 })
+                var jobListArray = [];
                 JSON.parse(res.text).map((item, i) => {
-                  console.log(item);
+                    console.log(item);
                     jobListArray.push(
                         <TableRow key={i}>
-                            <TableRowColumn key={i + "1"}>{item.jobId}</TableRowColumn>
-                            <TableRowColumn key={i + "2"}>{item.jobId.split('_')[0]}</TableRowColumn>
-                            <TableRowColumn key={i + "3"}>{item.status}</TableRowColumn>
+                            <TableRowColumn key={i + item.jobId}>{item.jobId}</TableRowColumn>
+                            <TableRowColumn key={i + item.jobId}>{item.jobId.split('_')[0]}</TableRowColumn>
+                            <TableRowColumn key={i + item.jobId}>{item.status}</TableRowColumn>
                         </TableRow>
                     );
                 })
@@ -113,33 +114,37 @@ export default class Monitoring extends React.Component {
                         <h1>Monitoring Stopped</h1>
                     )});
             } else {
-                console.log(data.stageName);
+                console.log(data.jobId, data.stageName, data.status);
                 switch (data.stageName) {
                     case 'build':
-                        that.setState({stageArr1: (<Build res={data} />)});
+                        that.setState({stageArr1: (<Build res={data}/>)});
                         break;
                     case 'eslint':
-                        that.setState({stageArr2: (<Eslint res={data} />)});
+                        that.setState({stageArr2: (<Eslint res={data}/>)});
                         break;
                     case 'htmlhint':
-                        that.setState({stageArr3: (<HtmlHint res={data} />)});
+                        that.setState({stageArr3: (<HtmlHint res={data}/>)});
                         break;
                     case 'code-coverage':
-                        that.setState({stageArr4: (<CodeCoverage res={data} />)});
+                        that.setState({stageArr4: (<CodeCoverage res={data}/>)});
                         break;
                     case 'whitebox':
-                        that.setState({stageArr5: (<Mocha res={data} />)});
+                        that.setState({stageArr5: (<Mocha res={data}/>)});
                         break;
                     default:
-                        console.log('Not a valid stage.');
+                        that.setState({stageArr6: (
+                                <div>
+                                    <h2 style={{color:'#FFA500'}}>{data.jobId} Status:{data.status}</h2>
+                                </div>
+                            )});
                 }
             }
         });
     }
 
-    componentWillUnmount(){
-      console.log('Stopping the monitoring...');
-      this.state.socket.emit('stop', 'Stop monitoring');
+    componentWillUnmount() {
+        console.log('Stopping the monitoring...');
+        this.state.socket.emit('stop', 'Stop monitoring');
     }
 
     render() {
@@ -168,7 +173,7 @@ export default class Monitoring extends React.Component {
 
                     <div style={styles.slide}>
                         <h1>Report</h1>
-                        <FlatButton label="Stop Monitoring" onClick={this.clickHandler1}/>
+                        <RaisedButton label="Stop Monitoring" onClick={this.clickHandler1}/> {this.state.stageArr6}
                         {this.state.stageArr1}
                         {this.state.stageArr2}
                         {this.state.stageArr3}

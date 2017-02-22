@@ -33,14 +33,21 @@ class HtmlHint extends React.Component {
         />
       <CardTitle title="Report" expandable={true} />
         <CardText expandable={true}>
-        Status = {this.state.data.status}<br/>
-      Output={this.state.data.stdout}<br /><br />
-        Errors={this.state.data.stderr}<br />
-        ExitCode={this.state.data.exitCode}<br/>
-        Initialized@= {this.state.data.initialized}<br />
-        scheduled@= {this.state.data.scheduled}<br />
-        completed@={this.state.data.completed}
-        <br/>
+        <h4>Status:</h4><div><pre>{this.state.data.status}</pre></div><br/>
+        <h4>Errors:</h4><div><pre>{this.state.data.stderr}</pre></div><br />
+        <h4>ExitCode:</h4><div><pre>{this.state.data.exitCode}</pre></div><br/>
+        <h4>Initialized@:</h4><div><pre>{this.state.data.initialized}</pre></div><br />
+        <h4>scheduled@:</h4><div><pre>{this.state.data.scheduled}</pre></div><br />
+        <h4>completed@:</h4><div><pre>{this.state.data.completed}</pre></div><br/>
+        <div>
+        <h4>Output:</h4>
+        {(typeof this.state.data.stdout === 'string')?
+                    (
+                        <h2>{this.state.data.stdout}</h2>
+                    ):(
+                    <div><pre>{JSON.stringify(this.state.data.stdout)}</pre></div>
+                    )}
+        </div>
         </CardText>
       </Card>
     );

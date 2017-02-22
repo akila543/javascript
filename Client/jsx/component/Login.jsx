@@ -18,10 +18,8 @@ return (
 
 <div>
 
-<RaisedButton className="GithubLink" label="Login  with  Github" labelStyle={{height: '20px'}} href={"https://github.com/login/oauth/authorize?client_id=7342dac8b3d3acbcbe2c"} labelStyle={{color:"white"}} buttonStyle={{background:"#FF5722 "}} onClick={this.handleClick} icon={<i className="material-icons" style={{color: 'white'}}>account_box
+<RaisedButton className="GithubLink" label="Login  with  Github" labelStyle={{height: '20px'}} href={"https://github.com/login/oauth/authorize?client_id=d595532bb5ab99a235f8"} labelStyle={{color:"white"}} buttonStyle={{background:"#FF5722 "}} onClick={this.handleClick} icon={<i className="material-icons" style={{color: 'white'}}>account_box
 </i>}/>
-
-
 
 </div>
 );

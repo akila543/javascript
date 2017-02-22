@@ -1,6 +1,10 @@
 const initiateJob = require('express').Router();
 const initiatePipeline = require('../../Pipeline/initiatePipeline.js');
 initiateJob.use(require('body-parser').json());
+const MongoClient = require('mongodb').MongoClient;
+
+//db connection url
+var url = 'mongodb://localhost:27017/reports';
 
 var client = require('redis').createClient();
 
@@ -13,8 +17,25 @@ initiateJob.post('/initiate', function(req, res, next) {
         },
         templateName: req.body.templateName
     };
-    initiatePipeline(input,req.body.userName,function(err, reply) {
-        res.send(reply);
+    initiatePipeline(input, req.body.userName, function(err, reply) {
+        MongoClient.connect(url, function(err, db) {
+            if (err) {
+                console.log('---- DB connection error <<=== ' + err + ' ===>>');
+            } else {
+                db.collection('buildreports').insertOne({
+                    jobId: reply,
+                    report: ""
+                }, function(err, result) {
+                    if (err) {
+                        console.log('---- DB add error <<=== ' + err + ' ===>>');
+                    } else {
+                        console.log("+-+- Report add status(+1-0) <<=== " + result.result.n + " ===>>");
+                        db.close();
+                        res.send(reply);
+                    }
+                }); // end of report
+            }
+        }); // end of MongoClient
     });
 });
 

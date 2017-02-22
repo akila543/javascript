@@ -3,8 +3,8 @@ const oauth = require("oauth").OAuth2;
 const jwt = require('jsonwebtoken');
 const Request = require('superagent');
 const cookieCode ="asdywiu45r61t..26t6wgy";
-const Client_ID="7342dac8b3d3acbcbe2c";
-const Client_Secret="ab305c3809d3d1ed9a8c8ed0e0e54aeecc3e2e57";
+const Client_ID="d595532bb5ab99a235f8";//"7342dac8b3d3acbcbe2c";
+const Client_Secret="2775d2beb0ee820fa6fb106ca378358ce4a20d1e";//"ab305c3809d3d1ed9a8c8ed0e0e54aeecc3e2e57";
 const OAuth2 = new oauth(Client_ID,Client_Secret,"https://github.com/","login/oauth/authorize","login/oauth/access_token");
 const secretCode = "E7r9t8@Q#h%Hy+M";
 
@@ -33,12 +33,12 @@ Router.get('/authentication', function(req, response, next) {
           if(adminList.indexOf(userName)!== -1)
           {
             response.cookie("type","admin");
-            response.redirect("http://172.23.238.228:3000/#/dashboard");
+            response.redirect("http://localhost:3000/#/dashboard");
           }
             else
             {
               response.cookie("type","user");
-              response.redirect("http://172.23.238.228:3000/#/user");
+              response.redirect("http://localhost:3000/#/user");
 
             }
            }

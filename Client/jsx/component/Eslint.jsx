@@ -33,33 +33,41 @@
 	        />
 	      <CardTitle title="Report" expandable={true} />
 	        <CardText expandable={true}>
-	        Status = {this.state.data.status}<br/>
-					Initialized@= {this.state.data.initialized}<br />
-					scheduled@= {this.state.data.scheduled}<br />
-					completed@={this.state.data.completed}
+					<h4>Status:</h4><div><pre>{this.state.data.status}</pre></div><br/>
+					<h4>Errors:</h4><div><pre>{this.state.data.stderr}</pre></div><br />
+					<h4>ExitCode:</h4><div><pre>{this.state.data.exitCode}</pre></div><br/>
+					<h4>Initialized@:</h4><div><pre>{this.state.data.initialized}</pre></div><br />
+					<h4>scheduled@:</h4><div><pre>{this.state.data.scheduled}</pre></div><br />
+					<h4>completed@:</h4><div><pre>{this.state.data.completed}</pre></div><br/>
 	        <br/>
 					<div>
-						<Table showCheckbox={false}>
-	 					<TableHeader displaySelectAll={false} adjustForCheckbox={false} >
-		 				<TableRow>
-			 				<TableHeaderColumn>filePath</TableHeaderColumn>
-			 				<TableHeaderColumn>messages</TableHeaderColumn>
-			 				<TableHeaderColumn>errorCount</TableHeaderColumn>
-							<TableHeaderColumn>warningCount</TableHeaderColumn>
-		 				</TableRow>
-	 					</TableHeader>
-						 <TableBody showRowHover={true} displayRowCheckbox={false}>
-						{this.state.data.stdout.map((tile) => (
-			 <TableRow>
-				 <TableRowColumn> {tile[Object.keys(tile)[0]]}</TableRowColumn>
-				 <TableRowColumn> {tile[Object.keys(tile)[1]]}</TableRowColumn>
-				 <TableRowColumn> {tile[Object.keys(tile)[2]]}</TableRowColumn>
-				 <TableRowColumn> {tile[Object.keys(tile)[3]]}</TableRowColumn>
-			 </TableRow>
+					{(typeof this.state.data.stdout === 'string')?
+											(
+													<h2>{this.state.data.stdout}</h2>
+											):(
+												<Table showCheckbox={false}>
+												<TableHeader displaySelectAll={false} adjustForCheckbox={false} >
+												<TableRow>
+													<TableHeaderColumn>filePath</TableHeaderColumn>
+													<TableHeaderColumn>messages</TableHeaderColumn>
+													<TableHeaderColumn>errorCount</TableHeaderColumn>
+													<TableHeaderColumn>warningCount</TableHeaderColumn>
+												</TableRow>
+												</TableHeader>
+												 <TableBody showRowHover={true} displayRowCheckbox={false}>
+												{this.state.data.stdout.map((tile,i) => (
+									 <TableRow>
+										 <TableRowColumn id={i}> {tile[Object.keys(tile)[0]]}</TableRowColumn>
+										 <TableRowColumn id={i+1}> {tile[Object.keys(tile)[1]]}</TableRowColumn>
+										 <TableRowColumn id={i+2}> {tile[Object.keys(tile)[2]]}</TableRowColumn>
+										 <TableRowColumn id={i+3}> {tile[Object.keys(tile)[3]]}</TableRowColumn>
+									 </TableRow>
 
-		 ))}
-		 	 </TableBody>
-	 </Table>
+								 ))}
+									 </TableBody>
+							 </Table>
+						 )
+					 }
 
 					</div>
 	        </CardText>

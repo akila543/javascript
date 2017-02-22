@@ -68,14 +68,7 @@ class Initiate extends React.Component{
              if (err || !res.ok) {
                alert('Oh no! error');
              } else {
-               if(res.text !== 'jobFailed')
-                    {
-                    that.setState({output:JSON.parse(res.text)});
-                    }
-                  else
-                    {
                     console.log(res.text);//getting the jobId
-                  }
              }
            });
   }
