@@ -175,7 +175,7 @@ export default class Monitoring extends React.Component {
                         {this.state.stageArr3}
                         {this.state.stageArr4}
                         {this.state.stageArr5}
-                        <RaisedButton onClick = {this.handlePrevSlide}label="Back" primary={true} style ={{marginLeft:'80%'}}  />
+                        <RaisedButton onClick = {this.handlePrevSlide} label="Back" primary={true} style ={{marginLeft:'80%'}}  />
                     </div>
                 </SwipeableViews>
             </div>
