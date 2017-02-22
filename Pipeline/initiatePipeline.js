@@ -16,7 +16,7 @@ module.exports = function (input,userName,callback)
                         console.log(err);
                       }
                       else{
-                            callback(null,jobId);
+                            callback(null,jobId,userName);
                       }
                     });
                 } else
