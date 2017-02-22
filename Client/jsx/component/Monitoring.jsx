@@ -169,6 +169,9 @@ export default class Monitoring extends React.Component {
                     <div style={styles.slide}>
                         <h1>Report</h1>
                         <FlatButton label="Stop Monitoring" onClick={this.clickHandler1}/>
+                        <form method="get" action="../../../Server/workflows/CI-Pipeline.yml">
+                            <button type="submit">Download!</button>
+                        </form>
                         {this.state.stageArr1}
                         {this.state.stageArr2}
                         {this.state.stageArr3}
