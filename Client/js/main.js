@@ -11,7 +11,7 @@ import WorkFlowList from "../jsx/component/WorkFlowList.jsx";
 import List_User from "../jsx/component/List_User.jsx";
 import Initiate from "../jsx/component/Initiate.jsx";
 import AdminInitiate from "../jsx/component/AdminInitiate.jsx";
-import User_Dashboard from "../jsx/component/User_Dashboard.jsx";
+import User from "../jsx/component/User.jsx";
 import cookie from 'react-cookie';
 // import Dashboard from "../jsx/component/Dashboard.jsx";
 
@@ -27,7 +27,7 @@ injectTapEventPlugin();
 ReactDOM.render(<MuiThemeProvider>
 	<Router history={hashHistory}>
 		<Route path={"/"} component={App}/>
-		<Route path={"/user"} component={User_Dashboard} onEnter={autherize}>
+		<Route path={"/user"} component={User} onEnter={autherize}>
 				<Route path={"/monitori"} component={Monitoring} onEnter={autherize} />
 				<Route path={"/pipeline"} component={Initiate} onEnter={autherize} />
 		</Route>
