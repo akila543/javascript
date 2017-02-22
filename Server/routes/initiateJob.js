@@ -17,21 +17,26 @@ initiateJob.post('/initiate', function(req, res, next) {
         },
         templateName: req.body.templateName
     };
-    initiatePipeline(input, req.body.userName, function(err, reply) {
+    initiatePipeline(input,req.body.userName, function(err,jobId,userName) {
         MongoClient.connect(url, function(err, db) {
             if (err) {
                 console.log('---- DB connection error <<=== ' + err + ' ===>>');
             } else {
-                db.collection('buildreports').insertOne({
-                    jobId: reply,
-                    report: ""
+                db.collection('activities').insertOne({
+                    user: userName,
+                    jobId: jobId,
+                    repo: req.body.data,
+                    initiatedAt: new Date(),
+                    templateName: req.body.templateName,
+                    status: "initiated",
+                    report: "No report yet"
                 }, function(err, result) {
                     if (err) {
                         console.log('---- DB add error <<=== ' + err + ' ===>>');
                     } else {
                         console.log("+-+- Report add status(+1-0) <<=== " + result.result.n + " ===>>");
                         db.close();
-                        res.send(reply);
+                        res.send(jobId);
                     }
                 }); // end of report
             }
