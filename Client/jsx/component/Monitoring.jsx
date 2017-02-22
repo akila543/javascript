@@ -173,6 +173,9 @@ export default class Monitoring extends React.Component {
                         <form method="get" action="../../../Server/workflows/CI-Pipeline.yml">
                             <button type="submit">Download!</button>
                         </form>
+                        <a href="../../../Server/reports/CI-Pipeline.yml_5.json">
+                            <button type="submit">Download!</button>
+                        </a>
                         {this.state.stageArr1}
                         {this.state.stageArr2}
                         {this.state.stageArr3}
