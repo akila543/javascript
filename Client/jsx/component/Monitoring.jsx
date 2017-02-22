@@ -168,12 +168,14 @@ export default class Monitoring extends React.Component {
 
                     <div style={styles.slide}>
                         <h1>Report</h1>
+
                         <FlatButton label="Stop Monitoring" onClick={this.clickHandler1}/>
                         {this.state.stageArr1}
                         {this.state.stageArr2}
                         {this.state.stageArr3}
                         {this.state.stageArr4}
                         {this.state.stageArr5}
+                        <RaisedButton onClick = {this.handlePrevSlide}label="Back" primary={true} style ={{marginLeft:'80%'}}  />
                     </div>
                 </SwipeableViews>
             </div>
