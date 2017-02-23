@@ -3,7 +3,7 @@ const MongoClient = require('mongodb').MongoClient;
 //db connection url
 var url = 'mongodb://localhost:27017/users';
 
-function addUser(id,user,details,callback){
+function addUser(id,user,details,loginTime,callback){
   MongoClient.connect(url,function(err,db){
     if (err) {
       console.log(err);
@@ -16,9 +16,10 @@ function addUser(id,user,details,callback){
         else{
           if (docs.length>0) {
             console.log('Existing User');
+            callback();
           }
           else{
-            db.collection('profiles').insertOne({id:id,userName:user,githubinfo:details},function(err,r){
+            db.collection('profiles').insertOne({id:id,userName:user,githubinfo:details,loggedinAt:loginTime},function(err,r){
               console.log(r.insertedCount);
               callback();
             });

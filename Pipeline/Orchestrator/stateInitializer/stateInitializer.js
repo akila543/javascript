@@ -41,18 +41,16 @@ function readTemplate(jobId, templateName, callback) {
         console.log("Connected correctly to server");
         var collection = db.collection('templates');
         // Find some documents
-        collection.find({
-            templateName: templateName
-        }).toArray(function(err, docs) {
+        collection.find({templateName: templateName}).toArray(function(err, docs) {
             if (!err) {
                 console.log("Found the following records");
-		console.log(docs);
+                console.log(docs);
                 var template = docs[0].content;
                 stages = template.stages;
                 stage = Object.getOwnPropertyNames(template.stages);
                 stage.map((item) => {
                     stages[item].status = 'Initialized';
-                    stages[item].ts_Initialized = ts.getHours() + ":" + ts.getMinutes() + ":" + ts.getSeconds();
+                    stages[item].ts_Initialized = (new Date()).toISOString();
 
                 })
                 stages = JSON.stringify(stages);
@@ -60,6 +58,7 @@ function readTemplate(jobId, templateName, callback) {
             } else
                 console.log(err);
             db.close();
+            callback();
         });
     });
 }
@@ -69,7 +68,7 @@ function pushIstages(jobId, callback) {
         if (err)
             console.log(err);
         else {
-                    callback(jobId);
+            callback(jobId);
         }
     });
 }
@@ -84,33 +83,36 @@ function dataPush(jobId, callback) {
         client.lpush('JOB_SCHEDULER', jobId, function(err, reply) {
             if (!err) {
                 console.log('data sent to JOB_SCHEDULER');
-                client.lpush('JOBLIST', jobId, (err, reply)=>{
+                client.lpush('JOBLIST', jobId, (err, reply) => {
                     if (!err) {
-                        client.hmset(jobId,'status','Initialized', function(err, reply) {
+                        client.hmset(jobId, 'status', 'Initialized', 'at', (new Date()).toISOString(), function(err, reply) {
                             if (!err)
                                 callback();
                             else
                                 console.log(err);
-                        });
+                            }
+                        );
 
                     } else
                         console.log(err);
-                })
+                    }
+                )
 
             } else
                 console.log(err);
-        });
+            }
+        );
 
     })
 
 }
 
 function Initiate(input, callback) {
-  createPayload(input.jobId,input.payload, function() {
-      createContext(input.jobId, function() {
-          readTemplate(input.jobId, input.templateName, callback);
-      });
-  });
+    createPayload(input.jobId, input.payload, function() {
+        createContext(input.jobId, function() {
+            readTemplate(input.jobId, input.templateName, callback);
+        });
+    });
 }
 
 //module exports
