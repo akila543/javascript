@@ -3,7 +3,7 @@ const getStageStatus = require('./getStageStatus');
 const async = require('async');
 const reportGen = require('../lib/finalReportGenerator');
 
-function getJobStatus(job, socket) {
+function getJobStatus(job,socket) {
     socket.on('stop', function(msg) {
         console.log(msg);
         job = "";
@@ -18,6 +18,15 @@ function getJobStatus(job, socket) {
                 async.series(Object.getOwnPropertyNames(stages).map((stage) => {
                     return getStageStatus.bind(null, job, stage, socket);
                 }), function(err, result) {
+                  var count = 0;
+                  result.map((stage)=>{
+                    if(stage !== undefined && (stage.status === 'Complete' || stage.status === 'Failed'))
+                    {
+                      count++;
+                    }
+                  });
+                  if(count === 5)
+                  {
                     rediscli.hmget(job,'status',function(err,jobStatus){
                       if (err) {
                         console.log(err);
@@ -33,15 +42,23 @@ function getJobStatus(job, socket) {
                                 console.log('Report for '+job+' is ready.');
                               }
                             });
-                            socket.emit('report',{jobId:job,stageName:'end',status:jobStatus[0]});
+                          socket.emit('report',{jobId:job,stageName:'end',status:jobStatus[0]});
                           }
                           else{
                             setTimeout(() => {
                                 getJobStatus(job, socket);
-                            }, 2000);
+                            },1000);
                           }
                       }
                     });//end of jobstatus
+
+                  }
+                  else{
+                    setTimeout(() => {
+                        getJobStatus(job, socket);
+                    },1000);
+                  }
+
                 });//end of async
             }
         }

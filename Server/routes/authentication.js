@@ -16,7 +16,6 @@ var adminList = [
     'varun7777',
     'rsunray',
     'subashchandarsiva',
-    'kritiraj',
     'karanjeet298'
 ];
 

@@ -27,7 +27,7 @@ function getStageStatus(job, stage, socket, callback) {
             }
             setTimeout(() => {
                 callback(null,reportObj);
-            },2000);
+            },1000);
         }
     });
 

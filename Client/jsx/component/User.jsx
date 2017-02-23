@@ -10,12 +10,19 @@ import Request from 'superagent';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import {Link, hashHistory} from 'react-router';
+import io from 'socket.io-client';
+import HtmlHint from './HtmlHint.jsx';
+import Build from './Build.jsx';
+import Eslint from './Eslint.jsx';
+import Mocha from './Mocha.jsx';
+import CodeCoverage from './CodeCoverage.jsx';
+import Results from './Results.jsx';
 
 export default class User extends React.Component {
     constructor(props)
     {
         super();
-        this.state={open: false,UserName:'user',repos:['Repo1','Repo2','Repo3','Repo4','Repo5'],repoUrl:'',selectedRepo:'',testedRepo:[]};
+        this.state={open: false,UserName:'user',isSubmit:false,repos:['Repo1','Repo2','Repo3','Repo4','Repo5'],repoUrl:'',selectedRepo:'',testedRepo:[],socket: io.connect('http://localhost:3000/monitor')};
         this.handleRepo = this.handleRepo.bind(this);
         this.handleType = this.handleType.bind(this);
         this.handleUrl = this.handleUrl.bind(this);
@@ -40,26 +47,72 @@ export default class User extends React.Component {
         {this.handleSubmit()}
     }
 
-    handleOpen () 
+    handleOpen ()
     {
     this.setState({open: true});
     }
 
-    handleClose() 
+    handleClose()
     {
     this.setState({open: false});
-  ``}
+  }
     handleSubmit()
     {
         this.setState({open: false});
-        Request.post('/initiate').set('Accept','application/json').send({data:this.state.selectedRepo,templateName:'CI-Template'})
-        .end((err,res)=>{
-            if(err || !res.ok)
-                console.log(err);
-            else
-                console.log(res.text)
-        })
-    }
+        this.setState({isSubmit:true});
+        var that=this;
+        Request.post('/initiate').set('Accept','application/json').send({data:that.state.selectedRepo,templateName:'CI-Pipeline.yml'})
+        .end(function(err, res){
+             if (err || !res.ok) {
+               alert('Oh no! error');
+             } else {
+                    console.log("id:",res.text);//getting the jobId
+                    var socket = that.state.socket;
+                    socket.emit('getjobstatus', res.text);
+                    socket.on('report', function(data) {
+                        if (data.status === 'Monitoring Stopped') {
+                            that.setState({stageArr: (
+                                    <h1>Monitoring Stopped</h1>
+                                )});
+                        } else {
+                            console.log(data.jobId, data.stageName, data.status);
+                            switch (data.stageName) {
+                                case 'build':
+                                    that.setState({stageArr1: (<Build res={data}/>)});
+                                    that.setState({stage1:data.status})
+                                    break;
+                                case 'eslint':
+                                    that.setState({stageArr2: (<Eslint res={data}/>)});
+                                    that.setState({stage2:data.status})
+                                    break;
+                                case 'htmlhint':
+                                    that.setState({stageArr3: (<HtmlHint res={data}/>)});
+                                    that.setState({stage3:data.status})
+                                    break;
+                                case 'code-coverage':
+                                    that.setState({stageArr4: (<CodeCoverage res={data}/>)});
+                                    that.setState({stage4:data.status})
+                                    break;
+                                case 'whitebox':
+                                    that.setState({stageArr5: (<Mocha res={data}/>)});
+                                    that.setState({stage5:data.status})
+                                    break;
+                                default:
+                                    that.setState({stageArr6: (
+                                            <div>
+                                                <h2 style={{color:'#FFA500'}}>{data.jobId} Status:{data.status}</h2>
+
+                                            </div>
+
+                                        )});
+                                        that.setState({stage6:data.status});
+                                        break;
+                            }
+                        }
+                    });
+           }
+         });
+}
     handleLogout()
     {
         cookie.remove("access_token");
@@ -125,11 +178,22 @@ export default class User extends React.Component {
         onTouchTap={this.handleSubmit}
       />,
     ];
+	  var box=null;
+      if(this.state.isSubmit){
+      box=<div >
+        {this.state.stageArr6}
+        {this.state.stageArr1}
+        {this.state.stageArr2}
+        {this.state.stageArr3}
+        {this.state.stageArr4}
+        {this.state.stageArr5}
+            </div>
+    }
 
     return (
         <div>
           <AppBar title={"Hello "+this.state.UserName} iconElementRight={< Link to = "/" > <FlatButton label="Logout" labelStyle={{color:"white"}} onClick={this.handleLogout}/> < /Link>}/>
-          
+
           <Grid style={{marginTop:"1%"}}>
              <Row >
 
@@ -139,6 +203,9 @@ export default class User extends React.Component {
              </Col>
              </Row>
                 <Row style={{marginTop:"1%"}}>
+                  <Col lg={3} md={3} mdOffset={8} sm={7} smOffset={8}  xs={12}>
+                    {box}
+                  </Col>
                  <Col lgOffset={8} lg={5} md={5} mdOffset={8} sm={7} smOffset={8}  xs={12}>
 
                     <Card>
@@ -167,16 +234,15 @@ export default class User extends React.Component {
                     </Card>
             </Col>
             </Row>
-            
+
         </Grid>
         <Dialog
           title="It seems no results associated with this repo. Do you wish to test this repo?"
           actions={actions}
           modal={false}
           open={this.state.open}
-          onRequestClose={this.handleClose}> 
+          onRequestClose={this.handleClose}>
         </Dialog>
          </div>);
   }
 }
-
