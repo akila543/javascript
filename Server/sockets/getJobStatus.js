@@ -55,7 +55,7 @@ function getJobStatus(job, user, socket) {
                         }); //end of jobstatus
                     } else {
                         setTimeout(() => {
-                            getJobStatus(job, socket);
+                            getJobStatus(job,user,socket);
                         }, 1000);
                     }
                 }); //end of async
