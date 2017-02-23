@@ -3,12 +3,10 @@ import AppBar from 'material-ui/AppBar';
 import React from 'react';
 import Dashboard from '../component/Dashboard.jsx';
 import DashNavbar from '../component/DashNavbar.jsx';
-import List_Dashboard from '../component/List_Dashboard.jsx';
 import NewHomePage from '../component/NewHomePage.jsx';
-import User_Dashboard from '../component/User_Dashboard.jsx';
+import User from '../component/User.jsx';
 
 import cookie from 'react-cookie';
-import {Grid,Row,Col} from 'react-flexbox-grid/lib';
 import Paper from 'material-ui/Paper';
 
 const style={
@@ -21,10 +19,7 @@ class App extends React.Component {
   {
     if(cookie.load('type')==="user")
     {return (
-
-      <div >
-        <User_Dashboard />
-      </div>
+        <User/>
     );}
     else
     if(cookie.load('type')==="admin")

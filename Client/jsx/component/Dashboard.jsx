@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Grid,Row,Col} from 'react-flexbox-grid/lib';
-import List_Dashboard from './List_Dashboard.jsx';
 import DashNavbar from './DashNavbar.jsx';
 import Paper from 'material-ui/Paper';
 

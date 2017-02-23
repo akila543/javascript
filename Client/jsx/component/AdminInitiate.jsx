@@ -9,6 +9,7 @@ import CircularProgress from 'material-ui/CircularProgress';
 import AppBar from 'material-ui/AppBar';
 import cookie from 'react-cookie';
 import FlatButton from 'material-ui/FlatButton';
+var validUrl = require('valid-url');
 const styles = {
   button: {
     margin: 12,
@@ -60,9 +61,12 @@ class AdminInitiate extends React.Component{
 
   handleSubmit(e){
     console.log(this.state.input );
-    var that = this;
-    this.setState({isSubmit:true});
 
+
+
+    if (validUrl.isUri(this.state.input)){
+        console.log('Looks like an URI');
+        this.setState({isSubmit:true});
     Request.post('/initiate').send({ data: this.state.input,templateName:"CI-Pipeline.yml"}).set('Accept', 'application/json')
            .end(function(err, res){
              if (err || !res.ok) {
@@ -71,6 +75,12 @@ class AdminInitiate extends React.Component{
                     console.log(res.text);//getting the jobId
            }
          });
+       }
+       else{
+         console.log('Not valid url');
+
+       }
+
        }
 
   render(){

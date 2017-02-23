@@ -1,24 +1,15 @@
 import React from 'react';
-
 import AppBar from 'material-ui/AppBar';
-
 import FlatButton from 'material-ui/FlatButton';
-
 import Request from 'superagent';
-
 import cookie from 'react-cookie';
-
 import {Link, hashHistory} from 'react-router';
-
 import Drawer from 'material-ui/Drawer';
-
 import MenuItem from 'material-ui/MenuItem';
-
 import ActionDashboard from 'material-ui/svg-icons/action/dashboard';
-
 import ActionSearch from 'material-ui/svg-icons/action/search';
-
 import IconButton from 'material-ui/IconButton';
+import Menu from 'material-ui/Menu';
 
 class DashNavbar extends React.Component {
 
@@ -62,56 +53,26 @@ class DashNavbar extends React.Component {
 
             <div>
 
-                <AppBar title="Octopus" onLeftIconButtonTouchTap={this.handleToggle} iconElementRight={< Link to = "/" > <FlatButton label="Logout" onClick={this.handleLogout}/> < /Link>}/>
+                <AppBar title="Octopus" onLeftIconButtonTouchTap={this.handleToggle} iconElementRight={< Link to = "/" > <FlatButton label="Logout" onClick={this.handleLogout} style={{color:'white'}}/> < /Link>}/>
 
                 <Drawer docked={false} width={250} open={this.state.open} onRequestChange={(open) => this.setState({open})}>
-
+<Menu desktop={true} width={320}>
                     <Link to="/monitor">
-
-                        <MenuItem onTouchTap={this.handleToggle}>
-
-                            <IconButton><ActionSearch/></IconButton>
-
-                            <FlatButton label='Monitoring' hoverColor='#e8f1fb ' labelStyle={{
-                                textAlign: 'left'
-                            }} style={{
-                                fontSize: '50px',
-                                marginTop: '4px'
-                            }}/>
-
-                        </MenuItem>
+  <MenuItem onTouchTap={this.handleToggle} primaryText="MONITORING" leftIcon={<ActionSearch />} style={{textAlign:'left',display: 'inline-block', fontSize: '17px',marginTop: '4px',width:'250'}}/>
 
                     </Link>
 
                     <Link to='/workflows'>
 
-                        <MenuItem onTouchTap={this.handleToggle}>
-
-                            <IconButton><ActionDashboard/></IconButton>
-
-                            <FlatButton label='Workflow' hoverColor='#e8f1fb ' labelStyle={{
-                                textAlign: 'left'
-                            }} style={{
-                                fontSize: '50px',
-                                marginTop: '4px'
-                            }}/></MenuItem>
-
+                        <MenuItem onTouchTap={this.handleToggle} primaryText="WORKFLOW" leftIcon={<ActionDashboard />} style={{textAlign:'left',display: 'inline-block', fontSize: '17px',marginTop: '4px',width:'250'}}/>
                     </Link>
                     <Link to='/AdminPipeline'>
+			              <MenuItem  onTouchTap={this.handleToggle} primaryText="INITIATE" leftIcon={<ActionDashboard />}  style={{textAlign:'left',display: 'inline-block', fontSize: '17px',marginTop: '4px',width:'250' }}/>
+                  </Link>
 
-                        <MenuItem onTouchTap={this.handleToggle}>
 
-                            <IconButton><ActionDashboard/></IconButton>
 
-                            <FlatButton label='Initiate' hoverColor='#e8f1fb ' labelStyle={{
-                                textAlign: 'left'
-                            }} style={{
-                                fontSize: '50px',
-                                marginTop: '4px'
-                            }}/></MenuItem>
-
-                    </Link>
-
+                  </Menu>
                 </Drawer>
 
                 {this.props.children}

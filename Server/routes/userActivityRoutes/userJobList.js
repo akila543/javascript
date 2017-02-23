@@ -13,7 +13,7 @@ Router.get('/userjoblist', function(req, res, next) {
       console.log(err);
     }
     else{
-      db.collection('activities').findAll({user:req.body.user,repo:req.body.repoUrl}).toArray(function(err,docs){
+      db.collection('activities').find({user:req.body.user,repo:req.body.repoUrl}).toArray(function(err,docs){
           if (err) {
             console.log(err);
           }
