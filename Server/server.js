@@ -10,8 +10,6 @@ const redisChangeListener = require('./sockets/redisChangeListener');
 const initiateJob = require('./routes/initiateJob');
 const getJobList = require('./routes/getJobList');
 const authentication = require('./routes/authentication.js');
-<<<<<<< HEAD
-const userJobList = require('./routes/userJobList');
 const monitorall = require('./routes/monitorAll.js');
 const userJobList = require('./routes/userActivityRoutes/userJobList');
 //workflow routes imports
