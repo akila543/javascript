@@ -132,13 +132,14 @@ export default class User extends React.Component {
           
           <Grid style={{marginTop:"1%"}}>
              <Row >
-             <Col xs={12}>
+
+             <Col xs={12} sm={12} md={12} lg={12}>
                     <TextField value={this.state.selectedRepo} floatingLabelText="Enter your git repo url" onChange={this.handleType}/>
                     <RaisedButton label="Submit" secondary={true} style={{marginLeft:"2%"}} onClick={this.handleRepo}/>
              </Col>
              </Row>
-                <Row>
-                 <Col xsOffset={8}>
+                <Row style={{marginTop:"1%"}}>
+                 <Col lgOffset={8} lg={5} md={5} mdOffset={8} sm={7} smOffset={8}  xs={12}>
 
                     <Card>
                         <CardHeader title="Your Repositories" style={{backgroundColor:"#BDBDBD"}}/>
@@ -152,8 +153,8 @@ export default class User extends React.Component {
                     </Card>
                  </Col>
             </Row>
-            <Row>
-            <Col xsOffset={8}>
+            <Row style={{marginTop:"1%"}}>
+            <Col lgOffset={8} lg={5} md={5} mdOffset={8} sm={7} smOffset={8}  xs={12}>
             <Card style={{marginTop:"5%"}}>
                         <CardHeader title="Tested Repositories" style={{backgroundColor:"#BDBDBD"}}/>
                             <CardText>
