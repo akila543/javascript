@@ -21,7 +21,7 @@ function scheduler(input, callback) {
         client.lpush('COMPLETE_RESULT', JSON.stringify(temp), function(err, reply) {
             if (!err) {
                 console.log("COMPLETED DATA IS SENT");
-                client.hmset(input.jobId, "status", 'Complete', function(err, reply) {
+                client.hmset(input.jobId, "status", 'Complete','at',(new Date()).toISOString(),function(err, reply) {
                     if (!err) {
                         callback();
                     } else {
@@ -34,7 +34,7 @@ function scheduler(input, callback) {
         })
         job_count = 0;
     } else {
-        client.hmset(input.jobId, "status", 'Scheduled', function(err, reply) {
+        client.hmset(input.jobId, "status", 'Scheduled','at',(new Date()).toISOString(), function(err, reply) {
             if (!err) {
                 console.log("SCHEDULED DATA IS SENT");
                 callback();
@@ -54,7 +54,7 @@ function scheduler(input, callback) {
             client.lpush('COMPLETE_RESULT', JSON.stringify(temp), function(err, reply) {
                 if (!err) {
                     console.log("FAILED DATA SENT");
-                    client.hmset(input.jobId, "status", 'Failed', function(err, reply) {
+                    client.hmset(input.jobId, "status", 'Failed','at',(new Date()).toISOString(), function(err, reply) {
                         if (!err) {
                             callback();
                         } else {

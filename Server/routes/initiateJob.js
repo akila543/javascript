@@ -4,7 +4,7 @@ initiateJob.use(require('body-parser').json());
 const MongoClient = require('mongodb').MongoClient;
 
 //db connection url
-var url = 'mongodb://localhost:27017/reports';
+var url = 'mongodb://localhost:27017/users';
 
 var client = require('redis').createClient();
 
@@ -28,8 +28,8 @@ initiateJob.post('/initiate', function(req, res, next) {
                     repo: req.body.data,
                     initiatedAt: new Date(),
                     templateName: req.body.templateName,
-                    status: "initiated",
-                    report: "No report yet"
+                    status: {},
+                    summary: "No summary yet"
                 }, function(err, result) {
                     if (err) {
                         console.log('---- DB add error <<=== ' + err + ' ===>>');

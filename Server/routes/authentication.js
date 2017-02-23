@@ -26,16 +26,18 @@ Router.get('/authentication', function(req, response, next) {
         if (err)
             console.log(err);
         else {
-            Request.get('https://api.github.com/user?access_token=' + access_token).set('Accept', 'application/json').end(function(err, res) {
+          console.log(access_token);
+            Request.get('https://api.github.com/user?access_token='+ access_token).set('Accept', 'application/json').end(function(err, res) {
                 if (err || !res.ok) {
                     console.log(err);
                     response.send('Error in authentication.');
                 } else {
                     var userName = res.body.login;
                     var id = res.body.id;
-                    addUser(id,userName,res.body,function(){
+                    addUser(id,userName,res.body,(new Date().toISOString()),function(){
                       var encoded_accestoken = jwt.sign(access_token, secretCode);
                       response.cookie("access_token", encoded_accestoken);
+                      response.cookie("user",userName);
                       response.cookie("repos_url",res.body.repos_url);
                       if (adminList.indexOf(userName) !== -1) {
                           response.cookie("type", "admin");
