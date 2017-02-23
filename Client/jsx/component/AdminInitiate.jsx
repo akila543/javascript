@@ -77,11 +77,41 @@ export default class AdminInitiate extends React.Component {
     this.setState({open: true});
     }
 
+    handleType(e)
+    {
+        this.setState({selectedRepo:e.target.value});
+        this.setState({repoUrl:e.target.value});
+    }
+    handleRepo()
+    {
+        var array = this.state.testedRepo;
+        console.log(this.state.repoUrl);
+        var temp = this.state.repoUrl.split('/');
+        array.push(temp[3]+"/"+temp[4]);
+        this.setState({testedRepo:array});
+        {this.handleSubmit()}
+    }
+
+    handleOpen ()
+    {
+    this.setState({open: true});
+    }
+
     handleClose()
     {
     this.setState({open: false});
   }
-
+    handleSubmit()
+    {
+        this.setState({open: false});
+        Request.post('/initiate').set('Accept','application/json').send({data:this.state.selectedRepo,templateName:'CI-Template'})
+        .end((err,res)=>{
+            if(err || !res.ok)
+                console.log(err);
+            else
+                console.log(res.text)
+        })
+    }
     handleLogout()
     {
         cookie.remove("access_token");
@@ -93,7 +123,6 @@ export default class AdminInitiate extends React.Component {
         var temp = "http://github.com/"+e;
         this.setState({selectedRepo:temp})
         var that = this;
-
          Request.get('/userjoblist').set('Accept', 'application/json').send({user:this.state.UserName,repoUrl:temp}).end(function(err, res) {
             if (err || !res.ok)
                 alert('Oh no! error');
@@ -190,7 +219,6 @@ export default class AdminInitiate extends React.Component {
          }
        });
 }
-
   render(){
     var box=null;
     console.log(this.state.stage1);
@@ -219,12 +247,10 @@ export default class AdminInitiate extends React.Component {
         onTouchTap={this.handleSubmit}
       />,
     ];
-
     return (
         <div>
           <Grid style={{marginTop:"1%"}}>
              <Row >
-
              <Col xs={12} sm={12} md={12} lg={12}>
                     <TextField value={this.state.selectedRepo} floatingLabelText="Enter your git repo url" onChange={this.handleType}/>
                     <RaisedButton label="Submit" secondary={true} style={{marginLeft:"2%"}} onClick={this.handleRepo}/>
@@ -269,8 +295,8 @@ export default class AdminInitiate extends React.Component {
           actions={actions}
           modal={false}
           open={this.state.open}
-          onRequestClose={this.handleClose}/>
+          onRequestClose={this.handleClose}>
+        </Dialog>
          </div>);
-
-}
+  }
 }
