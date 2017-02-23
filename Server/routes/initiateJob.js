@@ -9,7 +9,7 @@ var url = 'mongodb://localhost:27017/reports';
 var client = require('redis').createClient();
 
 initiateJob.post('/initiate', function(req, res, next) {
-    console.log('inside results route');
+    console.log('inside initiate job');
     console.log(req.body);
     var input = {
         payload: {

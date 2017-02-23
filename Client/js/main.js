@@ -5,15 +5,13 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import {Router,Route,hashHistory} from "react-router";
 import Monitoring from "../jsx/component/Monitoring.jsx";
-import Dashboard from "../jsx/component/Dashboard.jsx";
 import WorkFlowEdit from "../jsx/component/WorkFlowEdit.jsx";
 import WorkFlowList from "../jsx/component/WorkFlowList.jsx";
-import List_User from "../jsx/component/List_User.jsx";
 import Initiate from "../jsx/component/Initiate.jsx";
 import AdminInitiate from "../jsx/component/AdminInitiate.jsx";
 import User from "../jsx/component/User.jsx";
 import cookie from 'react-cookie';
-// import Dashboard from "../jsx/component/Dashboard.jsx";
+import Dashboard from "../jsx/component/Dashboard.jsx";
 
 
 function autherize(nextState,replace)

@@ -16,6 +16,7 @@ function addUser(id,user,details,callback){
         else{
           if (docs.length>0) {
             console.log('Existing User');
+            callback();
           }
           else{
             db.collection('profiles').insertOne({id:id,userName:user,githubinfo:details},function(err,r){

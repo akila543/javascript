@@ -27,7 +27,7 @@ Router.get('/authentication', function(req, response, next) {
         if (err)
             console.log(err);
         else {
-            Request.get('https://api.github.com/user/?access_token=' + access_token).set('Accept', 'application/json').end(function(err, res) {
+            Request.get('https://api.github.com/user?access_token=' + access_token).set('Accept', 'application/json').end(function(err, res) {
                 if (err || !res.ok) {
                     console.log(err);
                     response.send('Error in authentication.');

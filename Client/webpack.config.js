@@ -32,17 +32,10 @@ var config = {
           },
           {
               test: /\.css$/,
-              loader: 'style!css?modules',
+              loader: 'style-loader!css-loader?modules',
                 include: /flexboxgrid/,
-            },
-            {
-test: /\.css$/,
-  loader: 'required',
-},
-{
-test: /\.js$/,
-  loader: 'required?import[]=angular',
-}
+            }
+            
       ]
    }
 }
