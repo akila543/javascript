@@ -205,10 +205,10 @@
                </Col>
                </Row>
                   <Row style={{marginTop:"1%"}}>
-                    <Col lgOffset={0} lg={5} md={5} mdOffset={2} sm={7} smOffset={8}  xs={12}>
+                    <Col style={{marginRight:"1%"}} lgOffset={2} lg={5} md={5} mdOffset={2} sm={7} smOffset={8}  xs={12}>
                       {box}
                     </Col>
-                   <Col lgOffset={8} lg={3} md={3} mdOffset={8} sm={7} smOffset={8}  xs={12}>
+                   <Col lgOffset={8} lg={5} md={5} mdOffset={8} sm={7} smOffset={8} xs={12}>
 
                       <Card>
                           <CardHeader title="Your Repositories" style={{backgroundColor:"#BDBDBD"}}/>

@@ -21,7 +21,7 @@ import Build from './Build.jsx';
 import Eslint from './Eslint.jsx';
 import Mocha from './Mocha.jsx';
 import CodeCoverage from './CodeCoverage.jsx';
-
+import cookie from 'react-cookie';
 const styles = {
     headline: {
         fontSize: 24,
@@ -105,9 +105,11 @@ export default class Monitoring extends React.Component {
         this.setState({slideIndex: value});
         var id = this.state.data[row].jobId;
         this.setState({jobId: id});
+        var userid=cookie.load('user');
+
         var that = this;
         var socket = this.state.socket;
-        socket.emit('getjobstatus', id);
+        socket.emit('getjobstatus',{jobId:id,userId:userid});
         socket.on('report', function(data) {
             if (data.status === 'Monitoring Stopped') {
                 that.setState({stageArr: (
