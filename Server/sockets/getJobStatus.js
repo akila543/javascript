@@ -18,6 +18,7 @@ function getJobStatus(job, user, socket) {
                 async.series(Object.getOwnPropertyNames(stages).map((stage) => {
                     return getStageStatus.bind(null, job, stage, socket);
                 }), function(err, result) {
+
                     var count = 0;
                     result.map((stage) => {
                         if (stage !== undefined && (stage.status === 'Complete' || stage.status === 'Failed')) {
@@ -54,10 +55,11 @@ function getJobStatus(job, user, socket) {
                         }); //end of jobstatus
                     } else {
                         setTimeout(() => {
-                            getJobStatus(job, socket);
+                            getJobStatus(job,user,socket);
                         }, 1000);
                     }
                 }); //end of async
+
             }
         }
     }); //end of getStageStatus calls

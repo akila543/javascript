@@ -41,7 +41,9 @@
 					<h4>completed@:</h4><div><pre>{this.state.data.completed}</pre></div><br/>
 	        <br/>
 					<div>
-					{(typeof this.state.data.stdout === 'string')?
+						{(this.state.data.stdout!=undefined)?
+						(
+					(typeof this.state.data.stdout === 'string')?
 											(
 													<h2>{this.state.data.stdout}</h2>
 											):(
@@ -67,7 +69,9 @@
 									 </TableBody>
 							 </Table>
 						 )
-					 }
+					 ):(
+						 <h2>output is nothing</h2>
+					 )}
 
 					</div>
 	        </CardText>

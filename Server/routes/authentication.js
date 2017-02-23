@@ -16,7 +16,6 @@ var adminList = [
     'varun7777',
     'rsunray',
     'subashchandarsiva',
-    'kritiraj',
     'karanjeet298'
 ];
 
@@ -42,7 +41,7 @@ Router.get('/authentication', function(req, response, next) {
                       response.cookie("repos_url",res.body.repos_url);
                       if (adminList.indexOf(userName) !== -1) {
                           response.cookie("type", "admin");
-                          response.redirect("http://localhost:3000/#/dashboard");
+                          response.redirect("http://localhost:3000/#/monitor");
                       } else {
                           response.cookie("type", "user");
                           response.redirect("http://localhost:3000/#/user");
