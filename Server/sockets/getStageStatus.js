@@ -1,5 +1,4 @@
 const rediscli = require('redis').createClient();
-
 function getStageStatus(job, stage, socket, callback) {
     console.log(job + '_stages', stage);
     rediscli.hmget(job + '_stages', stage, function(err, result) {
@@ -27,10 +26,8 @@ function getStageStatus(job, stage, socket, callback) {
             }
             setTimeout(() => {
                 callback(null,reportObj);
-            },2000);
+            },1000);
         }
     });
-
 };
-
 module.exports = getStageStatus;

@@ -71,7 +71,7 @@ class Initiate extends React.Component{
                     console.log(res.text);//getting the jobId
              }
            });
-  }
+}
 
   render(){
     var box=null;

@@ -54,6 +54,8 @@ class DashNavbar extends React.Component {
             <div>
 
                 <AppBar title="Orchestropus" onLeftIconButtonTouchTap={this.handleToggle} iconElementRight={< Link to = "/" > <FlatButton label="Logout" labelStyle={{color:"white"}} onClick={this.handleLogout}/> < /Link>}/>
+                <AppBar title="Octopus" onLeftIconButtonTouchTap={this.handleToggle} iconElementRight={< Link to = "/" > <FlatButton label="Logout" onClick={this.handleLogout} style={{color:'white'}}/> < /Link>}/>
+
                 <Drawer docked={false} width={250} open={this.state.open} onRequestChange={(open) => this.setState({open})}>
                     <Menu desktop={true} width={320}>
                          <Link to="/monitor">

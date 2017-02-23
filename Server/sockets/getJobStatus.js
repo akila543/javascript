@@ -2,8 +2,8 @@ const rediscli = require('redis').createClient();
 const getStageStatus = require('./getStageStatus');
 const async = require('async');
 const reportGen = require('../lib/finalReportGenerator');
-
-function getJobStatus(job, socket) {
+const updateUserActivity = require('../userServices/updateUserActivity');
+function getJobStatus(job, user, socket) {
     socket.on('stop', function(msg) {
         console.log(msg);
         job = "";
@@ -18,34 +18,50 @@ function getJobStatus(job, socket) {
                 async.series(Object.getOwnPropertyNames(stages).map((stage) => {
                     return getStageStatus.bind(null, job, stage, socket);
                 }), function(err, result) {
-                    rediscli.hmget(job,'status',function(err,jobStatus){
-                      if (err) {
-                        console.log(err);
-                      }
-                      else {
-                        console.log(jobStatus);
-                          if (jobStatus[0] === 'Complete' || jobStatus[0] === 'Failed') {
-                            reportGen(job,result,function(err,response){
-                              if (err) {
+
+                    var count = 0;
+                    result.map((stage) => {
+                        if (stage !== undefined && (stage.status === 'Complete' || stage.status === 'Failed')) {
+                            count++;
+                        }
+                    });
+                    if (count === 5) {
+                        rediscli.hmget(job, 'status', function(err, jobStatus) {
+                            if (err) {
                                 console.log(err);
-                              }
-                              else {
-                                console.log('Report for '+job+' is ready.');
-                              }
-                            });
-                            socket.emit('report',{jobId:job,stageName:'end',status:jobStatus[0]});
-                          }
-                          else{
-                            setTimeout(() => {
-                                getJobStatus(job, socket);
-                            }, 2000);
-                          }
-                      }
-                    });//end of jobstatus
-                });//end of async
+                            } else {
+                                console.log(jobStatus);
+                                if (jobStatus[0] === 'Complete' || jobStatus[0] === 'Failed') {
+                                    reportGen(job, result, function(err, response) {
+                                        if (err) {
+                                            console.log(err);
+                                        } else {
+                                            updateUserActivity(user,job,jobStatus[0],function(){
+                                              console.log('Report for ' + job + ' is ready.');
+                                            });
+                                        }
+                                    });
+                                    socket.emit('report', {
+                                        jobId: job,
+                                        stageName: 'end',
+                                        status: jobStatus[0]
+                                    });
+                                } else {
+                                    setTimeout(() => {
+                                        getJobStatus(job, socket);
+                                    }, 1000);
+                                }
+                            }
+                        }); //end of jobstatus
+                    } else {
+                        setTimeout(() => {
+                            getJobStatus(job,user,socket);
+                        }, 1000);
+                    }
+                }); //end of async
+
             }
         }
-    });//end of getStageStatus calls
+    }); //end of getStageStatus calls
 }
-
 module.exports = getJobStatus;

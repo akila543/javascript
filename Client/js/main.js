@@ -12,6 +12,16 @@ import AdminInitiate from "../jsx/component/AdminInitiate.jsx";
 import User from "../jsx/component/User.jsx";
 import cookie from 'react-cookie';
 import Dashboard from "../jsx/component/Dashboard.jsx";
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import { cyan900
+,indigo700,white } from 'material-ui/styles/colors';
+
+const muiTheme = getMuiTheme({
+ palette: {
+primary1Color:cyan900
+,
+}
+ });
 
 
 function autherize(nextState,replace)
@@ -22,7 +32,7 @@ function autherize(nextState,replace)
 }
 
 injectTapEventPlugin();
-ReactDOM.render(<MuiThemeProvider>
+ReactDOM.render(<MuiThemeProvider muiTheme={muiTheme}>
 	<Router history={hashHistory}>
 		<Route path={"/"} component={App}/>
 		<Route path={"/user"} component={User} onEnter={autherize}>

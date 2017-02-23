@@ -86,7 +86,7 @@ class WorkFlowList extends React.Component{
   }
   render(){
 
-   var box=<FloatingActionButton mini={true} onClick={this.handleAdd} style={{marginTop:"2%",marginRight:"2%" }}>
+   var box=<FloatingActionButton mini={true} onClick={this.handleAdd} style={{marginTop:"2%",marginRight:"2%", }}>
       <ContentAdd />
     </FloatingActionButton>
    return(
@@ -120,8 +120,9 @@ class WorkFlowList extends React.Component{
                      <FlatButton
                        label="Delete"
                        id={item._id}
-                       secondary={true}
+                       style={{color:'#EF5350'}}
                        onClick={this.handleDelete}
+
                      />
                    </TableRowColumn>
                  </TableRow>
@@ -154,4 +155,3 @@ class WorkFlowList extends React.Component{
 }
 
 export default WorkFlowList;
-

@@ -60,6 +60,7 @@
     "socket.io-client": "^1.7.3",
     "style-loader": "^0.13.1",
     "superagent": "^3.3.2",
+    "valid-url": "^1.0.9",
     "yamljs": "^0.2.8"
   }
 }
