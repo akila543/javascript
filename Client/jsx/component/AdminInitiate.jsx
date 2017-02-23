@@ -1,119 +1,180 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import AppBar from 'material-ui/AppBar';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {Grid,Row,Col} from 'react-flexbox-grid';
+import {List, ListItem} from 'material-ui/List';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import Results from './Results.jsx';
-import Request from 'superagent';
-import {Link} from 'react-router';
-import CircularProgress from 'material-ui/CircularProgress';
-import AppBar from 'material-ui/AppBar';
 import cookie from 'react-cookie';
+import Request from 'superagent';
 import FlatButton from 'material-ui/FlatButton';
-const styles = {
-  button: {
-    margin: 12,
-    align:"center"
-  },
-  paper:{
- textAlign: 'center',
- display: 'inline-block',
-  },
-  exampleImageInput: {
-    cursor: 'pointer',
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    right: 0,
-    left: 0,
-    width: '100%',
-    opacity: 1,
-  },
-  inputField:{
-    align:"center"
-  },
-  progress:{
-    marginTop:'50px',
-    marginLeft:'50px'
-  }
-};
+import Dialog from 'material-ui/Dialog';
+import {Link, hashHistory} from 'react-router';
 
-class AdminInitiate extends React.Component{
-  constructor(props){
-    super(props);
-    this.state = {input:'',completed:0, isSubmit:false,output:null};
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
-  }
-
-  handleChange(e){
-    e.preventDefault();
-    this.setState({input:e.target.value});
-  }
-
-  handleLogout()
-  {
-    cookie.remove("access_token");
-    cookie.remove("type");
-
-  }
-
-  handleSubmit(e){
-    console.log(this.state.input );
-    var that = this;
-    this.setState({isSubmit:true});
-
-    Request.post('/initiate').send({ data: this.state.input,templateName:"CI-Pipeline.yml"}).set('Accept', 'application/json')
-           .end(function(err, res){
-             if (err || !res.ok) {
-               alert('Oh no! error');
-             } else {
-                    console.log(res.text);//getting the jobId
-           }
-         });
-       }
-
-  render(){
-    var box=null;
-    if(this.state.isSubmit && this.state.output==null){
-      box=<div >
-      <Link to="/monitor">
-              <FlatButton label='Click to monitor' hoverColor='#e8f1fb ' labelStyle={{
-                  textAlign: 'left'
-              }} style={{
-                  fontSize: '50px',
-                  marginTop: '4px'
-              }}/>
-      </Link>
-            <CircularProgress size={80} thickness={5} style={styles.progress} />
-            </div>
-    }
-    else if(this.state.isSubmit){
-      box=<div>
-          <Results output={this.state.output}/>
-
-      </div>
+export default class AdminInitiate extends React.Component {
+    constructor(props)
+    {
+        super();
+        this.state={open: false,UserName:'user',repos:['Repo1','Repo2','Repo3','Repo4','Repo5'],repoUrl:'',selectedRepo:'',testedRepo:[]};
+        this.handleRepo = this.handleRepo.bind(this);
+        this.handleType = this.handleType.bind(this);
+        this.handleUrl = this.handleUrl.bind(this);
+        this.handleLogout=this.handleLogout.bind(this);
+        this.handleOpen = this.handleOpen.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    return (<div>
-      <TextField
-        id="repoUrl" value={this.state.input} onChange={this.handleChange}
-        floatingLabelText="Repo URL"
-        type="text"
-       style={styles.inputField}
-      />
-      <RaisedButton
-       target="_blank"
-       label="Submit"
-       secondary={true}
-       onClick={this.handleSubmit}
-       style={styles.button}
-     />
-      {box}
+    handleType(e)
+    {
+        this.setState({selectedRepo:e.target.value});
+        this.setState({repoUrl:e.target.value});
+    }
+    handleRepo()
+    {
+        var array = this.state.testedRepo;
+        console.log(this.state.repoUrl);
+        var temp = this.state.repoUrl.split('/');
+        array.push(temp[3]+"/"+temp[4]);
+        this.setState({testedRepo:array});
+        {this.handleSubmit()}
+    }
 
-    </div>);
+    handleOpen () 
+    {
+    this.setState({open: true});
+    }
+
+    handleClose() 
+    {
+    this.setState({open: false});
+  ``}
+    handleSubmit()
+    {
+        this.setState({open: false});
+        Request.post('/initiate').set('Accept','application/json').send({data:this.state.selectedRepo,templateName:'CI-Template'})
+        .end((err,res)=>{
+            if(err || !res.ok)
+                console.log(err);
+            else
+                console.log(res.text)
+        })
+    }
+    handleLogout()
+    {
+        cookie.remove("access_token");
+        cookie.remove("type");
+    }
+
+    handleUrl(e)
+    {
+        var temp = "http://github.com/"+e;
+        this.setState({selectedRepo:temp})
+        var that = this;
+
+         Request.get('/userjoblist').set('Accept', 'application/json').send({user:this.state.UserName,repoUrl:temp}).end(function(err, res) {
+            if (err || !res.ok)
+                alert('Oh no! error');
+            else {
+                    console.log(res.text.length);
+                    if(res.text=='[]')
+                    {
+                        console.log(that);
+                        {that.handleOpen()}
+                    }
+                 }
+             })
+
+    }
+
+    componentWillMount()
+    {
+        var gitDetails=[];
+        var tempRepos=[];
+        var uName,aUrl;
+        var that=this;
+        console.log(cookie.load("repos_url")+"-------");
+        Request.get(cookie.load("repos_url")).set('Accept', 'application/json').end(function(err, res) {
+            if (err || !res.ok)
+                alert('Oh no! error');
+            else {
+                    gitDetails=res.body;
+                    gitDetails.map((item)=>{
+                    tempRepos.push(item.full_name);
+                    uName=item.owner.login;
+                    aUrl=item.owner.avatar_url;
+                    })
+                    that.setState({repos:tempRepos});
+                    that.setState({UserName:uName});
+                 }
+             })
+
+    }
+  render () {
+
+        const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onTouchTap={this.handleClose}
+      />,
+      <FlatButton
+        label="Submit"
+        primary={true}
+        keyboardFocused={true}
+        onTouchTap={this.handleSubmit}
+      />,
+    ];
+
+    return (
+        <div>          
+          <Grid style={{marginTop:"1%"}}>
+             <Row >
+
+             <Col xs={12} sm={12} md={12} lg={12}>
+                    <TextField value={this.state.selectedRepo} floatingLabelText="Enter your git repo url" onChange={this.handleType}/>
+                    <RaisedButton label="Submit" secondary={true} style={{marginLeft:"2%"}} onClick={this.handleRepo}/>
+             </Col>
+             </Row>
+                <Row style={{marginTop:"1%"}}>
+                 <Col lgOffset={8} lg={5} md={5} mdOffset={8} sm={7} smOffset={8}  xs={12}>
+
+                    <Card>
+                        <CardHeader title="Your Repositories" style={{backgroundColor:"#BDBDBD"}}/>
+                            <CardText>
+                                <List>
+                                {this.state.repos.map(text=>
+                                    <ListItem key={text}  primaryText={text} onClick={()=>this.handleUrl(text)}/>
+                                )}
+                                </List>
+                            </CardText>
+                    </Card>
+                 </Col>
+            </Row>
+            <Row style={{marginTop:"1%"}}>
+            <Col lgOffset={8} lg={5} md={5} mdOffset={8} sm={7} smOffset={8}  xs={12}>
+            <Card style={{marginTop:"5%"}}>
+                        <CardHeader title="Tested Repositories" style={{backgroundColor:"#BDBDBD"}}/>
+                            <CardText>
+                                <List>
+                                {this.state.testedRepo.map(text=>
+                                    <ListItem key={text}  primaryText={text} onClick={()=>this.handleUrl(text)}/>
+                                )}
+                                </List>
+                            </CardText>
+                    </Card>
+            </Col>
+            </Row>
+            
+        </Grid>
+        <Dialog
+          title="It seems no results associated with this repo. Do you wish to test this repo?"
+          actions={actions}
+          modal={false}
+          open={this.state.open}
+          onRequestClose={this.handleClose}> 
+        </Dialog>
+         </div>);
   }
-
 }
 
-export default AdminInitiate;

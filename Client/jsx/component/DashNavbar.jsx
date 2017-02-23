@@ -53,26 +53,19 @@ class DashNavbar extends React.Component {
 
             <div>
 
-                <AppBar title="Octopus" onLeftIconButtonTouchTap={this.handleToggle} iconElementRight={< Link to = "/" > <FlatButton label="Logout" onClick={this.handleLogout}/> < /Link>}/>
-
+                <AppBar title="Orchestropus" onLeftIconButtonTouchTap={this.handleToggle} iconElementRight={< Link to = "/" > <FlatButton label="Logout" labelStyle={{color:"white"}} onClick={this.handleLogout}/> < /Link>}/>
                 <Drawer docked={false} width={250} open={this.state.open} onRequestChange={(open) => this.setState({open})}>
-<Menu desktop={true} width={320}>
-                    <Link to="/monitor">
-  <MenuItem onTouchTap={this.handleToggle} primaryText="MONITORING" leftIcon={<ActionSearch />} style={{textAlign:'left',display: 'inline-block', fontSize: '17px',marginTop: '4px',width:'250'}}/>
-
-                    </Link>
-
-                    <Link to='/workflows'>
-
-                        <MenuItem onTouchTap={this.handleToggle} primaryText="WORKFLOW" leftIcon={<ActionDashboard />} style={{textAlign:'left',display: 'inline-block', fontSize: '17px',marginTop: '4px',width:'250'}}/>
-                    </Link>
-                    <Link to='/AdminPipeline'>
+                    <Menu desktop={true} width={320}>
+                         <Link to="/monitor">
+                            <MenuItem onTouchTap={this.handleToggle} primaryText="MONITORING" leftIcon={<ActionSearch />} style={{textAlign:'left',display: 'inline-block', fontSize: '17px',marginTop: '4px',width:'250'}}/>
+                         </Link>
+                         <Link to='/workflows'>
+                         <MenuItem onTouchTap={this.handleToggle} primaryText="WORKFLOW" leftIcon={<ActionDashboard />} style={{textAlign:'left',display: 'inline-block', fontSize: '17px',marginTop: '4px',width:'250'}}/>
+                         </Link>
+                         <Link to='/AdminPipeline'>
 			              <MenuItem  onTouchTap={this.handleToggle} primaryText="INITIATE" leftIcon={<ActionDashboard />}  style={{textAlign:'left',display: 'inline-block', fontSize: '17px',marginTop: '4px',width:'250' }}/>
-                  </Link>
-
-
-
-                  </Menu>
+                         </Link>
+                    </Menu>
                 </Drawer>
 
                 {this.props.children}

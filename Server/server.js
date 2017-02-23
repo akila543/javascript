@@ -11,6 +11,7 @@ const initiateJob = require('./routes/initiateJob');
 const getJobList = require('./routes/getJobList');
 const authentication = require('./routes/authentication.js');
 const userJobList = require('./routes/userJobList');
+const monitorall = require('./routes/monitorAll.js');
 //workflow routes imports
 const updateWorkflow = require('./routes/workflowRoutes/updateWorkflow');
 const getAllWorkflows = require('./routes/workflowRoutes/getAllWorkflows');
@@ -40,7 +41,7 @@ app.use(express.static('../Client/'));
 app.use('/',function(req,res,next){
 	console.log("Into the routes...");
 	next();
-},authentication,initiateJob,getJobList,updateWorkflow,getAllWorkflows,deleteWorkflow,getOneWorkflow,addWorkflow,userJobList);
+},authentication,initiateJob,getJobList,updateWorkflow,getAllWorkflows,deleteWorkflow,getOneWorkflow,monitorall,addWorkflow,userJobList);
 
 //socket listeners
 io.on('connection',home);
