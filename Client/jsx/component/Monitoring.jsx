@@ -184,7 +184,7 @@ export default class Monitoring extends React.Component {
                         {this.state.stageArr4}
                         {this.state.stageArr5}
                         <RaisedButton onClick = {this.handlePrevSlide} label="Back" primary={true} style ={{marginLeft:'80%'}}  />
-                        <a href="../../../Server/reports/CI-Pipeline.yml_5.json">
+                        <a href="/downloadreport">
                             <button type="submit">Download!</button>
                         </a>
                     </div>
