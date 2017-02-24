@@ -56,6 +56,7 @@ export default class User extends React.Component {
     {
     this.setState({open: false});
   }
+
     handleSubmit()
     {
         this.setState({open: false});
@@ -115,19 +116,16 @@ export default class User extends React.Component {
            }
          });
 }
-    handleLogout()
-    {
-        cookie.remove("access_token");
-        cookie.remove("type");
-    }
+
 
     handleUrl(e)
     {
-        var temp = "http://github.com/"+e;
+      e.preventDefault();
+        var temp = "http://github.com/"+e.target.value;
         this.setState({selectedRepo:temp})
         var that = this;
-
-         Request.get('/userjoblist').set('Accept', 'application/json').send({user:this.state.UserName,repoUrl:temp}).end(function(err, res) {
+        console.log(that.state.UserName,temp);
+         Request.get('/userjoblist').set('Accept','application/json').send({user:that.state.UserName,repoUrl:temp}).end(function(err, res) {
             if (err || !res.ok)
                 alert('Oh no! error');
             else {
@@ -228,7 +226,7 @@ export default class User extends React.Component {
                             <CardText>
                                 <List>
                                 {this.state.testedRepo.map(text=>
-                                    <ListItem key={text}  primaryText={text} onClick={()=>this.handleUrl(text)}/>
+                                    <ListItem key={text}  primaryText={text} onClick={this.handleUrl}/>
                                 )}
                                 </List>
                             </CardText>

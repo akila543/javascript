@@ -36,6 +36,7 @@ function getJobStatus(job, user, socket) {
                                         if (err) {
                                             console.log(err);
                                         } else {
+                                          console.log('repo user',user);
                                             updateUserActivity(user,job,jobStatus[0],function(){
                                               console.log('Report for ' + job + ' is ready.');
                                             });
