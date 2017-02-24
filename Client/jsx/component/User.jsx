@@ -61,7 +61,7 @@
           this.setState({open: false});
           this.setState({isSubmit:true});
           var that=this;
-          Request.post('/initiate').set('Accept','application/json').send({data:that.state.selectedRepo,templateName:'CI-Pipeline.yml'})
+          Request.post('/initiate').set('Accept','application/json').send({userName:cookie.load('user'),data:that.state.selectedRepo,templateName:'CI-Pipeline.yml'})
           .end(function(err, res){
                if (err || !res.ok) {
                  alert('Oh no! error');
@@ -124,18 +124,17 @@
       handleUrl(e)
       {
           var temp = "http://github.com/"+e;
-          this.setState({selectedRepo:temp})
+          this.setState({selectedRepo:temp,UserName:cookie.load('user')})
           var that = this;
-
-           Request.get('/userjoblist').set('Accept', 'application/json').send({user:this.state.UserName,repoUrl:temp}).end(function(err, res) {
+          console.log(this.state.UserName,temp,'\n');
+           Request.post('/userjoblist').set('Accept','application/json').send({user:cookie.load('user'),repoUrl:temp}).end(function(err, res) {
               if (err || !res.ok)
                   alert('Oh no! error');
               else {
-                      console.log(res.text.length);
+                      console.log(res.text);
                       if(res.text=='[]')
                       {
-                          console.log(that);
-                          {that.handleOpen()}
+                          {that.handleOpen()};
                       }
                    }
                })
@@ -199,7 +198,7 @@
             <Grid style={{marginTop:"1%"}}>
                <Row >
 
-               <Col xs={12} sm={12} md={12} lg={12}>
+               <Col xs={8} sm={8} md={8} lg={8}>
                       <TextField value={this.state.selectedRepo} floatingLabelText="Enter your git repo url" onChange={this.handleType}/>
                       <RaisedButton label="Submit" secondary={true} style={{marginLeft:"2%"}} onClick={this.handleRepo}/>
                </Col>
