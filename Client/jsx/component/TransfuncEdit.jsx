@@ -74,7 +74,7 @@ class TransformationFunc extends React.Component
 				else {
 					console.log(res);
 	        alert('Valid js!!! Successfully Updated ');
-					hashHistory.push("/dashboard");
+					hashHistory.push("/monitor");
 				}
   		});
 
