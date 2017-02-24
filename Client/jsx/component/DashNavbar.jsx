@@ -63,7 +63,7 @@ class DashNavbar extends React.Component {
                          <MenuItem onTouchTap={this.handleToggle} primaryText="WORKFLOW" leftIcon={<ActionDashboard />} style={{textAlign:'left',display: 'inline-block', fontSize: '17px',marginTop: '4px',width:'250'}}/>
                          </Link>
                          <Link to='/AdminPipeline'>
-			              <MenuItem  onTouchTap={this.handleToggle} primaryText="INITIATE" leftIcon={<ActionDashboard />}  style={{textAlign:'left',display: 'inline-block', fontSize: '17px',marginTop: '4px',width:'250' }}/>
+			              <MenuItem  onTouchTap={this.handleToggle} primaryText="TEST REPO" leftIcon={<ActionDashboard />}  style={{textAlign:'left',display: 'inline-block', fontSize: '17px',marginTop: '4px',width:'250' }}/>
                          </Link>
                     </Menu>
                 </Drawer>
