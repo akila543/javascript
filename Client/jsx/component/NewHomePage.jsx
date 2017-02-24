@@ -27,26 +27,25 @@ export default class HomePageUpdated extends React.Component
 
 				<Grid style={{width:'99.2%'}}>
 
-<div style={{style:'#2975e8'}}>
+<div style={{style:'#3CB371'}}>
 
-				<Row center="xs" style={{background:'#2975e8'}}>
+				<Row center="xs" style={{background:'#3CB371'}}>
 				<h1 style={{fontSize:'60',color:'white',fontFamily:'Quantico'}}>Orchestropus</h1>
 				</Row>
-				<Row center="xs" style={{background:'#2975e8'}}>
+				<Row center="xs" style={{background:'#3CB371'}}>
 					<img src="../jsx/images/logo.png" />
 				</Row>
-				<Row center="xs" style={{background:'#2975e8'}} >
+				<Row center="xs" style={{background:'#3CB371'}} >
 				<h1 style={{color:'white',fontFamily:'Acme'}}>BUILD and TEST with Confidence</h1>
 				</Row>
-				<Row center="xs" style={{background:'#2975e8'}} >
+				<Row center="xs" style={{background:'#3CB371'}} >
 				<h1  style={{color:'white',height:'40%',fontFamily:'Acme'}}>Orchestropus unifies issues, code review, CI into a single UI</h1>
 				</Row>
-				<Row center="xs" style={{background:'#2975e8',marginTop:'-7'}}>
+				<Row center="xs" style={{background:'#3CB371',marginTop:'-7'}}>
 				<RaisedButton  label="Login  with  Github"  href={"https://github.com/login/oauth/authorize?client_id=d595532bb5ab99a235f8"} labelStyle={{color:"white"}} buttonStyle={{background:"#ed6504"}}  onClick={this.handleClick} icon={<i className="material-icons" >account_box
 				</i>}/>
 				</Row>
-
-				<Row center="xs" style={{background:'#2975e8'}} >
+				<Row center="xs" style={{background:'#3CB371'}} >
 				<br/>
 				</Row>
 				</div>
