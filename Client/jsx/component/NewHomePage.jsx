@@ -27,17 +27,18 @@ export default class HomePageUpdated extends React.Component
 
 				<Grid style={{width:'98%'}}>
 
-				<Row center="xs" style={{background:'black'}}>
 
-				<h1 style={{fontSize:'40',color:'white',paddingRight:'980'}}>Orchestropus</h1>
-				<img  style={{width:'4%',height:'4%',marginRight:'1300',marginTop:'-55'}}src="../jsx/images/logo.png"/>
+				<Row center="xs" style={{background:'black'}}>
+				<h1 style={{fontSize:'40',color:'white',fontFamily:'Acme'}}>Orchestropus</h1>
 				</Row>
 				<Row center="xs" style={{background:'black'}}>
 					<img src="../jsx/images/giphy.gif" />
 				</Row>
 				<Row center="xs" style={{background:'black'}} >
-				<h1 style={{color:'white'}}>BUILD and TEST with Confidence</h1>
-				<h1  style={{color:'white',height:'40%'}}>Octopus unifies issues, code review, CI into a single UI</h1>
+				<h1 style={{color:'white',fontFamily:'Acme'}}>BUILD and TEST with Confidence</h1>
+				</Row>
+				<Row center="xs" style={{background:'black'}} >
+				<h1  style={{color:'white',height:'40%',fontFamily:'Acme'}}>Orchestropus unifies issues, code review, CI into a single UI</h1>
 				</Row>
 				<Row center="xs" style={{background:'black',marginTop:'-2'}}>
 				<RaisedButton  label="Login  with  Github"  href={"https://github.com/login/oauth/authorize?client_id=d595532bb5ab99a235f8"} labelStyle={{color:"white"}} buttonStyle={{background:"#FF5722 "}}  onClick={this.handleClick} icon={<i className="material-icons" >account_box
@@ -50,10 +51,10 @@ export default class HomePageUpdated extends React.Component
                 	  </Col>
 
                 	  <Col center="xs" className = "AppDesc">
-                	  <h3 className="AppHeading" center="xs">What is Octopus?</h3>
-                	  <p className="AppText"> Octopus is a self-contained, open source automation server which
+                	  <h3 className="AppHeading" center="xs">What is Orchestropus?</h3>
+                	  <p className="AppText"> Orchestropus is a self-contained, open source automation server which
 										<br/>can be used to automate all sorts of tasks such as building and testing
-										<br/>your software. Easily sync your GitHub projects withOctopus and you will
+										<br/>your software. Easily sync your GitHub projects withOrchestropus and you will
 										<br/>be testing your code in no time.!
 										</p>
                 	  </Col>
@@ -71,7 +72,7 @@ export default class HomePageUpdated extends React.Component
 					<i className="material-icons" style={{fontSize: '48px',color: '#006064'}}>cached</i>
 					<h4>Task monitoring</h4>
 				  <p className="FeaturesDesc">Easy Monitoring of your tasks
-				  <br/>at each stage of the process.Octopus
+				  <br/>at each stage of the process.Orchestropus
 				  <br/>provides the features to constantly
 				  <br/>monitor your jobs that are running.</p>
 				  </Col>
@@ -80,7 +81,7 @@ export default class HomePageUpdated extends React.Component
 				  <Col >
 					<i className="material-icons" style={{fontSize: '48px',color: '#006064'}}>equalizer</i>
 					<h4>Rich report system</h4>
-				  <p className="FeaturesDesc">Octopus provides a stable report
+				  <p className="FeaturesDesc">Orchestropus provides a stable report
 				  <br/> system, that let's the user to know
 				  <br/> the reports of their job done by providing
 				  <br/> specific details about the job.</p>
@@ -90,7 +91,7 @@ export default class HomePageUpdated extends React.Component
 				  <Col >
 						<i className="material-icons" style={{fontSize: '48px',color: '#006064'}}>build</i>
 						  <h4>Build your App</h4>
-				  <p className="FeaturesDesc">Octopus provides the user
+				  <p className="FeaturesDesc">Orchestropus provides the user
 				  <br/>the feature of automatically installing all
 				  <br/>the dependancies that are required to run
 				  <br/>and build the project.
@@ -144,8 +145,8 @@ export default class HomePageUpdated extends React.Component
 							    <List >
 							     <h1 style={{fontSize:20,textTransform: 'uppercase'}}>PLATFORM</h1>
 							      <ListItem primaryText="Features" style={{color:'steelblue'}} />
-							      <ListItem primaryText="Octopus Basic" style={{color:'steelblue'}}  />
-							      <ListItem primaryText="Octopus Pro"  style={{color:'steelblue'}}/>
+							      <ListItem primaryText="Orchestropus Basic" style={{color:'steelblue'}}  />
+							      <ListItem primaryText="Orchestropus Pro"  style={{color:'steelblue'}}/>
 							    </List>
 									</Col>
 
@@ -162,16 +163,16 @@ export default class HomePageUpdated extends React.Component
 								 <Col>
 							    <List >
 							      <h1 style={{fontSize:20,textTransform: 'uppercase'}}>PRICING</h1>
-							      <ListItem primaryText="Octopus Pricing" style={{color:'steelblue'}}  />
-							      <ListItem primaryText="Octopus Basic" style={{color:'steelblue'}}  />
-							      <ListItem primaryText="Octopus Pro" style={{color:'steelblue'}}  />
+							      <ListItem primaryText="Orchestropus Pricing" style={{color:'steelblue'}}  />
+							      <ListItem primaryText="Orchestropus Basic" style={{color:'steelblue'}}  />
+							      <ListItem primaryText="Orchestropus Pro" style={{color:'steelblue'}}  />
 							      <ListItem primaryText="Contact sales"  style={{color:'steelblue'}} />
 							    </List>
 									</Col>
 
 									</Row>
 
-									<p>Copyright &copy; Octopus.com</p>
+									<p>Copyright &copy; Orchestropus.com</p>
 									</footer>
 							</Grid>
 										);
