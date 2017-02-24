@@ -1,4 +1,0 @@
-#!/bin/bash
-#The code-review script
-
-echo "code review could be done externally."

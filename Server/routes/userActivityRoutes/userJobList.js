@@ -1,4 +1,3 @@
-const Router = require('express').Router();
 const UJobList = require('express').Router();
 UJobList.use(require('body-parser').json());
 const MongoClient = require('mongodb').MongoClient;
@@ -6,7 +5,7 @@ const MongoClient = require('mongodb').MongoClient;
 
 var url = "mongodb://localhost:27017/users";
 
-Router.post('/userjoblist', function(req, res, next) {
+UJobList.post('/userjoblist', function(req, res, next) {
 	console.log('get user joblist',req.body);
 	MongoClient.connect(url,function(err,db){
     if(err){
@@ -26,4 +25,4 @@ Router.post('/userjoblist', function(req, res, next) {
   });//end of mongoclient
 
 })
-module.exports = Router;
+module.exports = UJobList;

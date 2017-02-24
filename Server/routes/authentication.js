@@ -40,6 +40,7 @@ Router.get('/authentication', function(req, response, next) {
                       response.cookie("access_token", encoded_accestoken);
                       response.cookie("user",userName);
                       response.cookie("repos_url",res.body.repos_url);
+                      response.cookie("avtar",res.body.avatar_url);
                       if (adminList.indexOf(userName) !== -1) {
                           response.cookie("type", "admin");
                           response.redirect("http://localhost:3000/#/AdminPipeline");
