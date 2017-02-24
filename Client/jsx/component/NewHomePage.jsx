@@ -25,7 +25,7 @@ export default class HomePageUpdated extends React.Component
 	{
 		return(
 
-				<Grid style={{width:'98%'}}>
+				<Grid style={{width:'99.2%'}}>
 
 <div style={{style:'#2975e8'}}>
 
@@ -152,29 +152,29 @@ export default class HomePageUpdated extends React.Component
 									<Col >
 							    <List >
 							     <h1 style={{fontSize:20,textTransform: 'uppercase',fontFamily:'Quantico',hoverColor:'white'}}>PLATFORM</h1>
-							      <ListItem primaryText="Features" style={{color:'steelblue',fontFamily:'Quantico',hoverColor:'white'}} />
-							      <ListItem primaryText="Orchestropus Basic" style={{color:'steelblue',fontFamily:'Quantico',hoverColor:'white'}}  />
-							      <ListItem primaryText="Orchestropus Pro"  style={{color:'steelblue',fontFamily:'Quantico',hoverColor:'white'}}/>
+							      <ListItem primaryText="Features" style={{color:'white',fontFamily:'Quantico',hoverColor:'white'}} />
+							      <ListItem primaryText="Orchestropus Basic" style={{color:'white',fontFamily:'Quantico',hoverColor:'white'}}  />
+							      <ListItem primaryText="Orchestropus Pro"  style={{color:'white',fontFamily:'Quantico',hoverColor:'white'}}/>
 							    </List>
 									</Col>
 
 									<Col>
 									  <List >
 							      <h1 style={{fontSize:20,textTransform: 'uppercase',fontFamily:'Quantico',hoverColor:'white'}}>COMPANY</h1>
-							      <ListItem primaryText="Team" style={{color:'steelblue',fontFamily:'Quantico',hoverColor:'white'}}/>
-							      <ListItem primaryText="Customers"  style={{color:'steelblue',fontFamily:'Quantico',hoverColor:'white',hoverColor:'white'}} />
-							      <ListItem primaryText="Careers"  style={{color:'steelblue',fontFamily:'Quantico',fontFamily:'Quantico',hoverColor:'white'}}  />
-							      <ListItem primaryText="Press" style={{color:'steelblue',fontFamily:'Quantico',hoverColor:'white'}} />
+							      <ListItem primaryText="Team" style={{color:'white',fontFamily:'Quantico',hoverColor:'white'}}/>
+							      <ListItem primaryText="Customers"  style={{color:'white',fontFamily:'Quantico',hoverColor:'white',hoverColor:'white'}} />
+							      <ListItem primaryText="Careers"  style={{color:'white',fontFamily:'Quantico',fontFamily:'Quantico',hoverColor:'white'}}  />
+							      <ListItem primaryText="Press" style={{color:'white',fontFamily:'Quantico',hoverColor:'white'}} />
 							    </List>
 									 </Col>
 
 								 <Col>
 							    <List >
 							      <h1 style={{fontSize:20,textTransform: 'uppercase',fontFamily:'Quantico',hoverColor:'white'}}>PRICING</h1>
-							      <ListItem primaryText="Orchestropus Pricing" style={{color:'steelblue',fontFamily:'Quantico',hoverColor:'white'}}  />
-							      <ListItem primaryText="Orchestropus Basic" style={{color:'steelblue',fontFamily:'Quantico',hoverColor:'white'}}  />
-							      <ListItem primaryText="Orchestropus Pro" style={{color:'steelblue',fontFamily:'Quantico',hoverColor:'white'}}  />
-							      <ListItem primaryText="Contact sales"  style={{color:'steelblue',fontFamily:'Quantico',hoverColor:'white'}} />
+							      <ListItem primaryText="Orchestropus Pricing" style={{color:'white',fontFamily:'Quantico',hoverColor:'white'}}  />
+							      <ListItem primaryText="Orchestropus Basic" style={{color:'white',fontFamily:'Quantico',hoverColor:'white'}}  />
+							      <ListItem primaryText="Orchestropus Pro" style={{color:'white',fontFamily:'Quantico',hoverColor:'white'}}  />
+							      <ListItem primaryText="Contact sales"  style={{color:'white',fontFamily:'Quantico',hoverColor:'white'}} />
 							    </List>
 									</Col>
 
