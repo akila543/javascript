@@ -3,6 +3,7 @@ var ReactDOM = require('react-dom');
 var yamlLint = require('yaml-lint');
 var yaml = require('js-yaml');
 import RaisedButton from 'material-ui/RaisedButton';
+import {GridList, GridTile} from 'material-ui/GridList';
 import Graph from './graph.jsx';
 import Dialog from 'material-ui/Dialog';
 import brace from 'brace';
@@ -26,16 +27,17 @@ class WorkFlowEdit extends React.Component
 		super(props);
 		this.updateCode = this.updateCode.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.handleVisualise = this.handleVisualise.bind(this);
 		this.handleClose = this.handleClose.bind(this);
+		this.split=this.split.bind(this);
 		this.state={open:false,graph:'',jsonCode:'',templateName:this.props.filename,code:this.props.data ,err:[],isValid:false, isSubmit:false}
 
 	}
 
   componentWillReceiveProps(newProps)
   {
-   this.setState({code:YAML.stringify(newProps.data),templateName:newProps.filename})
+   this.setState({code:YAML.stringify(newProps.data),templateName:newProps.filename});
   }
+
 
 	handleClose()
 	{
@@ -44,8 +46,8 @@ class WorkFlowEdit extends React.Component
 
 
 	split()
-	{
-		var obj = doc.stages;
+	{	console.log("splt");
+		var obj = yaml.safeLoad(this.state.code).stages;
 
 		var jsonArray=[];
 		var incr =1;
@@ -81,8 +83,8 @@ class WorkFlowEdit extends React.Component
 
 					//console.log(node[i] + " index "+(node.indexOf(node[i])+1) +" depends_on "+ (node.indexOf(edge[i].toString())+1));
 					var temp = {
-						source:node.indexOf(node[i])+1,
-						target:(node.indexOf(edge[i].toString())+1),
+						target:node.indexOf(node[i])+1,
+						source:(node.indexOf(edge[i].toString())+1),
 						type:"emptyEdge"
 					}
 					json.edges.push(temp);
@@ -94,8 +96,8 @@ class WorkFlowEdit extends React.Component
 							//console.log("separate printing====>"+node.indexOf(edge[i][k]));
 							//console.log(node[i] +" index "+node.indexOf(node[i])+" depends_on "+ edge[i][k]+" index "+node.indexOf(edge[i][k]));
 							var temp = {
-						source:(node.indexOf(node[i])+1),
-						target:(node.indexOf(edge[i][k])+1),
+						target:(node.indexOf(node[i])+1),
+						source:(node.indexOf(edge[i][k])+1),
 						type:"emptyEdge"
 								}
 								json.edges.push(temp);
@@ -111,15 +113,9 @@ class WorkFlowEdit extends React.Component
 	this.setState({open:true});
 
 	}
-	handleVisualise()
-	{
-		doc = yaml.safeLoad(this.state.code);
-		console.log(doc);
-		this.split();
-	}
 
 
-		handleSubmit()
+		/*handleSubmit()
 		{
 			var that = this;
 			yamlLint.lint(this.state.code).then(function () {
@@ -142,11 +138,101 @@ class WorkFlowEdit extends React.Component
 				console.log(error.message);
 			});
 
+		}*/
+
+		updateCode(newcode)
+		{
+			if(newcode)
+			{
+				this.setState({code:newcode});
+			}
+			if(true)
+			{
+				this.checkDependency();
+			}
 		}
 
-		updateCode(newCode)
+		checkDependency()
+		{	var errors=[];
+			var errLines=[];
+			var workflow=yaml.safeLoad(this.state.code);
+			var stagesObj=workflow.stages; //its a Json
+			var stages=Object.keys(stagesObj); //list of all stages
+			stages.forEach(function(item){
+				var depends_on=stagesObj[item].depends_on;
+				if(depends_on != null)
+				{
+					depends_on.map(function(e){
+						if(stages.indexOf(e) == -1){
+							errors.push(e);
+						}
+					}); //end of map
+				}
+			});
+			console.log("Errors:"+ errors);
+			/*-------------getting lineNumber for each error and dispalying in editor---------------------------*/
+			var annot=[];
+			if(errors.length != 0)
+			{
+				var mycode=this.state.code;
+				errors.map(function(item){
+					var index=mycode.indexOf(item);
+					var tempString = mycode.substring(0, index);
+					var lineNumber = tempString.split('\n').length;
+					errLines.push(lineNumber);
+					annot.push({ row: lineNumber-1, column: 2, type: 'error', text:'some error.'});
+
+				}); //end of map
+			} //end of if
+			this.setState({err:annot});
+		}//end of checkDependency
+
+		handleSubmit()
 		{
-			this.setState({code:newCode});
+				var that = this;
+				this.handleVerify(function(){
+					if(that.state.isValid)
+					{
+						that.setState({isSubmit:true});
+						that.setState({err:[]});
+						alert("Great!!! Workflow Submitted.");
+					}
+					else{
+						console.log('dependency errors');
+					}
+				});
+		}
+
+		handleVerify(callback)
+		{
+			if(this.state.err.length === 0)
+			{
+				var that = this;
+				yamlLint.lint(that.state.code).then(function () {
+					console.log(that.state.err.length);
+					that.setState({
+						isValid: true,
+					});
+					callback();
+				}).catch(function (error) {
+					alert("You still have linting errors");
+					var errtext=error.message;
+					var startindex=error.message.indexOf("at line") + 8;
+					var endindex=error.message.indexOf("column")-2;
+
+					var errrow=error.message.substring(startindex,endindex)-1;
+					var myerror=[{ row: errrow, column: 2, type: 'error', text:errtext }];
+					that.setState({isValid:false});
+					that.setState({err:myerror})
+					console.log(error.message);
+					callback();
+				});
+			}
+			else
+			{	this.setState({isValid:false});
+				alert('OOPS!!!! you have ERRORS');
+				callback();
+			}
 		}
 
 
@@ -173,35 +259,38 @@ class WorkFlowEdit extends React.Component
 			}
 			else
 			{
-				box= <div className="container" style={{width:"auto"}}>
-					<div className="row" >
-						<AceEditor
-							mode="yaml"
-							theme="tomorrow"
-							value={this.state.code}
-							onChange={this.updateCode}
-							name="UNIQUE_ID_OF_DIV"
-							annotations={this.state.err}
-							editorProps={{$blockScrolling: true}}
-							style={{width:"60%",border:"1px solid black",margin:"10px"}}
-							/>
-					</div>
+				box= <GridList cols={2} cellHeight='auto'>
+							<GridTile>
+								<div>
+									<AceEditor
+										value={this.state.code}
+										mode="yaml"
+										theme="tomorrow"
+										onChange={this.updateCode}
+										name="ace_editor"
+										id="ace_editor"
+										annotations={this.state.err}
+										editorProps={{$blockScrolling: true}}
+										style={{border:"1px solid black",margin:"5%",width:"90%"}}
+										onLoad={(editor) => {
+											editor.focus();
+											editor.getSession();
+										}}
+										/>
+								</div>
+								<div style={{textAlign:"left"}}>
+									<RaisedButton label="Submit" secondary={true} onClick={this.handleSubmit} style={{margin:"1%"}} />
+									<FlatButton label="Visualise" primary={true} onClick={this.split} style={{margin:"1%"}} />
+								</div>
 
-					<div className="row" style={{textAlign:"left"}}>
-						<RaisedButton label="Submit" secondary={true} onClick={this.handleSubmit} style={{margin:"1%"}} />
-						<RaisedButton label="Visualise" primary={true} onClick={this.handleVisualise} style={{margin:"1%"}} />
+							</GridTile>
+							<GridTile style={{height:"70%",margin:"3%"}}>
+								<div>
+									{this.state.graph}
+								</div>
+							</GridTile>
 
-						<Dialog
-							title="Dialog With Actions"
-							actions={actions}
-							modal={false}
-							open={this.state.open}
-							onRequestClose={this.handleClose}>
-							{this.state.graph}
-						</Dialog>
-					</div>
-
-				</div>
+						 </GridList>
 			}
 
 
@@ -215,3 +304,4 @@ class WorkFlowEdit extends React.Component
 	} //end of class TemplateEditor
 
 	export default WorkFlowEdit;
+

@@ -21,7 +21,7 @@ const muiTheme = getMuiTheme({
 primary1Color:cyan900
 ,
 }
- });
+});
 
 
 function autherize(nextState,replace)

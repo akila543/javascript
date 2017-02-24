@@ -33,7 +33,6 @@ const SpecialEdgeShape = (
 export default {
   NodeTypes: {
     empty: {
-      typeText: "None",
       shapeId: "#empty",
       shape: EmptyShape
     },

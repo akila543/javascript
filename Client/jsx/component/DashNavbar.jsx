@@ -7,7 +7,8 @@ import {Link, hashHistory} from 'react-router';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import ActionDashboard from 'material-ui/svg-icons/action/dashboard';
-import ActionSearch from 'material-ui/svg-icons/action/search';
+import ActionVisibility from 'material-ui/svg-icons/action/visibility';
+import ActionCode from 'material-ui/svg-icons/action/code';
 import IconButton from 'material-ui/IconButton';
 import Menu from 'material-ui/Menu';
 
@@ -57,13 +58,13 @@ class DashNavbar extends React.Component {
                 <Drawer docked={false} width={250} open={this.state.open} onRequestChange={(open) => this.setState({open})}>
                     <Menu desktop={true} width={320}>
                          <Link to="/monitor">
-                            <MenuItem onTouchTap={this.handleToggle} primaryText="MONITORING" leftIcon={<ActionSearch />} style={{textAlign:'left',display: 'inline-block', fontSize: '17px',marginTop: '4px',width:'250'}}/>
+                            <MenuItem onTouchTap={this.handleToggle} primaryText="MONITORING" leftIcon={<ActionVisibility />} style={{textAlign:'left',display: 'inline-block', fontSize: '17px',marginTop: '4px',width:'250'}}/>
                          </Link>
                          <Link to='/workflows'>
                          <MenuItem onTouchTap={this.handleToggle} primaryText="WORKFLOW" leftIcon={<ActionDashboard />} style={{textAlign:'left',display: 'inline-block', fontSize: '17px',marginTop: '4px',width:'250'}}/>
                          </Link>
                          <Link to='/AdminPipeline'>
-			              <MenuItem  onTouchTap={this.handleToggle} primaryText="TEST REPO" leftIcon={<ActionDashboard />}  style={{textAlign:'left',display: 'inline-block', fontSize: '17px',marginTop: '4px',width:'250' }}/>
+			              <MenuItem  onTouchTap={this.handleToggle} primaryText="TESTREPO" leftIcon={<ActionCode />}  style={{textAlign:'left',display: 'inline-block', fontSize: '17px',marginTop: '4px',width:'250' }}/>
                          </Link>
                     </Menu>
                 </Drawer>
