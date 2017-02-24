@@ -11,19 +11,6 @@ import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import {Link, hashHistory} from 'react-router';
 
-export default class AdminInitiate extends React.Component {
-    constructor(props)
-    {
-        super();
-        this.state={open: false,UserName:'user',repos:['Repo1','Repo2','Repo3','Repo4','Repo5'],repoUrl:'',selectedRepo:'',testedRepo:[]};
-        this.handleRepo = this.handleRepo.bind(this);
-        this.handleType = this.handleType.bind(this);
-        this.handleUrl = this.handleUrl.bind(this);
-        this.handleLogout=this.handleLogout.bind(this);
-        this.handleOpen = this.handleOpen.bind(this);
-        this.handleClose = this.handleClose.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
 import io from 'socket.io-client';
 import HtmlHint from './HtmlHint.jsx';
 import Build from './Build.jsx';
@@ -59,6 +46,21 @@ const styles = {
   }
 };
 
+
+export default class AdminInitiate extends React.Component {
+    constructor(props)
+    {
+        super();
+        this.state={open: false,UserName:'user',repos:['Repo1','Repo2','Repo3','Repo4','Repo5'],repoUrl:'',selectedRepo:'',testedRepo:[]};
+        this.handleRepo = this.handleRepo.bind(this);
+        this.handleType = this.handleType.bind(this);
+        this.handleUrl = this.handleUrl.bind(this);
+        this.handleLogout=this.handleLogout.bind(this);
+        this.handleOpen = this.handleOpen.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
 class AdminInitiate extends React.Component{
   constructor(props){
     super(props);
@@ -83,12 +85,12 @@ class AdminInitiate extends React.Component{
         {this.handleSubmit()}
     }
 
-    handleOpen () 
+    handleOpen ()
     {
     this.setState({open: true});
     }
 
-    handleClose() 
+    handleClose()
     {
     this.setState({open: false});
   ``}
@@ -244,7 +246,7 @@ class AdminInitiate extends React.Component{
     ];
 
     return (
-        <div>          
+        <div>
           <Grid style={{marginTop:"1%"}}>
              <Row >
 
@@ -282,16 +284,15 @@ class AdminInitiate extends React.Component{
                     </Card>
             </Col>
             </Row>
-            
+
         </Grid>
         <Dialog
           title="It seems no results associated with this repo. Do you wish to test this repo?"
           actions={actions}
           modal={false}
           open={this.state.open}
-          onRequestClose={this.handleClose}> 
+          onRequestClose={this.handleClose}>
         </Dialog>
          </div>);
   }
 }
-
