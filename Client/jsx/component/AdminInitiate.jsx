@@ -56,13 +56,12 @@ export default class User extends React.Component {
     {
     this.setState({open: false});
   }
-
     handleSubmit()
     {
         this.setState({open: false});
         this.setState({isSubmit:true});
         var that=this;
-        Request.post('/initiate').set('Accept','application/json').send({data:that.state.selectedRepo,templateName:'CI-Pipeline.yml'})
+        Request.post('/initiate').set('Accept','application/json').send({userName:cookie.load('user'),data:that.state.selectedRepo,templateName:'CI-Pipeline.yml'})
         .end(function(err, res){
              if (err || !res.ok) {
                alert('Oh no! error');
@@ -116,24 +115,26 @@ export default class User extends React.Component {
            }
          });
 }
-
+    handleLogout()
+    {
+        cookie.remove("access_token");
+        cookie.remove("type");
+    }
 
     handleUrl(e)
     {
-      e.preventDefault();
-        var temp = "http://github.com/"+e.target.value;
-        this.setState({selectedRepo:temp})
+        var temp = "http://github.com/"+e;
+        this.setState({selectedRepo:temp,UserName:cookie.load('user')})
         var that = this;
-        console.log(that.state.UserName,temp);
-         Request.get('/userjoblist').set('Accept','application/json').send({user:that.state.UserName,repoUrl:temp}).end(function(err, res) {
+        console.log(this.state.UserName,temp,'\n');
+         Request.post('/userjoblist').set('Accept','application/json').send({user:cookie.load('user'),repoUrl:temp}).end(function(err, res) {
             if (err || !res.ok)
                 alert('Oh no! error');
             else {
-                    console.log(res.text.length);
+                    console.log(res.text);
                     if(res.text=='[]')
                     {
-                        console.log(that);
-                        {that.handleOpen()}
+                        {that.handleOpen()};
                     }
                  }
              })
@@ -195,12 +196,12 @@ export default class User extends React.Component {
           <Grid style={{marginTop:"1%"}}>
              <Row >
 
-             <Col xs={12} sm={12} md={12} lg={12}>
+             <Col xs={8} sm={8} md={8} lg={8}>
                     <TextField value={this.state.selectedRepo} floatingLabelText="Enter your git repo url" onChange={this.handleType}/>
                     <RaisedButton label="Submit" secondary={true} style={{marginLeft:"2%"}} onClick={this.handleRepo}/>
              </Col>
              </Row>
-                <Row style={{marginTop:"1%"}} around="lg">
+                <Row style={{marginTop:"1%"}} around="xs">
                   <Col lg={5}>
                     {box}
                   </Col>
@@ -217,7 +218,7 @@ export default class User extends React.Component {
                     </Card>
                  </Col>
             </Row>
-            <Row around="xs">
+            <Row style={{marginTop:"1%"}} around="xs">
                <Col lg={5}>
                </Col>
             <Col lgOffset={1} lg={5} md={5} mdOffset={1} sm={7} smOffset={1}  xs={12}>
@@ -226,7 +227,7 @@ export default class User extends React.Component {
                             <CardText>
                                 <List>
                                 {this.state.testedRepo.map(text=>
-                                    <ListItem key={text}  primaryText={text} onClick={this.handleUrl}/>
+                                    <ListItem key={text}  primaryText={text} onClick={()=>this.handleUrl(text)}/>
                                 )}
                                 </List>
                             </CardText>
