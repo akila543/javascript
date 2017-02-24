@@ -42,10 +42,10 @@ Router.get('/authentication', function(req, response, next) {
                       response.cookie("repos_url",res.body.repos_url);
                       if (adminList.indexOf(userName) !== -1) {
                           response.cookie("type", "admin");
-                          response.redirect("http://localhost:3000/#/monitor");
+                          response.redirect("http://localhost:3000/#/AdminPipeline");
                       } else {
                           response.cookie("type", "user");
-                          response.redirect("http://localhost:3000/#/AdminPipeline");
+                          response.redirect("http://localhost:3000/#/user");
                       }
                     });
                 }
