@@ -102,7 +102,7 @@
                                   default:
                                       that.setState({stageArr6: (
                                               <div>
-                                                  <h2 style={{color:'#FFA500'}}>{data.jobId} Status:{data.status}</h2>
+                                                  <h4 style={{color:'#FFA500'}}>{data.jobId} Status:{data.status}</h4>
 
                                               </div>
 
@@ -204,12 +204,11 @@
                       <RaisedButton label="Submit" secondary={true} style={{marginLeft:"2%"}} onClick={this.handleRepo}/>
                </Col>
                </Row>
-                  <Row style={{marginTop:"1%"}}>
-                    <Col style={{marginRight:"1%"}} lgOffset={2} lg={5} md={5} mdOffset={2} sm={7} smOffset={8}  xs={12}>
+                  <Row style={{marginTop:"1%"}} around="xs">
+                    <Col lg={5}>
                       {box}
                     </Col>
-                   <Col lgOffset={8} lg={5} md={5} mdOffset={8} sm={7} smOffset={8} xs={12}>
-
+                    <Col lgOffset={1} lg={5} md={5} mdOffset={1} sm={7} smOffset={1}  xs={12}>
                       <Card>
                           <CardHeader title="Your Repositories" style={{backgroundColor:"#BDBDBD"}}/>
                               <CardText>
@@ -222,8 +221,10 @@
                       </Card>
                    </Col>
               </Row>
-              <Row style={{marginTop:"1%"}}>
-              <Col lgOffset={8} lg={5} md={5} mdOffset={8} sm={7} smOffset={8}  xs={12}>
+              <Row style={{marginTop:"1%"}} around="xs">
+                 <Col lg={5}>
+                 </Col>
+              <Col lgOffset={1} lg={5} md={5} mdOffset={1} sm={7} smOffset={1}  xs={12}>
               <Card style={{marginTop:"5%"}}>
                           <CardHeader title="Tested Repositories" style={{backgroundColor:"#BDBDBD"}}/>
                               <CardText>

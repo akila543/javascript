@@ -28,9 +28,14 @@ class Build extends React.Component {
     render() {
         console.log(this.state.data);
         if (this.state.data.status === 'Complete')
-            var avatar = "../jsx/images/avatar1.jpeg";
-        else
-            var avatar = "../jsx/images/avatar2.jpeg";
+  					var avatar = "../jsx/images/avatar1.jpeg";
+  			else   if (this.state.data.status === 'Failed')
+  					var avatar = "../jsx/images/avatar2.jpeg";
+  			else if(this.state.data.status==='Blocked')
+  					var avatar="../jsx/images/block.png";
+  			else {
+  				var avatar="../jsx/images/pending.png";
+  			}
         return (
             <Card >
                 <CardHeader title="Build" avatar={avatar} subtitle={this.state.data.status} actAsExpander={true} showExpandableButton={true}/>
