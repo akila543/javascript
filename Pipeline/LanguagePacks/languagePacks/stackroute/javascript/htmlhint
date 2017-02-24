@@ -2,4 +2,5 @@
 #The htmlhint script
 
 cd $WORKSPACE
-htmlhint --format json
+
+htmlhint --format json ./**/*.{htm,html}  

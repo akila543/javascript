@@ -15,7 +15,6 @@ module.exports = function(user,jobId,status,callback){
             console.log(err);
           }
           else {
-            console.log(reply);
             callback();
           }
       });//end of findall

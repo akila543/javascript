@@ -14,11 +14,12 @@
     overflow: hidden !important;
 }
 
+
 .hero{
     /*max-width:auto;
     height:auto;*/
     filter: brightness(70%);
-
+    
 }
 .hero img{
   width:105%;
@@ -31,7 +32,7 @@
 .AppTitle
 {
     font-family: 'Caveat Brush', cursive;
-    position: absolute;
+    position: relative;
     top:-30px;
     left:30px;
     color: white;

@@ -101,17 +101,7 @@ export default class AdminInitiate extends React.Component {
     {
     this.setState({open: false});
   }
-    handleSubmit()
-    {
-        this.setState({open: false});
-        Request.post('/initiate').set('Accept','application/json').send({data:this.state.selectedRepo,templateName:'CI-Template'})
-        .end((err,res)=>{
-            if(err || !res.ok)
-                console.log(err);
-            else
-                console.log(res.text)
-        })
-    }
+
     handleLogout()
     {
         cookie.remove("access_token");
@@ -120,10 +110,12 @@ export default class AdminInitiate extends React.Component {
 
     handleUrl(e)
     {
-        var temp = "http://github.com/"+e;
+      e.preventDefault();
+        var temp = "http://github.com/"+e.target.value;
         this.setState({selectedRepo:temp})
         var that = this;
-         Request.get('/userjoblist').set('Accept', 'application/json').send({user:this.state.UserName,repoUrl:temp}).end(function(err, res) {
+        console.log(that.state.UserName,temp);
+         Request.get('/userjoblist').set('Accept','application/json').send({user:that.state.UserName,repoUrl:temp}).end(function(err, res) {
             if (err || !res.ok)
                 alert('Oh no! error');
             else {
@@ -281,7 +273,7 @@ export default class AdminInitiate extends React.Component {
                             <CardText>
                                 <List>
                                 {this.state.testedRepo.map(text=>
-                                    <ListItem key={text}  primaryText={text} onClick={()=>this.handleUrl(text)}/>
+                                    <ListItem key={text}  primaryText={text} onClick={this.handleUrl}/>
                                 )}
                                 </List>
                             </CardText>

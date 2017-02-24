@@ -6,8 +6,8 @@ const MongoClient = require('mongodb').MongoClient;
 
 var url = "mongodb://localhost:27017/users";
 
-Router.get('/userjoblist', function(req, res, next) {
-
+Router.post('/userjoblist', function(req, res, next) {
+	console.log('get user joblist',req.body);
 	MongoClient.connect(url,function(err,db){
     if(err){
       console.log(err);
