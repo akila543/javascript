@@ -17,6 +17,7 @@ import Eslint from './Eslint.jsx';
 import Mocha from './Mocha.jsx';
 import CodeCoverage from './CodeCoverage.jsx';
 import Results from './Results.jsx';
+var validUrl = require('valid-url');
 
 export default class User extends React.Component {
     constructor(props)
@@ -58,6 +59,9 @@ export default class User extends React.Component {
   }
     handleSubmit()
     {
+      var regexp=/http:\/\/github\.com\/*\/*/;
+
+ if((validUrl.isUri(this.state.selectedRepo))&&regexp.test(this.state.selectedRepo)){
         this.setState({open: false});
         this.setState({isSubmit:true});
         var that=this;
@@ -114,6 +118,10 @@ export default class User extends React.Component {
                     });
            }
          });
+       }
+       else {
+         alert('Not a Valid URL');
+       }
 }
     handleLogout()
     {
