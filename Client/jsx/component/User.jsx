@@ -22,7 +22,7 @@
       constructor(props)
       {
           super();
-          this.state={open: false,UserName:'user',isSubmit:false,repos:['Repo1','Repo2','Repo3','Repo4','Repo5'],repoUrl:'',selectedRepo:'',testedRepo:[],socket: io.connect('http://localhost:3000/monitor')};
+          this.state={open: false,UserName:'user',isSubmit:false,repos:[],repoUrl:'',selectedRepo:'',testedRepo:[],socket: io.connect('http://localhost:3000/monitor')};
           this.handleRepo = this.handleRepo.bind(this);
           this.handleType = this.handleType.bind(this);
           this.handleUrl = this.handleUrl.bind(this);
@@ -205,7 +205,7 @@
                </Col>
                </Row>
                   <Row style={{marginTop:"1%"}}>
-                    <Col style={{marginRight:"1%"}} lgOffset={2} lg={5} md={5} mdOffset={2} sm={7} smOffset={8}  xs={12}>
+                    <Col lg={5} md={5} sm={7} xs={12}>
                       {box}
                     </Col>
                    <Col lgOffset={8} lg={5} md={5} mdOffset={8} sm={7} smOffset={8} xs={12}>
