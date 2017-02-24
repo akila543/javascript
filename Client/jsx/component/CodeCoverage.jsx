@@ -18,6 +18,14 @@ class CodeCoverage extends React.Component {
 
   render() {
 		console.log(this.state.data);
+    var output='';
+    var error='';
+    if(this.state.data.stdout!=undefined){
+    var out=this.state.data.stdout.split("=");
+    var err=this.state.data.stderr.split('=');
+    output=out[62];
+    error=err;
+  }
     if(this.state.data.status==='Complete')
     var avatar="../jsx/images/avatar1.jpeg";
   else
@@ -34,8 +42,8 @@ class CodeCoverage extends React.Component {
       <CardTitle title="Report" expandable={true} />
         <CardText expandable={true}>
         <h4>Status:</h4><div><pre>{this.state.data.status}</pre></div><br/>
-        <h4>Output:</h4>{this.state.data.stdout}<br />
-        <h4>Errors:</h4>{this.state.data.stderr}<br />
+        <h4>Output:</h4><div><pre>{output}</pre></div><br />
+        <h4>Errors:</h4><div><pre>{error}</pre></div><br />
         <h4>ExitCode:</h4><div><pre>{this.state.data.exitCode}</pre></div><br/>
         <h4>Initialized@:</h4><div><pre>{this.state.data.initialized}</pre></div><br />
         <h4>scheduled@:</h4><div><pre>{this.state.data.scheduled}</pre></div><br />

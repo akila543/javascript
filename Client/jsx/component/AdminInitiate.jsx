@@ -10,7 +10,6 @@ import Request from 'superagent';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import {Link, hashHistory} from 'react-router';
-
 import io from 'socket.io-client';
 import HtmlHint from './HtmlHint.jsx';
 import Build from './Build.jsx';
@@ -45,13 +44,11 @@ const styles = {
     marginLeft:'50px'
   }
 };
-
-
 export default class AdminInitiate extends React.Component {
     constructor(props)
     {
         super();
-        this.state={open: false,UserName:'user',repos:['Repo1','Repo2','Repo3','Repo4','Repo5'],repoUrl:'',selectedRepo:'',testedRepo:[]};
+        this.state={input:'',completed:0, isSubmit:false,output:null,socket: io.connect('http://localhost:3000/monitor'),open: false,UserName:'user',repos:['Repo1','Repo2','Repo3','Repo4','Repo5'],repoUrl:'',selectedRepo:'',testedRepo:[]};
         this.handleRepo = this.handleRepo.bind(this);
         this.handleType = this.handleType.bind(this);
         this.handleUrl = this.handleUrl.bind(this);
@@ -60,15 +57,25 @@ export default class AdminInitiate extends React.Component {
         this.handleClose = this.handleClose.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+    handleType(e)
+    {
+        this.setState({selectedRepo:e.target.value});
+        this.setState({repoUrl:e.target.value});
+    }
+    handleRepo()
+    {
+        var array = this.state.testedRepo;
+        console.log(this.state.repoUrl);
+        var temp = this.state.repoUrl.split('/');
+        array.push(temp[3]+"/"+temp[4]);
+        this.setState({testedRepo:array});
+        {this.handleSubmit()}
+    }
 
-class AdminInitiate extends React.Component{
-  constructor(props){
-    super(props);
-    this.state = {input:'',completed:0, isSubmit:false,output:null,socket: io.connect('http://localhost:3000/monitor'),stageArr1:'',stageArr2:'',stageArr3:'',stageArr4:'',stageArr5:'',stageArr6:'',stage1:'',stage2:'',stage3:'',stage4:'',stage5:'',stage6:''};
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
-  }
+    handleOpen ()
+    {
+    this.setState({open: true});
+    }
 
     handleType(e)
     {
@@ -93,7 +100,7 @@ class AdminInitiate extends React.Component{
     handleClose()
     {
     this.setState({open: false});
-  ``}
+  }
     handleSubmit()
     {
         this.setState({open: false});
@@ -116,7 +123,6 @@ class AdminInitiate extends React.Component{
         var temp = "http://github.com/"+e;
         this.setState({selectedRepo:temp})
         var that = this;
-
          Request.get('/userjoblist').set('Accept', 'application/json').send({user:this.state.UserName,repoUrl:temp}).end(function(err, res) {
             if (err || !res.ok)
                 alert('Oh no! error');
@@ -155,67 +161,64 @@ class AdminInitiate extends React.Component{
              })
 
     }
-  render () {
-  handleSubmit(e){
-    console.log(this.state.input );
-    var that = this;
-    that.setState({isSubmit:true});
+    handleSubmit(){
+      this.setState({open: false});
+      this.setState({isSubmit:true});
+      var that=this;
+      Request.post('/initiate').set('Accept','application/json').send({data:that.state.selectedRepo,templateName:'CI-Pipeline.yml'})
+      .end(function(err, res){
+           if (err || !res.ok) {
+             alert('Oh no! error');
+           } else {
+             console.log(res.text);//getting the jobId
+             var userid=cookie.load('user');
+             console.log("cookie",userid);
+             var socket = that.state.socket;
+             socket.emit('getjobstatus', {jobId:res.text,userId:userid});
+                  socket.on('report', function(data) {
+                      if (data.status === 'Monitoring Stopped') {
+                          that.setState({stageArr: (
+                                  <h1>Monitoring Stopped</h1>
+                              )});
+                      } else {
+                          console.log(data.jobId, data.stageName, data.status);
+                          switch (data.stageName) {
+                              case 'build':
+                                  that.setState({stageArr1: (<Build res={data}/>)});
+                                  that.setState({stage1:data.status})
+                                  break;
+                              case 'eslint':
+                                  that.setState({stageArr2: (<Eslint res={data}/>)});
+                                  that.setState({stage2:data.status})
+                                  break;
+                              case 'htmlhint':
+                                  that.setState({stageArr3: (<HtmlHint res={data}/>)});
+                                  that.setState({stage3:data.status})
+                                  break;
+                              case 'code-coverage':
+                                  that.setState({stageArr4: (<CodeCoverage res={data}/>)});
+                                  that.setState({stage4:data.status})
+                                  break;
+                              case 'whitebox':
+                                  that.setState({stageArr5: (<Mocha res={data}/>)});
+                                  that.setState({stage5:data.status})
+                                  break;
+                              default:
+                                  that.setState({stageArr6: (
+                                          <div>
+                                              <h2 style={{color:'#FFA500'}}>{data.jobId} Status:{data.status}</h2>
 
-    Request.post('/initiate').send({ data: this.state.input,templateName:"CI-Pipeline.yml"}).set('Accept', 'application/json')
-           .end(function(err, res){
-             if (err || !res.ok) {
-               alert('Oh no! error');
-             } else {
-                    console.log(res.text);//getting the jobId
-                    var userid=cookie.load('user');
-                    console.log("cookie",userid);
-                    var socket = that.state.socket;
-                    socket.emit('getjobstatus', {jobId:res.text,userId:userid});
-                    socket.on('report', function(data) {
-                        if (data.status === 'Monitoring Stopped') {
-                            that.setState({stageArr: (
-                                    <h1>Monitoring Stopped</h1>
-                                )});
-                        } else {
-                            console.log(data.jobId, data.stageName, data.status);
-                            switch (data.stageName) {
-                                case 'build':
-                                    that.setState({stageArr1: (<Build res={data}/>)});
-                                    that.setState({stage1:data.status})
-                                    break;
-                                case 'eslint':
-                                    that.setState({stageArr2: (<Eslint res={data}/>)});
-                                    that.setState({stage2:data.status})
-                                    break;
-                                case 'htmlhint':
-                                    that.setState({stageArr3: (<HtmlHint res={data}/>)});
-                                    that.setState({stage3:data.status})
-                                    break;
-                                case 'code-coverage':
-                                    that.setState({stageArr4: (<CodeCoverage res={data}/>)});
-                                    that.setState({stage4:data.status})
-                                    break;
-                                case 'whitebox':
-                                    that.setState({stageArr5: (<Mocha res={data}/>)});
-                                    that.setState({stage5:data.status})
-                                    break;
-                                default:
-                                    that.setState({stageArr6: (
-                                            <div>
-                                                <h2 style={{color:'#FFA500'}}>{data.jobId} Status:{data.status}</h2>
+                                          </div>
 
-                                            </div>
-
-                                        )});
-                                        that.setState({stage6:data.status});
-                                        break;
-                            }
-                        }
-                    });
-           }
-         });
-       }
-
+                                      )});
+                                      that.setState({stage6:data.status});
+                                      break;
+                          }
+                      }
+                  });
+         }
+       });
+}
   render(){
     var box=null;
     console.log(this.state.stage1);
@@ -244,18 +247,19 @@ class AdminInitiate extends React.Component{
         onTouchTap={this.handleSubmit}
       />,
     ];
-
     return (
         <div>
           <Grid style={{marginTop:"1%"}}>
              <Row >
-
              <Col xs={12} sm={12} md={12} lg={12}>
                     <TextField value={this.state.selectedRepo} floatingLabelText="Enter your git repo url" onChange={this.handleType}/>
                     <RaisedButton label="Submit" secondary={true} style={{marginLeft:"2%"}} onClick={this.handleRepo}/>
              </Col>
              </Row>
                 <Row style={{marginTop:"1%"}}>
+                  <Col lgOffset={8} lg={5} md={5} mdOffset={8} sm={7} smOffset={8}  xs={12}>
+                    {box}
+                 </Col>
                  <Col lgOffset={8} lg={5} md={5} mdOffset={8} sm={7} smOffset={8}  xs={12}>
 
                     <Card>

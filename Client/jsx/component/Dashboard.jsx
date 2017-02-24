@@ -25,7 +25,8 @@ class Dashboard extends React.Component {
     return (
       <div>
          <DashNavbar />
-          {this.props.children} 
+          {this.props.children}
+
       </div>
     );
   }
