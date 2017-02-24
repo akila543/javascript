@@ -45,7 +45,7 @@ Router.get('/authentication', function(req, response, next) {
                           response.redirect("http://localhost:3000/#/monitor");
                       } else {
                           response.cookie("type", "user");
-                          response.redirect("http://localhost:3000/#/user");
+                          response.redirect("http://localhost:3000/#/AdminPipeline");
                       }
                     });
                 }
