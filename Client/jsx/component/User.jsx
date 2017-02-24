@@ -17,12 +17,16 @@
   import Mocha from './Mocha.jsx';
   import CodeCoverage from './CodeCoverage.jsx';
   import Results from './Results.jsx';
-
+  import Popover from 'material-ui/Popover';
+import Menu from 'material-ui/Menu';
+import MenuItem from 'material-ui/MenuItem';
+var validUrl = require('valid-url');
+var box=new Array();
   export default class User extends React.Component {
       constructor(props)
       {
           super();
-          this.state={open: false,UserName:'user',isSubmit:false,repos:['Repo1','Repo2','Repo3','Repo4','Repo5'],repoUrl:'',selectedRepo:'',testedRepo:[],socket: io.connect('http://localhost:3000/monitor')};
+          this.state={templateContent:'',openTemplate:false,worklist:[],open: false,template:'CI-Pipeline.yml',open1:false,UserName:'user',isSubmit:false,repos:[],repoUrl:'',selectedRepo:'',testedRepo:[],socket: io.connect('http://localhost:3000/monitor')};
           this.handleRepo = this.handleRepo.bind(this);
           this.handleType = this.handleType.bind(this);
           this.handleUrl = this.handleUrl.bind(this);
@@ -30,8 +34,24 @@
           this.handleOpen = this.handleOpen.bind(this);
           this.handleClose = this.handleClose.bind(this);
           this.handleSubmit = this.handleSubmit.bind(this);
+          this.handleTouchTap = this.handleTouchTap.bind(this);
+          this.handleRequestClose = this.handleRequestClose.bind(this);
       }
+      handleTouchTap(event) {
+    // This prevents ghost click.
+    var that=this;
 
+    that.setState({
+      open1: true,
+      anchorEl: event.currentTarget,
+    });
+  }
+
+  handleRequestClose(){
+    this.setState({
+      open1: false,
+    });
+  };
       handleType(e)
       {
           this.setState({selectedRepo:e.target.value});
@@ -43,6 +63,7 @@
           console.log(this.state.repoUrl);
           var temp = this.state.repoUrl.split('/');
           array.push(temp[3]+"/"+temp[4]);
+          console.log(temp);
           this.setState({testedRepo:array});
           {this.handleSubmit()}
       }
@@ -58,10 +79,17 @@
     }
       handleSubmit()
       {
+
+          var regexp=/http:\/\/github\.com\/*\/*/;
+
+     if((validUrl.isUri(this.state.selectedRepo))&&regexp.test(this.state.selectedRepo)){
+              box = [];
           this.setState({open: false});
           this.setState({isSubmit:true});
+
           var that=this;
-          Request.post('/initiate').set('Accept','application/json').send({userName:cookie.load('user'),data:that.state.selectedRepo,templateName:'CI-Pipeline.yml'})
+          console.log("template :",that.state.template);
+          Request.post('/initiate').set('Accept','application/json').send({userName:cookie.load('user'),data:that.state.selectedRepo,templateName:that.state.template})
           .end(function(err, res){
                if (err || !res.ok) {
                  alert('Oh no! error');
@@ -102,7 +130,7 @@
                                   default:
                                       that.setState({stageArr6: (
                                               <div>
-                                                  <h2 style={{color:'#FFA500'}}>{data.jobId} Status:{data.status}</h2>
+                                                  <h4 style={{color:'#FFA500'}}>{data.jobId} Status:{data.status}</h4>
 
                                               </div>
 
@@ -114,6 +142,10 @@
                       });
              }
            });
+         }
+         else {
+           alert("Not a valid Url");
+         }
   }
       handleLogout()
       {
@@ -135,6 +167,28 @@
                       if(res.text=='[]')
                       {
                           {that.handleOpen()};
+                      }
+                      else {
+                        JSON.parse(res.text).map((item,i)=>{
+                           console.log(item);
+                               box.push(
+                                 <Card key={i}>
+                                 <CardHeader
+                                   title={"Results for "+ e} style={{backgroundColor:"#558B2F"}}/>
+                                 <CardTitle title="Summary"/>
+                                 <CardText>
+                                   {item.summary}<br/><br/>
+                                   jobId:{item.jobId}<br/><br/>
+                                   initiated at :{item.initiatedAt}<br/><br/>
+                                   Template Name :{item.templateName}
+                                 </CardText>
+                                 <CardActions>
+                                   <RaisedButton secondary={true} label="Test your Repo" />
+                                 </CardActions>
+                               </Card>
+                             )});
+                       console.log(box);
+                       that.setState({stateBox:box});
                       }
                    }
                })
@@ -162,7 +216,26 @@
                       that.setState({UserName:uName});
                    }
                })
+               Request
+                .get('/workflows')
+                .set({ 'API-Key': 'foobar', Accept: 'application/json' })
+                .end(function(err,res){
+                  if (err) {
+                    console.log(err);
 
+                  }
+                  else {
+                    that.setState({worklist:JSON.parse(res.text)});
+                  }
+                });
+              box.push(  <Card style={{width:"100%"}}>
+                           <CardText style={{color:"#3F51B5"}}>
+                                <br/>
+                               <h2 style={{color:"#800000"}}>Are your Repos deployable?</h2>
+                               <h3>If not sure select a repo to test and let the orchestropus show you whether it is...</h3>
+                           </CardText>
+                       </Card>
+);
       }
     render () {
 
@@ -179,17 +252,16 @@
           onTouchTap={this.handleSubmit}
         />,
       ];
-  	  var box=null;
-        if(this.state.isSubmit){
-        box=<div >
-          {this.state.stageArr6}
-          {this.state.stageArr1}
-          {this.state.stageArr2}
-          {this.state.stageArr3}
-          {this.state.stageArr4}
-          {this.state.stageArr5}
-              </div>
-      }
+      const actionsTemp = [
+      <FlatButton
+        label="Ok"
+        primary={true}
+        onTouchTap={()=>{this.setState({openTemplate:false})}}
+      />];
+      //   if(this.state.isSubmit){
+      //   box.push();
+      // }
+
 
       return (
           <div>
@@ -201,14 +273,47 @@
                <Col xs={8} sm={8} md={8} lg={8}>
                       <TextField value={this.state.selectedRepo} floatingLabelText="Enter your git repo url" onChange={this.handleType}/>
                       <RaisedButton label="Submit" secondary={true} style={{marginLeft:"2%"}} onClick={this.handleRepo}/>
+
                </Col>
+               <Col lg={4} style={{position:"absolute",top:"16%"}} >
+                     <RaisedButton
+                       onTouchTap={this.handleTouchTap}
+                         label="Choose Template"
+                         />
+         <Popover
+           open={this.state.open1}
+           anchorEl={this.state.anchorEl}
+           anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+           targetOrigin={{horizontal: 'left', vertical: 'top'}}
+           onRequestClose={this.handleRequestClose}
+         >
+           {this.state.worklist.map((item)=>(
+           <Menu>
+             <MenuItem key={item} primaryText={item.templateName} onClick={
+                 ()=>{
+                   this.setState({template:item.templateName,templateContent:JSON.stringify(item.content),open1:false});
+                   console.log(JSON.stringify(item.content));
+                   this.setState({openTemplate:true});
+                 }}/>
+           </Menu>
+         ))}
+         </Popover>
+
+              </Col>
                </Row>
-                  <Row style={{marginTop:"1%"}}>
-                    <Col style={{marginRight:"1%"}} lgOffset={2} lg={5} md={5} mdOffset={2} sm={7} smOffset={8}  xs={12}>
+                  <Row style={{marginTop:"1%"}} around="xs">
+                    <Col lg={5}>
+                      <div >
+                        {this.state.stageArr6}
+                        {this.state.stageArr1}
+                        {this.state.stageArr2}
+                        {this.state.stageArr3}
+                        {this.state.stageArr4}
+                        {this.state.stageArr5}
+                      </div>
                       {box}
                     </Col>
-                   <Col lgOffset={8} lg={5} md={5} mdOffset={8} sm={7} smOffset={8} xs={12}>
-
+                    <Col lgOffset={1} lg={5} md={5} mdOffset={1} sm={7} smOffset={1}  xs={12}>
                       <Card>
                           <CardHeader title="Your Repositories" style={{backgroundColor:"#BDBDBD"}}/>
                               <CardText>
@@ -221,8 +326,10 @@
                       </Card>
                    </Col>
               </Row>
-              <Row style={{marginTop:"1%"}}>
-              <Col lgOffset={8} lg={5} md={5} mdOffset={8} sm={7} smOffset={8}  xs={12}>
+              <Row style={{marginTop:"1%"}} around="xs">
+                 <Col lg={5}>
+                 </Col>
+              <Col lgOffset={1} lg={5} md={5} mdOffset={1} sm={7} smOffset={1}  xs={12}>
               <Card style={{marginTop:"5%"}}>
                           <CardHeader title="Tested Repositories" style={{backgroundColor:"#BDBDBD"}}/>
                               <CardText>
@@ -235,7 +342,6 @@
                       </Card>
               </Col>
               </Row>
-
           </Grid>
           <Dialog
             title="It seems no results associated with this repo. Do you wish to test this repo?"
@@ -243,6 +349,16 @@
             modal={false}
             open={this.state.open}
             onRequestClose={this.handleClose}>
+          </Dialog>
+          <Dialog
+            title="Template Viewer"
+            actions={actionsTemp}
+            modal={false}
+            open={this.state.openTemplate}
+            onRequestClose={this.handleClose}
+            autoScrollBodyContent={true}>
+            {this.state.templateContent}
+
           </Dialog>
            </div>);
     }

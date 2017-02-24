@@ -133,7 +133,6 @@ class WorkFlowList extends React.Component{
          </div>
          <div>
            <WorkFlowEdit data={this.state.content} filename={this.state.templateName} transfunction={this.state.transfunction} />
-           <RaisedButton  onClick = {this.handlePrevSlide} label="Back" primary={true} style={{marginLeft:"1%"}}/>
          </div>
          <div>
            <Grid style={{width:'100%'}}>
@@ -142,8 +141,6 @@ class WorkFlowList extends React.Component{
 
                    </Row>
                  </Grid>
-
-           <RaisedButton  onClick = {this.handlePrevSlide} label="Back" primary={true} style={{marginLeft:"1%"}}/>
          </div>
        </SwipeableViews>
 

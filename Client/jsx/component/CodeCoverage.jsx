@@ -26,10 +26,15 @@ class CodeCoverage extends React.Component {
     output=out[62];
     error=err;
   }
-    if(this.state.data.status==='Complete')
-    var avatar="../jsx/images/avatar1.jpeg";
-  else
-    var avatar="../jsx/images/avatar2.jpeg";
+  if (this.state.data.status === 'Complete')
+      var avatar = "../jsx/images/avatar1.jpeg";
+  else   if (this.state.data.status === 'Failed')
+      var avatar = "../jsx/images/avatar2.jpeg";
+  else if(this.state.data.status==='Blocked')
+      var avatar="../jsx/images/block.png";
+  else {
+    var avatar="../jsx/images/pending.png";
+  }
     return (
       <Card >
         <CardHeader

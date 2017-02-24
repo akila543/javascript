@@ -5,7 +5,7 @@ import Dashboard from '../component/Dashboard.jsx';
 import DashNavbar from '../component/DashNavbar.jsx';
 import NewHomePage from '../component/NewHomePage.jsx';
 import User from '../component/User.jsx';
-
+import AdminInitiate from "../component/AdminInitiate.jsx";
 import cookie from 'react-cookie';
 import Paper from 'material-ui/Paper';
 
@@ -25,7 +25,10 @@ class App extends React.Component {
     if(cookie.load('type')==="admin")
       {return(
         <div>
-          <Dashboard />
+        <DashNavbar>
+          <AdminInitiate />
+        </DashNavbar>
+
         </div>
       );
     }

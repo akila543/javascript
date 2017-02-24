@@ -48,6 +48,10 @@ export default class Graph extends Component {
 
   }
 
+  componentWillReceiveProps(newProps)
+  {
+    this.setState({graph:newProps.data});
+  }
   // Helper to find the index of a given node
   getNodeIndex(searchNode) {
     return this.state.graph.nodes.findIndex((node)=>{
@@ -182,6 +186,7 @@ export default class Graph extends Component {
    */
 
   render() {
+    console.log(this.state.graph);
     const nodes = this.state.graph.nodes;
     const edges = this.state.graph.edges;
     const selected = this.state.selected;
