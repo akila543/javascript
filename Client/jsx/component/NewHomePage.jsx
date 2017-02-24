@@ -27,7 +27,7 @@ export default class HomePageUpdated extends React.Component
 
 				<Grid style={{width:'98%'}}>
 
-
+<div style={{backgroundColor:'#212e44'}}>
 				<Row center="xs" style={{background:'#212e44'}}>
 				<h1 style={{fontSize:'60',color:'white',fontFamily:'Quantico'}}>Orchestropus</h1>
 				</Row>
@@ -44,6 +44,11 @@ export default class HomePageUpdated extends React.Component
 				<RaisedButton  label="Login  with  Github"  href={"https://github.com/login/oauth/authorize?client_id=d595532bb5ab99a235f8"} labelStyle={{color:"white"}} buttonStyle={{background:"#ed6504"}}  onClick={this.handleClick} icon={<i className="material-icons" >account_box
 				</i>}/>
 				</Row>
+
+				<Row center="xs" style={{background:'#212e44'}} >
+				<br/>
+				</Row>
+				</div>
                  <Row center="xs" className = "buildrow" >
 
                    	  <Col xs={12} sm={9} md={3} lg={3} className = "build">
@@ -68,35 +73,37 @@ export default class HomePageUpdated extends React.Component
 
 
 				<Row around="xs" center="xs">
-				  <Col >
-					<i className="material-icons" style={{fontSize: '48px',color: '#006064'}}>cached</i>
-					<h4 style={{fontFamily:'Quantico'}}>Task monitoring</h4>
-				  <p  style={{fontFamily:'Acme'}} className="FeaturesDesc">Easy Monitoring of your tasks
-				  <br/>at each stage of the process.Orchestropus
-				  <br/>provides the features to constantly
-				  <br/>monitor your jobs that are running.</p>
-				  </Col>
+				<Col >
+                    <i className="material-icons" style={{fontSize: '48px',color: '#006064 '}}>cached</i>
+                    <h4 style={{fontFamily:'Quantico'}}>Task monitoring</h4>
+                  <p  style={{fontFamily:'Acme'}} className="FeaturesDesc">Easy Monitoring of your
+                  <br/>tasks at each stage of the process.
+                  <br/>Orchestropus provides the features
+                  <br/>to constantly monitor your jobs that
+                    <br/>are running.</p>
+                  </Col>
 
 
-				  <Col >
-					<i className="material-icons" style={{fontSize: '48px',color: '#006064'}}>equalizer</i>
-					<h4 style={{fontFamily:'Quantico'}}>Rich report system</h4>
-				  <p  style={{fontFamily:'Acme'}} className="FeaturesDesc">Orchestropus provides a stable report
-				  <br/> system, that let's the user to know
-				  <br/> the reports of their job done by providing
-				  <br/> specific details about the job.</p>
-				  </Col>
+                  <Col >
+                    <i className="material-icons" style={{fontSize: '48px',color: '#006064 '}}>equalizer</i>
+                    <h4 style={{fontFamily:'Quantico'}}>Rich report system</h4>
+                  <p  style={{fontFamily:'Acme'}} className="FeaturesDesc">Orchestropus provides a stable
+                  <br/>report system, that let's the user
+                  <br/>to know the reports of their job done
+                  <br/>by providing specific details about
+                    <br/>the job.</p>
+                  </Col>
 
 
-				  <Col >
-						<i className="material-icons" style={{fontSize: '48px',color: '#006064'}}>build</i>
-						  <h4 style={{fontFamily:'Quantico'}}>Build your App</h4>
-				  <p  style={{fontFamily:'Acme'}} className="FeaturesDesc">Orchestropus provides the user
-				  <br/>the feature of automatically installing all
-				  <br/>the dependancies that are required to run
-				  <br/>and build the project.
-				  </p>
-				  </Col>
+                  <Col >
+                        <i className="material-icons" style={{fontSize: '48px',color: '#006064 '}}>build</i>
+                          <h4 style={{fontFamily:'Quantico'}}>Build your App</h4>
+                  <p  style={{fontFamily:'Acme'}} className="FeaturesDesc">Orchestropus provides the user
+                  <br/>the feature of automatically installing
+                  <br/>all the dependancies that are required
+                  <br/>to run and build the project.
+                  </p>
+                  </Col>
 				</Row>
 
 
@@ -143,36 +150,36 @@ export default class HomePageUpdated extends React.Component
 
 									<Col >
 							    <List >
-							     <h1 style={{fontSize:20,textTransform: 'uppercase',fontFamily:'Quantico'}}>PLATFORM</h1>
-							      <ListItem primaryText="Features" style={{color:'steelblue',fontFamily:'Quantico'}} />
-							      <ListItem primaryText="Orchestropus Basic" style={{color:'steelblue',fontFamily:'Quantico'}}  />
-							      <ListItem primaryText="Orchestropus Pro"  style={{color:'steelblue',fontFamily:'Quantico'}}/>
+							     <h1 style={{fontSize:20,textTransform: 'uppercase',fontFamily:'Quantico',hoverColor:'white'}}>PLATFORM</h1>
+							      <ListItem primaryText="Features" style={{color:'steelblue',fontFamily:'Quantico',hoverColor:'white'}} />
+							      <ListItem primaryText="Orchestropus Basic" style={{color:'steelblue',fontFamily:'Quantico',hoverColor:'white'}}  />
+							      <ListItem primaryText="Orchestropus Pro"  style={{color:'steelblue',fontFamily:'Quantico',hoverColor:'white'}}/>
 							    </List>
 									</Col>
 
 									<Col>
 									  <List >
-							      <h1 style={{fontSize:20,textTransform: 'uppercase',fontFamily:'Quantico'}}>COMPANY</h1>
-							      <ListItem primaryText="Team" style={{color:'steelblue',fontFamily:'Quantico'}}/>
-							      <ListItem primaryText="Customers"  style={{color:'steelblue',fontFamily:'Quantico'}} />
-							      <ListItem primaryText="Careers"  style={{color:'steelblue',fontFamily:'Quantico',fontFamily:'Quantico'}}  />
-							      <ListItem primaryText="Press" style={{color:'steelblue',fontFamily:'Quantico'}} />
+							      <h1 style={{fontSize:20,textTransform: 'uppercase',fontFamily:'Quantico',hoverColor:'white'}}>COMPANY</h1>
+							      <ListItem primaryText="Team" style={{color:'steelblue',fontFamily:'Quantico',hoverColor:'white'}}/>
+							      <ListItem primaryText="Customers"  style={{color:'steelblue',fontFamily:'Quantico',hoverColor:'white',hoverColor:'white'}} />
+							      <ListItem primaryText="Careers"  style={{color:'steelblue',fontFamily:'Quantico',fontFamily:'Quantico',hoverColor:'white'}}  />
+							      <ListItem primaryText="Press" style={{color:'steelblue',fontFamily:'Quantico',hoverColor:'white'}} />
 							    </List>
 									 </Col>
 
 								 <Col>
 							    <List >
-							      <h1 style={{fontSize:20,textTransform: 'uppercase',fontFamily:'Quantico',fontFamily:'Quantico',fontFamily:'Quantico',fontFamily:'Quantico',fontFamily:'Quantico'}}>PRICING</h1>
-							      <ListItem primaryText="Orchestropus Pricing" style={{color:'steelblue',fontFamily:'Quantico',fontFamily:'Quantico',fontFamily:'Quantico',fontFamily:'Quantico'}}  />
-							      <ListItem primaryText="Orchestropus Basic" style={{color:'steelblue',fontFamily:'Quantico',fontFamily:'Quantico',fontFamily:'Quantico'}}  />
-							      <ListItem primaryText="Orchestropus Pro" style={{color:'steelblue',fontFamily:'Quantico',fontFamily:'Quantico'}}  />
-							      <ListItem primaryText="Contact sales"  style={{color:'steelblue',fontFamily:'Quantico'}} />
+							      <h1 style={{fontSize:20,textTransform: 'uppercase',fontFamily:'Quantico',hoverColor:'white'}}>PRICING</h1>
+							      <ListItem primaryText="Orchestropus Pricing" style={{color:'steelblue',fontFamily:'Quantico',hoverColor:'white'}}  />
+							      <ListItem primaryText="Orchestropus Basic" style={{color:'steelblue',fontFamily:'Quantico',hoverColor:'white'}}  />
+							      <ListItem primaryText="Orchestropus Pro" style={{color:'steelblue',fontFamily:'Quantico',hoverColor:'white'}}  />
+							      <ListItem primaryText="Contact sales"  style={{color:'steelblue',fontFamily:'Quantico',hoverColor:'white'}} />
 							    </List>
 									</Col>
 
 									</Row>
 
-									<p style={{fontFamily:'Acme'}}>Copyright &copy; Orchestropus.com</p>
+									<p style={{fontFamily:'Acme'}}>Copyrights &copy; Orchestropus.com</p>
 									</footer>
 							</Grid>
 										);
