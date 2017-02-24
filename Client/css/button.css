@@ -19,7 +19,7 @@
     /*max-width:auto;
     height:auto;*/
     filter: brightness(70%);
-    
+
 }
 .hero img{
   width:105%;
@@ -75,22 +75,23 @@
     text-align: center;
     margin-top: 5%;
     margin-left: 5%;
+    font-family: 'Acme',sans-serif;
 }
 .AppHeading
 {
     color: #0D47A1;
-    font-family: 'PT Sans', sans-serif;
+    font-family: 'Acme',sans-serif;
     font-size: 30px;
 }
 .AppText
 {
-    font-family: 'Droid Sans', sans-serif;
+    font-family: 'Acme', sans-serif;
 }
 
 .Features
 {
     margin-top: 4%;
-    font-family: 'Muli', sans-serif;
+    font-family: 'Acme', sans-serif;
     color: #283593;
 }
 .iconRow
@@ -164,7 +165,7 @@
     top:180px;
     left:400px;
     color: white;
-    font-family: 'Dosis', sans-serif;
+    font-family: 'Acme', sans-serif;
 }
 
 .heroPhrase2
@@ -174,14 +175,6 @@
     left:250px;
     color: white;
     font-family: 'Dosis', sans-serif;
-}
-
-.GithubLink
-{
-  position: absolute;
-  top:300px;
-  left:530px;
-
 }
 
 .build
@@ -219,6 +212,7 @@
 
 .FeaturesDesc
 {
+    font-family:'Acme',san-serif
     color: #78909C;
 }
 
