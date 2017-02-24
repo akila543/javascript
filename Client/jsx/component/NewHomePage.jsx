@@ -28,10 +28,12 @@ export default class HomePageUpdated extends React.Component
 				<Grid style={{width:'98%'}}>
 
 				<Row center="xs" style={{background:'black'}}>
-				<h1 style={{fontSize:'40',color:'white'}}>Orchestropus</h1>
+
+				<h1 style={{fontSize:'40',color:'white',paddingRight:'980'}}>Orchestropus</h1>
+				<img  style={{width:'4%',height:'4%',marginRight:'1300',marginTop:'-55'}}src="../jsx/images/logo.png"/>
 				</Row>
 				<Row center="xs" style={{background:'black'}}>
-					<img src="../jsx/images/logo.png" />
+					<img src="../jsx/images/giphy.gif" />
 				</Row>
 				<Row center="xs" style={{background:'black'}} >
 				<h1 style={{color:'white'}}>BUILD and TEST with Confidence</h1>
