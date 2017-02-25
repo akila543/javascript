@@ -114,32 +114,6 @@ class WorkFlowEdit extends React.Component
 
 	}
 
-
-		/*handleSubmit()
-		{
-			var that = this;
-			yamlLint.lint(this.state.code).then(function () {
-				that.setState({
-					isValid: true,
-					isSubmit:true,
-				});
-				that.setState({err:[]	})
-				alert('Valid File!!! File Submitted');
-			}).catch(function (error) {
-				var errtext=error.message;
-				var startindex=error.message.indexOf("at line") + 8;
-				var endindex=error.message.indexOf("column")-2;
-
-				var errrow=error.message.substring(startindex,endindex)-1;
-				var myerror=[{ row: errrow, column: 2, type: 'error', text:errtext }];
-				that.setState({isValid:false});
-				that.setState({err:myerror})
-				alert('Invalid file!!! correct the error.');
-				console.log(error.message);
-			});
-
-		}*/
-
 		updateCode(newcode)
 		{
 			if(newcode)
@@ -259,7 +233,7 @@ class WorkFlowEdit extends React.Component
 			}
 			else
 			{
-				box= <GridList cols={2} cellHeight='auto'>
+				box= <GridList cols={2} cellHeight='auto' style={{width:"95%"}}>
 							<GridTile>
 								<div>
 									<AceEditor
@@ -271,7 +245,7 @@ class WorkFlowEdit extends React.Component
 										id="ace_editor"
 										annotations={this.state.err}
 										editorProps={{$blockScrolling: true}}
-										style={{border:"1px solid black",margin:"5%",width:"90%"}}
+										style={{border:"1px solid black",margin:"5%",width:"90%", height:"400px"}}
 										onLoad={(editor) => {
 											editor.focus();
 											editor.getSession();
@@ -284,7 +258,7 @@ class WorkFlowEdit extends React.Component
 								</div>
 
 							</GridTile>
-							<GridTile style={{height:"70%",margin:"3%"}}>
+							<GridTile style={{height:"550px",marginTop:"3%"}}>
 								<div>
 									{this.state.graph}
 								</div>
@@ -304,4 +278,3 @@ class WorkFlowEdit extends React.Component
 	} //end of class TemplateEditor
 
 	export default WorkFlowEdit;
-
