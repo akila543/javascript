@@ -1,5 +1,0 @@
-#!/bin/bash
-#The testing script
-
-cd $WORKSPACE
-mocha test/ --reporter json

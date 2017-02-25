@@ -1,5 +1,0 @@
-#!/bin/bash
-#The unit testing script
-
-cd $WORKSPACE
-mocha

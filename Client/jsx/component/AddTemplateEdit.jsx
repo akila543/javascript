@@ -280,7 +280,7 @@ class AddTemplateEdit extends React.Component
 			else
 			{
 
-				box= <GridList cols={2} cellHeight='auto'>
+				box= <GridList cellHeight="auto" cols={2} style={{width:"95%"}}>
 							<GridTile>
 								<div>
 									<AceEditor
@@ -292,14 +292,14 @@ class AddTemplateEdit extends React.Component
 										id="ace_editor"
 										annotations={this.state.err}
 										editorProps={{$blockScrolling: true}}
-										style={{border:"1px solid black",margin:"5%",width:"90%"}}
+										style={{border:"1px solid black",margin:"5%",width:"90%",height:"400px"}}
 										onLoad={(editor) => {
 											editor.focus();
 											editor.getSession();
 										}}
 										/>
 								</div>
-								<div>
+								<div style={{marginLeft:"1%"}}>
 									<TextField
 							      hintText="Enter File Name"
 							      floatingLabelText="File Name"
@@ -321,7 +321,7 @@ class AddTemplateEdit extends React.Component
 								</div>
 
 							</GridTile>
-							<GridTile style={{height:"70%",margin:"3%"}}>
+							<GridTile style={{height:"550px",marginTop:"3%"}}>
 								<div>
 									{this.state.graph}
 								</div>
@@ -341,4 +341,3 @@ class AddTemplateEdit extends React.Component
 	} //end of class TemplateEditor
 
 	export default AddTemplateEdit;
-
