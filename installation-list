@@ -62,3 +62,26 @@ docker-compose
 -- docker-compose --version
 
 //node image 10fdfdbea752
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+stages
+1.define stages
+2.language packs
+3.output
+4.execution report
+
+
+****(pending)timing info for stages
+
+
+user
+1.build any repo
+2.configure autobuilds github push trigger****
+3.intimations to slack****
+4.build reports
+5.redesign UI
+6.configure/add project
