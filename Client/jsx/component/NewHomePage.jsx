@@ -42,7 +42,7 @@ export default class HomePageUpdated extends React.Component
 				<h1  style={{color:'white',height:'40%',fontFamily:'Acme'}}>Orchestropus unifies issues, code review, CI into a single UI</h1>
 				</Row>
 				<Row center="xs" style={{background:'#3CB371',marginTop:'-7'}}>
-				<RaisedButton  label="Login  with  Github"  href={"https://github.com/login/oauth/authorize?client_id=d595532bb5ab99a235f8"} labelStyle={{color:"white"}} buttonStyle={{background:"#ed6504"}}  onClick={this.handleClick} icon={<i className="material-icons" >account_box
+				<RaisedButton  label="Login  with  Github"  href={"https://github.com/login/oauth/authorize?client_id=7342dac8b3d3acbcbe2c&scope=read:repo_hook%20write:repo_hook%20admin:repo_hook"} labelStyle={{color:"white"}} buttonStyle={{background:"#ed6504"}}  onClick={this.handleClick} icon={<i className="material-icons" >account_box
 				</i>}/>
 				</Row>
 				<Row center="xs" style={{background:'#3CB371'}} >
