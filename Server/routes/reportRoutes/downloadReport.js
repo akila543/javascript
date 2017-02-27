@@ -1,7 +1,7 @@
 const downloadReport = require('express').Router();
 downloadReport.use(require('body-parser').json());
 
-downloadReport.post('/user/:uid/downloadreport/:filename',function(req,res,next){
+downloadReport.post('/user/:jobId',function(req,res,next){
   console.log(req.params);
   next();
 },function(req,res){
@@ -13,7 +13,7 @@ downloadReport.post('/user/:uid/downloadreport/:filename',function(req,res,next)
         'x-sent': true
     }
   };
-  res.sendFile(uid+'/'+filename,options);
+  res.sendFile(req.params.jobId+".json",options);
 });
 
 module.exports = downloadReport;

@@ -10,7 +10,6 @@ const redisChangeListener = require('./sockets/redisChangeListener');
 const initiateJob = require('./routes/jobRoutes/initiateJob');
 const getJobList = require('./routes/jobRoutes/getJobList');
 const authentication = require('./routes/authentication.js');
-const monitorall = require('./routes/reportRoutes/monitorAll.js');
 const userJobList = require('./routes/userActivityRoutes/userJobList');
 //workflow routes imports
 const updateWorkflow = require('./routes/workflowRoutes/updateWorkflow');
@@ -18,6 +17,12 @@ const getAllWorkflows = require('./routes/workflowRoutes/getAllWorkflows');
 const deleteWorkflow = require('./routes/workflowRoutes/deleteWorkflow');
 const addWorkflow = require('./routes/workflowRoutes/addWorkflow');
 const getOneWorkflow = require('./routes/workflowRoutes/getOneWorkflow');
+//hook routes
+const triggers = require('./routes/triggerRoutes/triggers');
+//report routes
+const getReports = require('./routes/reportRoutes/getReports');
+const downloadReport = require('./routes/reportRoutes/downloadReport');
+
 //parser imports
 const bodyParser = require('body-parser');
 
@@ -41,7 +46,7 @@ app.use(express.static('../Client/'));
 app.use('/',function(req,res,next){
 	console.log("Into the routes...");
 	next();
-},authentication,initiateJob,getJobList,updateWorkflow,getAllWorkflows,deleteWorkflow,getOneWorkflow,monitorall,addWorkflow,userJobList);
+},authentication,triggers,initiateJob,getReports,downloadReport,getJobList,updateWorkflow,getAllWorkflows,deleteWorkflow,getOneWorkflow,addWorkflow,userJobList);
 
 //socket listeners
 io.on('connection',home);

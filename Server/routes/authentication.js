@@ -16,6 +16,7 @@ Router.use(bodyParser.json());
 Router.use(bodyParser.urlencoded({
   extended: true
 }));
+
 var adminList = [
     'sagarpatke',
     'NishaUttawani',
@@ -38,26 +39,6 @@ Router.get('/authentication', function(req, response, next) {
                     console.log(err);
                     response.send('Error in authentication.');
                 } else {
-                    ////////////////////////////test hooks///////////////////////////////////////
-                    Request.post('https://api.github.com/repos/' + res.body.login + '/tempCI/hooks?access_token=' + access_token).send({
-                        "name": "web",
-                        "active": true,
-                        "events": [
-                            "push", "pull_request"
-                        ],
-                        "config": {
-                            "url": "http://2152c194.ngrok.io/hooks",
-                            "content_type": "json"
-                        }
-                    }).set('Accept', 'application/json').end(function(err, res) {
-                        if (err || !res.ok) {
-                            console.log(err);
-                            response.send('Error in authentication.');
-                        } else {
-                        console.log('hook added', res);
-                          }
-                    });
-                    /////////////////////////////////////////////////////////////////////////////
                     var userName = res.body.login;
                     var id = res.body.id;
                     addUser(id, userName, res.body, (new Date().toISOString()), function() {

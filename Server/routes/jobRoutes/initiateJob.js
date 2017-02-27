@@ -1,5 +1,5 @@
 const initiateJob = require('express').Router();
-const initiatePipeline = require('../../Pipeline/initiatePipeline.js');
+const initiatePipeline = require('../../../Pipeline/initiatePipeline.js');
 initiateJob.use(require('body-parser').json());
 const MongoClient = require('mongodb').MongoClient;
 
@@ -28,7 +28,7 @@ initiateJob.post('/initiate', function(req, res, next) {
                     repo: req.body.data,
                     initiatedAt: new Date(),
                     templateName: req.body.templateName,
-                    status: {},
+                    status: "Initiated",
                     summary: "No summary yet"
                 }, function(err, result) {
                     if (err) {
