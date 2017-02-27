@@ -23,7 +23,11 @@ export default class User extends React.Component {
     constructor(props)
     {
         super();
+<<<<<<< HEAD
+        this.state={input:'',completed:0, isSubmit:false,output:null,socket: io.connect('http://localhost:3000/monitor'),open: false,UserName:'user',repos:[],repoUrl:'',selectedRepo:'',testedRepo:[]};
+=======
         this.state={open: false,UserName:'user',isSubmit:false,repos:['Repo1','Repo2','Repo3','Repo4','Repo5'],repoUrl:'',selectedRepo:'',testedRepo:[],socket: io.connect('http://localhost:3000/monitor')};
+>>>>>>> 23a098614b182398f273c1c77825b51f1828dcbf
         this.handleRepo = this.handleRepo.bind(this);
         this.handleType = this.handleType.bind(this);
         this.handleUrl = this.handleUrl.bind(this);
@@ -209,8 +213,13 @@ export default class User extends React.Component {
                     <RaisedButton label="Submit" secondary={true} style={{marginLeft:"2%"}} onClick={this.handleRepo}/>
              </Col>
              </Row>
+<<<<<<< HEAD
+                <Row style={{marginTop:"1%"}}>
+                  <Col lg={5} md={5} sm={7} xs={12}>
+=======
                 <Row style={{marginTop:"1%"}} around="xs">
                   <Col lg={5}>
+>>>>>>> 23a098614b182398f273c1c77825b51f1828dcbf
                     {box}
                   </Col>
                   <Col lgOffset={1} lg={5} md={5} mdOffset={1} sm={7} smOffset={1}  xs={12}>

@@ -11,6 +11,7 @@ const initiateJob = require('./routes/jobRoutes/initiateJob');
 const getJobList = require('./routes/jobRoutes/getJobList');
 const authentication = require('./routes/authentication.js');
 const userJobList = require('./routes/userActivityRoutes/userJobList');
+const slacknotify = require('./routes/slacknotify.js');
 //workflow routes imports
 const updateWorkflow = require('./routes/workflowRoutes/updateWorkflow');
 const getAllWorkflows = require('./routes/workflowRoutes/getAllWorkflows');
@@ -46,7 +47,7 @@ app.use(express.static('../Client/'));
 app.use('/',function(req,res,next){
 	console.log("Into the routes...");
 	next();
-},authentication,triggers,initiateJob,getReports,downloadReport,getJobList,updateWorkflow,getAllWorkflows,deleteWorkflow,getOneWorkflow,addWorkflow,userJobList);
+},authentication,triggers,initiateJob,getReports,downloadReport,getJobList,updateWorkflow,getAllWorkflows,deleteWorkflow,getOneWorkflow,addWorkflow,userJobList,slacknotify);
 
 //socket listeners
 io.on('connection',home);
