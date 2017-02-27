@@ -14,24 +14,24 @@ export default class TitleCard extends React.Component
 	return (
 
       <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-        <Card style={{borderRadius: "25px",marginTop:"1%"}}>
+        <Card style={{marginTop:"1%"}}>
         <CardText>
            <Grid>
                <Row around="xs" center="xs">
 
                  <Col >
-                 	 <i className="material-icons" style={{fontSize: '48px'}}>add_shopping_cart</i>
-                     <h1>Choose your Repo</h1>
+                 	 <i className="material-icons" style={{fontSize: '38px'}}>add_shopping_cart</i>
+                     <h3>Choose your Repo</h3>
                  </Col>
-                
+
                  <Col >
-                 	<i className="material-icons" style={{fontSize: '48px'}}>description</i>
-                   <h1>Choose your Template</h1>
+                 	<i className="material-icons" style={{fontSize: '38px'}}>description</i>
+                   <h3>Choose your Template</h3>
                  </Col>
-                 
+
                  <Col >
-                 <i className="material-icons" style={{fontSize: '48px'}}>report</i>
-                  <h1>Report</h1>
+                 <i className="material-icons" style={{fontSize: '38px'}}>report</i>
+                  <h3>Report</h3>
                  </Col>
 
                </Row>

@@ -23,6 +23,7 @@
     "passport-github": "^1.1.0",
     "passport-github2": "^0.1.10",
     "redis": "^2.6.5",
+    "slack-notify": "^0.1.6",
     "socket.io": "^1.7.3",
     "superagent": "^3.4.3"
   }

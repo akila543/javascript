@@ -25,7 +25,7 @@ import CodeCoverage from './CodeCoverage.jsx';
 import Results from './Results.jsx';
 import {Chart} from 'react-google-charts';
 import TitleCard from './TitleCard.jsx';
-import newUser from './newUser.jsx';
+import newUser from './NewUser.jsx';
 export default class User extends React.Component {
     constructor(props)
     {
@@ -38,16 +38,16 @@ export default class User extends React.Component {
             }
         };
         this.state = {
-            jobId:this.props.jobId,
+            jobId:this.props.params.jobId,
             isSubmit: false,
             socket: io.connect('http://localhost:3000/monitor')
         };
           this.handleLogout=this.handleLogout.bind(this);
-
+          this.drawCharts = this.drawCharts.bind(this);
     }
     componentWillReceiveProps(nextProps) {
-      console.log(nextProps.jobId);
-      this.setState({jobId:nextProps.jobId});
+      console.log("joId=====>",nextProps.params.jobId);
+      this.setState({jobId:nextProps.params.jobId});
   }
   handleLogout()
     {
@@ -104,31 +104,37 @@ export default class User extends React.Component {
 
                                         )});
                                     that.setState({stage6: data.status});
+                                    that.drawCharts();
                                     break;
                             }
                         }
                     });
 
-            if (this.state.stage6 != null) {
-                Request.get('/getreport/'+id).set('Accept', 'application/json').end(function(err, res) {
-                    if (!err) {
-                        var that = this;
-                        res.map(function(item) {
-                            if (item != null) {
-                                var arr = [];
-                                var stageName = item.stageName;
-                                var scheduled = new Date(item.scheduled);;
-                                var completed = new Date(item.completed);;
-                                arr.push(stageName, scheduled, completed);
-                                that.state.data2.push(arr);
-                            }
-                        });
-                        var first = ["sdasd", new Date(), new Date()];
-                        that.state.data2.unshift(first);
-                    }
-                })
-            }
+
     }
+    drawCharts(){
+        console.log("inside geting reports");
+          Request.get('/getreports/'+this.state.jobId).set('Accept', 'application/json').end(function(err, res) {
+              if (!err) {
+                  var that = this;
+                  var tempArr = new Array();
+                  tempArr.push(["sdasd", new Date(), new Date()]);
+                  console.log("reports",res,"====================",typeof res);
+                  JSON.parse(res.text).map(function(item) {
+                      if (item != null) {
+                          var arr = [];
+                          var stageName = item.stageName;
+                          var scheduled = new Date(item.scheduled);;
+                          var completed = new Date(item.completed);;
+                          arr.push(stageName, scheduled, completed);
+                          tempArr.push(arr);
+                      }
+                  });
+                  this.setState({data2:tempArr});
+              }
+          })
+      }
+
 
     render() {
             var timeline=null;
@@ -140,14 +146,15 @@ export default class User extends React.Component {
 
         return (
                 <div>
-                  <NewUser />
+                <AppBar title={"Hello "+cookie.load("user")} iconElementRight={< Link to = "/" > <FlatButton label="Logout" labelStyle={{color:"white"}} onClick={this.handleLogout}/> < /Link>}/>
+                <TitleCard/>
                 <Grid style={{
                     marginTop: "1%"
                 }}>
                     <Row style={{
                         marginTop: "1%"
                     }} >
-                        <Col lg={5}>
+                        <Col lg={10}>
                             <div >
                                 {this.state.stageArr6}
                                 {this.state.stageArr1}

@@ -9,7 +9,7 @@ getReports.use(bodyParser.urlencoded({
 
 var url = 'mongodb://localhost:27017/reports';
 
-getReports.get('/getreports/:jobId', function(req,res,next){
+getReports.get('/getreports/:jobId',function(req,res,next){
   console.log(req.params);
   next();
 },function(req,res){

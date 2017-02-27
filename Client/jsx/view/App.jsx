@@ -4,7 +4,7 @@ import React from 'react';
 import Dashboard from '../component/Dashboard.jsx';
 import DashNavbar from '../component/DashNavbar.jsx';
 import NewHomePage from '../component/NewHomePage.jsx';
-import User from '../component/User.jsx';
+import User from '../component/NewUser.jsx';
 import AdminInitiate from "../component/AdminInitiate.jsx";
 import cookie from 'react-cookie';
 import Paper from 'material-ui/Paper';

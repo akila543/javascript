@@ -21,7 +21,10 @@ import Eslint from './Eslint.jsx';
 import Mocha from './Mocha.jsx';
 import CodeCoverage from './CodeCoverage.jsx';
 import io from 'socket.io-client';
-//import FinalResult from '../component/FinalResult.jsx'
+import {Link,hashHistory} from 'react-router';
+
+import FinalResult from '../component/FinalResult.jsx'
+import TitleCard from './TitleCard.jsx';
 var YAML = require('json2yaml');
 
 
@@ -29,6 +32,7 @@ var doc;
 var edge = new Array();
 var node = new Array();
 var x1 = 100,y1=100;
+var next=null;
 
 class ChooseWorkflow extends React.Component
 {
@@ -38,8 +42,10 @@ class ChooseWorkflow extends React.Component
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleVisualise = this.handleVisualise.bind(this);
 		this.handleClose = this.handleClose.bind(this);
+		this.handleLogout=this.handleLogout.bind(this);
+		console.log(this.props.params.user,this.props.params.repo);
 		this.state={open:false,
-                selectedRepo:this.props.githubUrl,
+                selectedRepo:"http://github.com/"+this.props.params.user+"/"+this.props.params.repo,
                 graph:'',
                 jsonCode:'',
                 isSubmit:false,
@@ -49,13 +55,15 @@ class ChooseWorkflow extends React.Component
                 worklist:[],
                 open1: false,
                 isSelect:false,
-                template: 'CI-Pipeline.yml',}
+                template: 'CI-Pipeline.yml',
+								jobId:""
+							}
 
 	}
-  componentWillReceiveProps(nextProps)
-  {
-    this.setState({selectedRepo:nextProps.githubUrl})
-  }
+  // componentWillReceiveProps(nextProps)
+  // {
+  //   this.setState({selectedRepo:nextProps.params.githubUrl})
+  // }
 
   componentWillMount(){
     var that = this;
@@ -67,10 +75,17 @@ class ChooseWorkflow extends React.Component
          console.log(err);
        }
        else {
+				 console.log(res.text);
          that.setState({worklist:JSON.parse(res.text)});
        }
      });
     }
+
+		handleLogout()
+	    {
+	        cookie.remove("access_token");
+	        cookie.remove("type");
+	    }
 
     handleClose()
   	{
@@ -160,53 +175,53 @@ class ChooseWorkflow extends React.Component
            if (err || !res.ok) {
              alert('Oh no! error');
            } else {
-             console.log(res.text);//getting the jobId
-             //<FinalResult jobId=res.text/>
-             var userid=cookie.load('user');
-             console.log("cookie",userid);
-             var socket = that.state.socket;
-             socket.emit('getjobstatus', {jobId:res.text,userId:userid});
-                  socket.on('report', function(data) {
-                      if (data.status === 'Monitoring Stopped') {
-                          that.setState({stageArr: (
-                                  <h1>Monitoring Stopped</h1>
-                              )});
-                      } else {
-                          console.log(data.jobId, data.stageName, data.status);
-                          switch (data.stageName) {
-                              case 'build':
-                                  that.setState({stageArr1: (<Build res={data}/>)});
-                                  that.setState({stage1:data.status})
-                                  break;
-                              case 'eslint':
-                                  that.setState({stageArr2: (<Eslint res={data}/>)});
-                                  that.setState({stage2:data.status})
-                                  break;
-                              case 'htmlhint':
-                                  that.setState({stageArr3: (<HtmlHint res={data}/>)});
-                                  that.setState({stage3:data.status})
-                                  break;
-                              case 'code-coverage':
-                                  that.setState({stageArr4: (<CodeCoverage res={data}/>)});
-                                  that.setState({stage4:data.status})
-                                  break;
-                              case 'whitebox':
-                                  that.setState({stageArr5: (<Mocha res={data}/>)});
-                                  that.setState({stage5:data.status})
-                                  break;
-                              default:
-                                  that.setState({stageArr6: (
-                                          <div>
-                                              <h4 style={{color:'#FFA500'}}>{data.jobId} Status:{data.status}</h4>
-
-                                          </div>
-
-                                      )});
-                                      that.setState({stage6:data.status});
-                                      break;
-                          }
-                      }
-                  });
+             console.log("===============>jobId",res.text,"======>");//getting the jobId
+						 that.setState({jobId:res.text});
+        //      var userid=cookie.load('user');
+        //      console.log("cookie",userid);
+        //      var socket = that.state.socket;
+        //      socket.emit('getjobstatus', {jobId:res.text,userId:userid});
+        //           socket.on('report', function(data) {
+        //               if (data.status === 'Monitoring Stopped') {
+        //                   that.setState({stageArr: (
+        //                           <h1>Monitoring Stopped</h1>
+        //                       )});
+        //               } else {
+        //                   console.log(data.jobId, data.stageName, data.status);
+        //                   switch (data.stageName) {
+        //                       case 'build':
+        //                           that.setState({stageArr1: (<Build res={data}/>)});
+        //                           that.setState({stage1:data.status})
+        //                           break;
+        //                       case 'eslint':
+        //                           that.setState({stageArr2: (<Eslint res={data}/>)});
+        //                           that.setState({stage2:data.status})
+        //                           break;
+        //                       case 'htmlhint':
+        //                           that.setState({stageArr3: (<HtmlHint res={data}/>)});
+        //                           that.setState({stage3:data.status})
+        //                           break;
+        //                       case 'code-coverage':
+        //                           that.setState({stageArr4: (<CodeCoverage res={data}/>)});
+        //                           that.setState({stage4:data.status})
+        //                           break;
+        //                       case 'whitebox':
+        //                           that.setState({stageArr5: (<Mocha res={data}/>)});
+        //                           that.setState({stage5:data.status})
+        //                           break;
+        //                       default:
+        //                           that.setState({stageArr6: (
+        //                                   <div>
+        //                                       <h4 style={{color:'#FFA500'}}>{data.jobId} Status:{data.status}</h4>
+				 //
+        //                                   </div>
+				 //
+        //                               )});
+        //                               that.setState({stage6:data.status});
+        //                               break;
+        //                   }
+        //               }
+        //           });
          }
        });
     }
@@ -225,8 +240,7 @@ class ChooseWorkflow extends React.Component
 					onTouchTap={this.handleClose}
 					/>,
 			];
-
-      var box=null;
+			var box = null;
       if(this.state.isSelect)
       {
         box=<div>
@@ -239,7 +253,7 @@ class ChooseWorkflow extends React.Component
             editorProps={{$blockScrolling: true}}
             style={{width:"500px"} ,{border:"1px solid black"}}
             />
-            <Link to="/finalresult">
+            <Link to={"/finalresult/"+this.state.jobId}>
                 <RaisedButton label="Submit" secondary={true} onClick={this.handleSubmit} style={{margin:"4%"}} />
             </Link>
 
@@ -256,7 +270,10 @@ class ChooseWorkflow extends React.Component
 
       }
 
-      return(
+      return (
+				<div>
+				<AppBar title={"Hello "+cookie.load("user")} iconElementRight={< Link to = "/" > <FlatButton label="Logout" labelStyle={{color:"white"}} onClick={this.handleLogout}/> < /Link>}/>
+				<TitleCard/>
         <Grid>
           <Row style={{margin:"5px"}}>
             <Col lg={12}>
@@ -288,6 +305,7 @@ class ChooseWorkflow extends React.Component
             </Col>
           </Row>
         </Grid>
+				</div>
       );
 		} //end of render
 	} //end of class TemplateEditor

@@ -39,13 +39,13 @@ function getJobStatus(job, user, socket) {
                                           console.log('repo user',user);
                                             updateUserActivity(user,job,jobStatus[0],function(){
                                               console.log('Report for ' + job + ' is ready.');
+                                              socket.emit('report', {
+                                                  jobId: job,
+                                                  stageName: 'end',
+                                                  status: jobStatus[0]
+                                              });
                                             });
                                         }
-                                    });
-                                    socket.emit('report', {
-                                        jobId: job,
-                                        stageName: 'end',
-                                        status: jobStatus[0]
                                     });
                                 } else {
                                     setTimeout(() => {

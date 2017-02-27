@@ -7,35 +7,45 @@ import {List, ListItem} from 'material-ui/List';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import Request from 'superagent';
+import {Link,hashHistory} from 'react-router';
+import cookie from 'react-cookie';
+import Subheader from 'material-ui/Subheader';
+
 
 export default class SelectRepo extends React.Component
 {
 	constructor(props)
 	{
 		super(props);
-		this.state={open:false,githubUrl:'',githubName:'',repos:['repo1','repo7','repo6','repo5','repo4','repo3','repo2']};
+		this.state={open:false,githubUrl:'',githubName:'',repos:[]};
 		this.handleUrl = this.handleUrl.bind(this);
 	    this.handleText = this.handleText.bind(this);
     	this.handleYes = this.handleYes.bind(this);
 	}
 	  componentWillMount()
     {
-        // Request.get(cookie.load("repos_url")).set('Accept', 'application/json').end(function(err, res) {
-        //     if (err || !res.ok)
-        //         alert('Oh no! error');
-        //     else {
-        //         gitDetails = res.body;
-        //         gitDetails.map((item) => {
-        //             tempRepos.push(item.full_name);
-        //             uName = item.owner.login;
-        //             aUrl = item.owner.avatar_url;
-        //         })
-        //         that.setState({repos: tempRepos});
-        //         that.setState({UserName: uName});
+			var tempRepos=[];
+			var uName;
+			var aUrl;
+			var that = this;
+        Request.get(cookie.load("repos_url")).set('Accept', 'application/json').end(function(err, res) {
+            if (err || !res.ok)
+                alert('Oh no! error');
+            else {
+							console.log(res.body);
+                var gitDetails = res.body;
+								console.log(gitDetails);
+                gitDetails.map((item) => {
+                    tempRepos.push(item.full_name);
+                    uName = item.owner.login;
+                    aUrl = item.owner.avatar_url;
+                })
+                that.setState({repos: tempRepos});
+                that.setState({UserName: uName});
 
-        //     }
-        // })
-    
+            }
+        })
+
     }
     handleUrl(url)
   {
@@ -49,28 +59,31 @@ export default class SelectRepo extends React.Component
     console.log(e.target.value);
     this.setState({githubUrl:e.target.value});
   }
+
   handleYes()
   {
     this.setState({open:false});
-     Request.post('https://api.github.com/repos/' + {this.state.githubName}+'/hooks?access_token=' +cookie.load(access_token)).send({
-                        "name": "web",+'{this.state.githubUrl}+'
+		var that = this;
+     Request.post('https://api.github.com/repos/' +that.state.githubName+'/hooks?access_token=' +cookie.load('access_token')).send({
+                        "name": "web",
                         "active": true,
                         "events": [
                             "push", "pull_request"
                         ],
                         "config": {
-                            "url": "http://2152c194.ngrok.io/hooks/"+{this.state.githubName.split('/')[1]},
+                            "url": "http://7cd4b107.ngrok.io/hooks/"+that.state.githubName.split('/')[1],
                             "content_type": "json"
                         }
                     }).set('Accept', 'application/json').end(function(err, res) {
                         if (err || !res.ok) {
                             console.log(err);
-                            response.send('Error in authentication.');
+                            //res.send('Error in authentication.');
                         } else {
                         console.log('hook added', res);
+
                           }
                     });
- 
+
   }
 	render()
 	{
@@ -91,8 +104,8 @@ export default class SelectRepo extends React.Component
 			<div>
 			<Grid>
           <Row>
-                <Col xs={3} sm={3} md={3} lg={3}>
-              <Card style={{borderRadius: "2px",marginTop:"6%",height:'200'}}>
+                <Col xs={12} sm={12} md={3} lg={3}>
+              <Card style={{borderRadius: "2px",marginTop:"6%"}}>
                 <CardText>
                 <List style={{}} >
                 <Subheader>User Board</Subheader>
@@ -102,12 +115,14 @@ export default class SelectRepo extends React.Component
                 </CardText>
               </Card>
             </Col>
-               
+
             <Col xs={9} sm={9} md={9} lg={9}>
-              <Card style={{borderRadius: "25px",marginTop:"2%",backgroundColor:"#F5F5F5"}}>
+              <Card style={{marginTop:"2%",backgroundColor:"#F5F5F5"}}>
                 <CardText>
                         <TextField value={this.state.githubUrl} floatingLabelText="Type a repo Url" style={{width:"80%"}} onChange={this.handleText}/>
+												<Link to={"/chooseworkflow/"+this.state.githubName}>
                         <RaisedButton label="Submit" primary={true} style={{marginLeft:"1%"}}/>
+												</Link>
                         <center><h1>OR Choose your repo below</h1></center>
                         <List>
                           {this.state.repos.map(text => <ListItem key={text} primaryText={text} style={{textAlign:"center"}} onClick={() => this.handleUrl(text)}/>)}
