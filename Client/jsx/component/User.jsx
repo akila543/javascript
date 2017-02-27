@@ -18,11 +18,13 @@
   import CodeCoverage from './CodeCoverage.jsx';
   import Results from './Results.jsx';
 
+
+      var box=[];
   export default class User extends React.Component {
       constructor(props)
       {
           super();
-          this.state={open: false,UserName:'user',isSubmit:false,repos:[],repoUrl:'',selectedRepo:'',testedRepo:[],socket: io.connect('http://localhost:3000/monitor')};
+          this.state={expanded: false,stateBox:[],open: false,UserName:'user',isSubmit:false,repos:[],repoUrl:'',selectedRepo:'',testedRepo:[],socket: io.connect('http://localhost:3000/monitor')};
           this.handleRepo = this.handleRepo.bind(this);
           this.handleType = this.handleType.bind(this);
           this.handleUrl = this.handleUrl.bind(this);
@@ -30,6 +32,7 @@
           this.handleOpen = this.handleOpen.bind(this);
           this.handleClose = this.handleClose.bind(this);
           this.handleSubmit = this.handleSubmit.bind(this);
+          this.handleExpandChange = this.handleExpandChange.bind(this);
       }
 
       handleType(e)
@@ -40,13 +43,15 @@
       handleRepo()
       {
           var array = this.state.testedRepo;
-          console.log(this.state.repoUrl);
           var temp = this.state.repoUrl.split('/');
           array.push(temp[3]+"/"+temp[4]);
           this.setState({testedRepo:array});
           {this.handleSubmit()}
       }
-
+      handleExpandChange(){
+          console.log(!this.state.expanded);
+          this.setState({expanded: !this.state.expanded});
+      };
       handleOpen ()
       {
       this.setState({open: true});
@@ -124,17 +129,39 @@
       handleUrl(e)
       {
           var temp = "http://github.com/"+e;
-          this.setState({selectedRepo:temp,UserName:cookie.load('user')})
+ https://github.com/broofa/node-uuid         this.setState({selectedRepo:temp,UserName:cookie.load('user')})
           var that = this;
           console.log(this.state.UserName,temp,'\n');
            Request.post('/userjoblist').set('Accept','application/json').send({user:cookie.load('user'),repoUrl:temp}).end(function(err, res) {
               if (err || !res.ok)
                   alert('Oh no! error');
               else {
-                      console.log(res.text);
+                      var result = JSON.parse(res.text);
                       if(res.text=='[]')
                       {
                           {that.handleOpen()};
+                      }
+                      else
+                      {
+
+                        result.map((item,i)=>{
+                                box.push(
+                                  <Card key={i}>
+                                  <CardHeader
+                                    title={"Results for "+ e} style={{backgroundColor:"#558B2F"}}/>
+                                  <CardTitle title="Summary"/>
+                                  <CardText>
+                                    {item.summary}<br/><br/>
+                                    jobId:{item.jobId}<br/><br/>
+                                    initiated at :{item.initiatedAt}<br/><br/>
+                                    Template Name :{item.templateName}
+                                  </CardText>
+                                  <CardActions>
+                                    <RaisedButton secondary={true} label="Test your Repo" />
+                                  </CardActions>
+                                </Card>
+                              )});
+                        that.setState({stateBox:box});
                       }
                    }
                })
@@ -147,7 +174,6 @@
           var tempRepos=[];
           var uName,aUrl;
           var that=this;
-          console.log(cookie.load("repos_url")+"-------");
           Request.get(cookie.load("repos_url")).set('Accept', 'application/json').end(function(err, res) {
               if (err || !res.ok)
                   alert('Oh no! error');
@@ -179,7 +205,6 @@
           onTouchTap={this.handleSubmit}
         />,
       ];
-  	  var box=null;
         if(this.state.isSubmit){
         box=<div >
           {this.state.stageArr6}
@@ -195,22 +220,30 @@
           <div>
             <AppBar title={"Hello "+this.state.UserName} iconElementRight={< Link to = "/" > <FlatButton label="Logout" labelStyle={{color:"white"}} onClick={this.handleLogout}/> < /Link>}/>
 
-            <Grid style={{marginTop:"1%"}}>
-               <Row >
+            <Grid style={{marginTop:"1%", width:"80%"}}>
+               <Row>
 
-               <Col xs={8} sm={8} md={8} lg={8}>
-                      <TextField value={this.state.selectedRepo} floatingLabelText="Enter your git repo url" onChange={this.handleType}/>
-                      <RaisedButton label="Submit" secondary={true} style={{marginLeft:"2%"}} onClick={this.handleRepo}/>
-               </Col>
+                 <Col xs={8} sm={8} md={8} lg={8}>
+                        <TextField value={this.state.selectedRepo} floatingLabelText="Enter your git repo url" onChange={this.handleType}/>
+                        <RaisedButton label="Submit" secondary={true} style={{marginLeft:"2%"}} onClick={this.handleRepo}/>
+                 </Col>
                </Row>
-                  <Row style={{marginTop:"1%"}}>
-                    <Col lg={5} md={5} sm={7} xs={12}>
-                      {box}
+                <Row style={{margin:"2%"}}>
+                    <Col lg={12} md={12} sm={12} xs={12}>
+                        <Card style={{width:"100%"}}>
+                            <CardText style={{color:"#3F51B5"}}>
+                                 <br/>
+                                <h2>Are your Repos deployable?</h2>
+                                <h3>If not sure select a repo to test and let the orchestropus show you whether it is...</h3>
+                            </CardText>
+                        </Card>
                     </Col>
+                </Row>
+              <Row>
                    <Col lgOffset={8} lg={5} md={5} mdOffset={8} sm={7} smOffset={8} xs={12}>
 
-                      <Card>
-                          <CardHeader title="Your Repositories" style={{backgroundColor:"#BDBDBD"}}/>
+                      <Card expanded={this.state.expanded} onExpandChange={this.handleExpandChange}>
+                          <CardHeader title="Your Repositories" style={{backgroundColor:"#BDBDBD"}} showExpandableButton={true} actAsExpander={true}/>
                               <CardText>
                                   <List>
                                   {this.state.repos.map(text=>
