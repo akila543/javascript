@@ -1,5 +1,5 @@
 const initiateJob = require('express').Router();
-const initiatePipeline = require('../../Pipeline/initiatePipeline.js');
+const initiatePipeline = require('../../../Pipeline/initiatePipeline.js');
 initiateJob.use(require('body-parser').json());
 const MongoClient = require('mongodb').MongoClient;
 
