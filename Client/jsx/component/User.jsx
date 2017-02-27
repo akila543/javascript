@@ -278,7 +278,6 @@
             onRequestClose={this.handleClose}>
           </Dialog>
            </div>);
-=======
                                 </CardText>
                                 <CardActions>
                                     <RaisedButton secondary={true} label="Test your Repo"/>
