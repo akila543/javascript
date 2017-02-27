@@ -1,5 +1,0 @@
-#!/bin/bash
-#The istanbul script
-
-cd $WORKSPACE
-istanbul cover . 

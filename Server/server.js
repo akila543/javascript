@@ -7,10 +7,10 @@ const io = require('socket.io')(server);
 const home = require('./sockets/homeSocket');
 const redisChangeListener = require('./sockets/redisChangeListener');
 //pipeline routes imports
-const initiateJob = require('./routes/initiateJob');
-const getJobList = require('./routes/getJobList');
+const initiateJob = require('./routes/jobRoutes/initiateJob');
+const getJobList = require('./routes/jobRoutes/getJobList');
 const authentication = require('./routes/authentication.js');
-const monitorall = require('./routes/monitorAll.js');
+const monitorall = require('./routes/reportRoutes/monitorAll.js');
 const userJobList = require('./routes/userActivityRoutes/userJobList');
 const slacknotify = require('./routes/slacknotify.js');
 //workflow routes imports

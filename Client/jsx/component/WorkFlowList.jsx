@@ -89,19 +89,29 @@ class WorkFlowList extends React.Component{
    var box=<FloatingActionButton mini={true} onClick={this.handleAdd} style={{marginTop:"2%",marginRight:"2%", }}>
       <ContentAdd />
     </FloatingActionButton>
+
    return(
      <div>
        <SwipeableViews
          index={this.state.slideIndex}>
+
          <div>
-           <GridList cellHeight='auto' col={2} style={{textAlign:"left"}} >
-             <h1>WorkFlows</h1>
-             <div style={{textAlign:"right"}}>
-               {box}
-             </div>
-           </GridList>
+           <Grid style={{width:"95%"}}>
+             <Row>
+               <Col xs={10} sm={10} md={10} lg={10}>
+                  <h1>WorkFlows</h1>
+               </Col>
+               <Col xs={2} sm={2} md={2} lg={2}>
+                 <div style={{textAlign:"right"}}>
+                   {box}
+                 </div>
+               </Col>
+
+             </Row>
+           </Grid>
+
            <Divider/>
-          <Table style={{width:"100%"}}>
+          <Table>
              <TableBody displayRowCheckbox={false}>
                {this.state.worklist.map((item)=>(
                  <TableRow >
@@ -133,17 +143,9 @@ class WorkFlowList extends React.Component{
          </div>
          <div>
            <WorkFlowEdit data={this.state.content} filename={this.state.templateName} transfunction={this.state.transfunction} />
-           <RaisedButton  onClick = {this.handlePrevSlide} label="Back" primary={true} style={{marginLeft:"1%"}}/>
          </div>
          <div>
-           <Grid style={{width:'100%'}}>
-                   <Row>
-                     <Col xs={12} sm={12} md={12} lg={12}>  <AddTemplateEdit/>  </Col>
-
-                   </Row>
-                 </Grid>
-
-           <RaisedButton  onClick = {this.handlePrevSlide} label="Back" primary={true} style={{marginLeft:"1%"}}/>
+           <AddTemplateEdit/>
          </div>
        </SwipeableViews>
 

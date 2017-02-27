@@ -97,7 +97,7 @@ class TransformationFunc extends React.Component
 				{
 					console.log(res.text);
 					alert("Valid js!!! Successfully uploaded");
-					hashHistory.push('/dashboard');
+					hashHistory.push("/monitor");
 				 }
 				});
 		}

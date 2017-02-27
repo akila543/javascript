@@ -21,7 +21,7 @@ function getJobStatus(job, user, socket) {
 
                     var count = 0;
                     result.map((stage) => {
-                        if (stage !== undefined && (stage.status === 'Complete' || stage.status === 'Failed')) {
+                        if (stage !== undefined && (stage.status === 'Complete' || stage.status === 'Failed'||stage.status==='Blocked')) {
                             count++;
                         }
                     });

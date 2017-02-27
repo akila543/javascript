@@ -18,10 +18,15 @@
 		}
 	  render() {
 			console.log(this.state.data);
-			if(this.state.data.status==='Complete')
-	    var avatar="../jsx/images/avatar1.jpeg";
-	  else
-	    var avatar="../jsx/images/avatar2.jpeg";
+			if (this.state.data.status === 'Complete')
+					var avatar = "../jsx/images/avatar1.jpeg";
+			else   if (this.state.data.status === 'Failed')
+					var avatar = "../jsx/images/avatar2.jpeg";
+			else if(this.state.data.status==='Blocked')
+					var avatar="../jsx/images/block.png";
+			else {
+				var avatar="../jsx/images/pending.png";
+			}
 	    return (
 	      <Card >
 	        <CardHeader
@@ -45,7 +50,7 @@
 						(
 					(typeof this.state.data.stdout === 'string')?
 											(
-													<h2>{this.state.data.stdout}</h2>
+													<div><h4>Output</h4><pre>{this.state.data.stdout}</pre></div>
 											):(
 												<Table showCheckbox={false}>
 												<TableHeader displaySelectAll={false} adjustForCheckbox={false} >
@@ -70,7 +75,7 @@
 							 </Table>
 						 )
 					 ):(
-						 <h2>output is nothing</h2>
+						 <div><h4>Output</h4><pre></pre></div>
 					 )}
 
 					</div>
