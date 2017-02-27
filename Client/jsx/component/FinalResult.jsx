@@ -1,0 +1,172 @@
+import React from 'react';
+import AppBar from 'material-ui/AppBar';
+import {
+    Card,
+    CardActions,
+    CardHeader,
+    CardMedia,
+    CardTitle,
+    CardText
+} from 'material-ui/Card';
+import {Grid, Row, Col} from 'react-flexbox-grid';
+import {List, ListItem} from 'material-ui/List';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+import cookie from 'react-cookie';
+import Request from 'superagent';
+import FlatButton from 'material-ui/FlatButton';
+import {Link, hashHistory} from 'react-router';
+import io from 'socket.io-client';
+import HtmlHint from './HtmlHint.jsx';
+import Build from './Build.jsx';
+import Eslint from './Eslint.jsx';
+import Mocha from './Mocha.jsx';
+import CodeCoverage from './CodeCoverage.jsx';
+import Results from './Results.jsx';
+import {Chart} from 'react-google-charts';
+import TitleCard from './TitleCard.jsx';
+import newUser from './newUser.jsx';
+export default class User extends React.Component {
+    constructor(props)
+    {
+        super(props);
+        this.state = {
+            data2: [],
+            options: {
+                colors: ['#e0440e'],
+                title: 'Toppings I Like On My Pizza'
+            }
+        };
+        this.state = {
+            jobId:this.props.jobId,
+            isSubmit: false,
+            socket: io.connect('http://localhost:3000/monitor')
+        };
+          this.handleLogout=this.handleLogout.bind(this);
+
+    }
+    componentWillReceiveProps(nextProps) {
+      console.log(nextProps.jobId);
+      this.setState({jobId:nextProps.jobId});
+  }
+  handleLogout()
+    {
+        cookie.remove("access_token");
+        cookie.remove("type");
+    }
+
+    componentWillMount()
+    {
+
+            var userid=cookie.load('user');
+
+            var that = this;
+            var socket = that.state.socket;
+            socket.emit('getjobstatus',{jobId:this.state.jobId,userId:userid});
+            socket.on('report', function(data) {
+                if (data.status === 'Monitoring Stopped') {
+                    that.setState({stageArr: (
+                            <h1>Monitoring Stopped</h1>
+                        )});
+                } else
+                {
+                            console.log(data.jobId, data.stageName, data.status);
+                            switch (data.stageName) {
+                                case 'build':
+                                    that.setState({stageArr1: (<Build res={data}/>)});
+                                    that.setState({stage1: data.status});
+                                    break;
+                                case 'eslint':
+                                    that.setState({stageArr2: (<Eslint res={data}/>)});
+                                    that.setState({stage2: data.status});
+                                    break;
+                                case 'htmlhint':
+                                    that.setState({stageArr3: (<HtmlHint res={data}/>)});
+                                    that.setState({stage3: data.status})
+                                    break;
+                                case 'code-coverage':
+                                    that.setState({stageArr4: (<CodeCoverage res={data}/>)});
+                                    that.setState({stage4: data.status})
+                                    break;
+                                case 'whitebox':
+                                    that.setState({stageArr5: (<Mocha res={data}/>)});
+                                    that.setState({stage5: data.status})
+                                    break;
+                                default:
+                                    that.setState({stageArr6: (
+                                            <div>
+                                                <h4 style={{
+                                                    color: '#FFA500'
+                                                }}>{data.jobId}
+                                                    Status:{data.status}</h4>
+
+                                            </div>
+
+                                        )});
+                                    that.setState({stage6: data.status});
+                                    break;
+                            }
+                        }
+                    });
+
+            if (this.state.stage6 != null) {
+                Request.get('/getreport/'+id).set('Accept', 'application/json').end(function(err, res) {
+                    if (!err) {
+                        var that = this;
+                        res.map(function(item) {
+                            if (item != null) {
+                                var arr = [];
+                                var stageName = item.stageName;
+                                var scheduled = new Date(item.scheduled);;
+                                var completed = new Date(item.completed);;
+                                arr.push(stageName, scheduled, completed);
+                                that.state.data2.push(arr);
+                            }
+                        });
+                        var first = ["sdasd", new Date(), new Date()];
+                        that.state.data2.unshift(first);
+                    }
+                })
+            }
+    }
+
+    render() {
+            var timeline=null;
+          if(this.state.data2!=null){
+            timeline= <div style={{margin: "50px"}}>
+                  <Chart chartType="Timeline" data={this.state.data2} graph_id="Timeline" options={this.state.options} width="60%" height="500px"/>
+              </div>
+        }
+
+        return (
+                <div>
+                  <NewUser />
+                <Grid style={{
+                    marginTop: "1%"
+                }}>
+                    <Row style={{
+                        marginTop: "1%"
+                    }} >
+                        <Col lg={5}>
+                            <div >
+                                {this.state.stageArr6}
+                                {this.state.stageArr1}
+                                {this.state.stageArr2}
+                                {this.state.stageArr3}
+                                {this.state.stageArr4}
+                                {this.state.stageArr5}
+                            </div>
+
+                        </Col>
+                        </Row>
+                    <Row>
+                        <Col>
+                          {timeline}
+                        </Col>
+
+                    </Row>
+                </Grid>
+                  </div>
+        );
+    }
+}
