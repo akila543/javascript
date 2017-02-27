@@ -1,4 +1,3 @@
-<<<<<<< HEAD
   import React from 'react';
   import AppBar from 'material-ui/AppBar';
   import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
@@ -127,231 +126,6 @@
           cookie.remove("type");
       }
 
-      handleUrl(e)
-      {
-          var temp = "http://github.com/"+e;
- https://github.com/broofa/node-uuid         this.setState({selectedRepo:temp,UserName:cookie.load('user')})
-          var that = this;
-          console.log(this.state.UserName,temp,'\n');
-           Request.post('/userjoblist').set('Accept','application/json').send({user:cookie.load('user'),repoUrl:temp}).end(function(err, res) {
-              if (err || !res.ok)
-                  alert('Oh no! error');
-              else {
-                      var result = JSON.parse(res.text);
-                      if(res.text=='[]')
-                      {
-                          {that.handleOpen()};
-                      }
-                      else
-                      {
-
-                        result.map((item,i)=>{
-                                box.push(
-                                  <Card key={i}>
-                                  <CardHeader
-                                    title={"Results for "+ e} style={{backgroundColor:"#558B2F"}}/>
-                                  <CardTitle title="Summary"/>
-                                  <CardText>
-=======
-import React from 'react';
-import AppBar from 'material-ui/AppBar';
-import {
-    Card,
-    CardActions,
-    CardHeader,
-    CardMedia,
-    CardTitle,
-    CardText
-} from 'material-ui/Card';
-import {Grid, Row, Col} from 'react-flexbox-grid';
-import {List, ListItem} from 'material-ui/List';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
-import cookie from 'react-cookie';
-import Request from 'superagent';
-import FlatButton from 'material-ui/FlatButton';
-import Dialog from 'material-ui/Dialog';
-import {Link, hashHistory} from 'react-router';
-import io from 'socket.io-client';
-import HtmlHint from './HtmlHint.jsx';
-import Build from './Build.jsx';
-import Eslint from './Eslint.jsx';
-import Mocha from './Mocha.jsx';
-import CodeCoverage from './CodeCoverage.jsx';
-import Results from './Results.jsx';
-import Popover from 'material-ui/Popover';
-import Menu from 'material-ui/Menu';
-import MenuItem from 'material-ui/MenuItem';
-var validUrl = require('valid-url');
-import {Chart} from 'react-google-charts';
-var box = new Array();
-export default class User extends React.Component {
-    constructor(props)
-    {
-        super();
-        this.state = {
-            data2: [],
-            options: {
-                colors: ['#e0440e'],
-                title: 'Toppings I Like On My Pizza'
-            }
-        };
-        this.state = {
-            templateContent: '',
-            openTemplate: false,
-            worklist: [],
-            open: false,
-            template: 'CI-Pipeline.yml',
-            open1: false,
-            UserName: 'user',
-            isSubmit: false,
-            repos: [],
-            repoUrl: '',
-            selectedRepo: '',
-            testedRepo: [],
-            socket: io.connect('http://localhost:3000/monitor')
-        };
-        this.handleRepo = this.handleRepo.bind(this);
-        this.handleType = this.handleType.bind(this);
-        this.handleUrl = this.handleUrl.bind(this);
-        this.handleLogout = this.handleLogout.bind(this);
-        this.handleOpen = this.handleOpen.bind(this);
-        this.handleClose = this.handleClose.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleTouchTap = this.handleTouchTap.bind(this);
-        this.handleRequestClose = this.handleRequestClose.bind(this);
-    }
-
-    handleTouchTap(event) {
-        // This prevents ghost click.
-        var that = this;
-
-        that.setState({open1: true, anchorEl: event.currentTarget});
-    }
-
-    handleRequestClose() {
-        this.setState({open1: false});
-    };
-    handleType(e)
-    {
-        this.setState({selectedRepo: e.target.value});
-        this.setState({repoUrl: e.target.value});
-    }
-    handleRepo()
-    {
-        var array = this.state.testedRepo;
-        console.log(this.state.repoUrl);
-        var temp = this.state.repoUrl.split('/');
-        array.push(temp[3] + "/" + temp[4]);
-        console.log(temp);
-        this.setState({testedRepo: array});
-    }
-    {this.handleSubmit()}
-}
-
-handleOpen()
-{
-    this.setState({open: true});
-}
-
-handleClose()
-{
-    this.setState({open: false});
-    handleSubmit()
-    {
-
-        var regexp = /http:\/\/github\.com\/*\/*/;
-
-        if ((validUrl.isUri(this.state.selectedRepo)) && regexp.test(this.state.selectedRepo)) {
-            box = [];
-            this.setState({open: false});
-            this.setState({isSubmit: true});
-            var id = '';
-            var that = this;
-            console.log("template :", that.state.template);
-            Request.post('/initiate').set('Accept', 'application/json').send({userName: cookie.load('user'), data: that.state.selectedRepo, templateName: that.state.template}).end(function(err, res) {
-                if (err || !res.ok) {
-                    alert('Oh no! error');
-                } else {
-                    id = res.text;
-                    console.log(res.text); //getting the jobId
-                    var userid = cookie.load('user');
-                    console.log("cookie", userid);
-                    var socket = that.state.socket;
-                    socket.emit('getjobstatus', {
-                        jobId: res.text,
-                        userId: userid
-                    });
-                    socket.on('report', function(data) {
-                        if (data.status === 'Monitoring Stopped') {
-                            that.setState({stageArr: (
-                                    <h1>Monitoring Stopped</h1>
-                                )});
-                        } else {
-                            console.log(data.jobId, data.stageName, data.status);
-                            switch (data.stageName) {
-                                case 'build':
-                                    that.setState({stageArr1: (<Build res={data}/>)});
-                                    that.setState({stage1: data.status})break;
-                                case 'eslint':
-                                    that.setState({stageArr2: (<Eslint res={data}/>)});
-                                    that.setState({stage2: data.status})break;
-                                case 'htmlhint':
-                                    that.setState({stageArr3: (<HtmlHint res={data}/>)});
-                                    that.setState({stage3: data.status})break;
-                                case 'code-coverage':
-                                    that.setState({stageArr4: (<CodeCoverage res={data}/>)});
-                                    that.setState({stage4: data.status})break;
-                                case 'whitebox':
-                                    that.setState({stageArr5: (<Mocha res={data}/>)});
-                                    that.setState({stage5: data.status})break;
-                                default:
-                                    that.setState({stageArr6: (
-                                            <div>
-                                                <h4 style={{
-                                                    color: '#FFA500'
-                                                }}>{data.jobId}
-                                                    Status:{data.status}</h4>
-
-                                            </div>
-
-                                        )});
-                                    that.setState({stage6: data.status});
-                                    break;
-                            }
-                        }
-                    });
-                }
-            });
-            if (this.state.stage6 != null) {
-                Request.post('/getReport').set('Accept', 'application/json').send({jobId: id}).end(function(err, res) {
-                    if (!err) {
-                        var that = this;
-                        res.map(function(item) {
-                            if (item != null) {
-                                var arr = [];
-                                var stageName = item.stageName;
-                                var scheduled = new Date(item.scheduled);;
-                                var completed = new Date(item.completed);;
-                                arr.push(stageName, scheduled, completed);
-                                that.state.data2.push(arr);
-                            }
-                        });
-                        var first = ["sdasd", new Date(), new Date()];
-                        that.state.data2.unshift(first);
-                    }
-                })
-            }
-        } else {
-            alert("Not a valid Url");
-        }
-    }
-    handleLogout()
-    {
-        cookie.remove("access_token");
-        cookie.remove("type");
-    }
-
     handleUrl(e)
     {
         var temp = "http://github.com/" + e;
@@ -377,12 +151,10 @@ handleClose()
                                 }}/>
                                 <CardTitle title="Summary"/>
                                 <CardText>
->>>>>>> 23a098614b182398f273c1c77825b51f1828dcbf
                                     {item.summary}<br/><br/>
                                     jobId:{item.jobId}<br/><br/>
                                     initiated at :{item.initiatedAt}<br/><br/>
                                     Template Name :{item.templateName}
-<<<<<<< HEAD
                                   </CardText>
                                   <CardActions>
                                     <RaisedButton secondary={true} label="Test your Repo" />
@@ -703,6 +475,5 @@ handleClose()
                 </Dialog>
             </div>
         );
->>>>>>> 23a098614b182398f273c1c77825b51f1828dcbf
     }
 }
