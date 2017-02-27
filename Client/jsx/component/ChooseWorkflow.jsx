@@ -10,10 +10,13 @@ import 'brace/theme/tomorrow';
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 import {Grid,Row,Col} from 'react-flexbox-grid/lib';
+import {GridList, GridTile} from 'material-ui/GridList';
+import {List, ListItem} from 'material-ui/List';
 import request from 'superagent';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
+import Subheader from 'material-ui/Subheader';
 import cookie from 'react-cookie';
 import HtmlHint from './HtmlHint.jsx';
 import Build from './Build.jsx';
@@ -22,9 +25,8 @@ import Mocha from './Mocha.jsx';
 import CodeCoverage from './CodeCoverage.jsx';
 import io from 'socket.io-client';
 import {Link,hashHistory} from 'react-router';
-
-import FinalResult from '../component/FinalResult.jsx'
 import TitleCard from './TitleCard.jsx';
+import FinalResult from './FinalResult.jsx'
 var YAML = require('json2yaml');
 
 
@@ -40,10 +42,10 @@ class ChooseWorkflow extends React.Component
 	{
 		super(props);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.handleVisualise = this.handleVisualise.bind(this);
 		this.handleClose = this.handleClose.bind(this);
 		this.handleLogout=this.handleLogout.bind(this);
-		console.log(this.props.params.user,this.props.params.repo);
+    this.split = this.split.bind(this);
+		//console.log(this.props.params.user,this.props.params.repo);
 		this.state={open:false,
                 selectedRepo:"http://github.com/"+this.props.params.user+"/"+this.props.params.repo,
                 graph:'',
@@ -60,10 +62,6 @@ class ChooseWorkflow extends React.Component
 							}
 
 	}
-  // componentWillReceiveProps(nextProps)
-  // {
-  //   this.setState({selectedRepo:nextProps.params.githubUrl})
-  // }
 
   componentWillMount(){
     var that = this;
@@ -81,6 +79,7 @@ class ChooseWorkflow extends React.Component
      });
     }
 
+
 		handleLogout()
 	    {
 	        cookie.remove("access_token");
@@ -94,7 +93,8 @@ class ChooseWorkflow extends React.Component
 
     split()
   	{
-  		var obj = doc.stages;
+  		var obj = this.state.templateContent.stages;
+      console.log(obj);
   		var jsonArray=[];
   		var incr =1;
 
@@ -157,14 +157,9 @@ class ChooseWorkflow extends React.Component
   	var temp = <Graph data={json}/>
   	this.setState({graph:temp});
   	this.setState({open:true});
+    console.log("graph");
+    console.log(this.state.graph);
 
-  	}
-
-  	handleVisualise()
-  	{
-  		doc = (this.state.templateContent)
-  		console.log(doc);
-  		this.split();
   	}
 
     handleSubmit()
@@ -177,51 +172,7 @@ class ChooseWorkflow extends React.Component
            } else {
              console.log("===============>jobId",res.text,"======>");//getting the jobId
 						 that.setState({jobId:res.text});
-        //      var userid=cookie.load('user');
-        //      console.log("cookie",userid);
-        //      var socket = that.state.socket;
-        //      socket.emit('getjobstatus', {jobId:res.text,userId:userid});
-        //           socket.on('report', function(data) {
-        //               if (data.status === 'Monitoring Stopped') {
-        //                   that.setState({stageArr: (
-        //                           <h1>Monitoring Stopped</h1>
-        //                       )});
-        //               } else {
-        //                   console.log(data.jobId, data.stageName, data.status);
-        //                   switch (data.stageName) {
-        //                       case 'build':
-        //                           that.setState({stageArr1: (<Build res={data}/>)});
-        //                           that.setState({stage1:data.status})
-        //                           break;
-        //                       case 'eslint':
-        //                           that.setState({stageArr2: (<Eslint res={data}/>)});
-        //                           that.setState({stage2:data.status})
-        //                           break;
-        //                       case 'htmlhint':
-        //                           that.setState({stageArr3: (<HtmlHint res={data}/>)});
-        //                           that.setState({stage3:data.status})
-        //                           break;
-        //                       case 'code-coverage':
-        //                           that.setState({stageArr4: (<CodeCoverage res={data}/>)});
-        //                           that.setState({stage4:data.status})
-        //                           break;
-        //                       case 'whitebox':
-        //                           that.setState({stageArr5: (<Mocha res={data}/>)});
-        //                           that.setState({stage5:data.status})
-        //                           break;
-        //                       default:
-        //                           that.setState({stageArr6: (
-        //                                   <div>
-        //                                       <h4 style={{color:'#FFA500'}}>{data.jobId} Status:{data.status}</h4>
-				 //
-        //                                   </div>
-				 //
-        //                               )});
-        //                               that.setState({stage6:data.status});
-        //                               break;
-        //                   }
-        //               }
-        //           });
+
          }
        });
     }
@@ -244,67 +195,65 @@ class ChooseWorkflow extends React.Component
       if(this.state.isSelect)
       {
         box=<div>
-            <AceEditor
-            mode="yaml"
-            readOnly={true}
-            theme="tomorrow"
-            value={YAML.stringify(this.state.templateContent)}
-            name="UNIQUE_ID_OF_DIV"
-            editorProps={{$blockScrolling: true}}
-            style={{width:"500px"} ,{border:"1px solid black"}}
-            />
+            <div>{this.state.graph}</div>
             <Link to={"/finalresult/"+this.state.jobId}>
-                <RaisedButton label="Submit" secondary={true} onClick={this.handleSubmit} style={{margin:"4%"}} />
+              <RaisedButton label="Submit" secondary={true} onClick={this.handleSubmit} style={{marginTop:"4%",marginLeft:"10%"}} />
             </Link>
-
-            <FlatButton label="Visualise" primary={true} onClick={this.handleVisualise} style={{marginLeft:"4%"}} />
-              <Dialog
-  							title="Dialog With Actions"
-  							actions={actions}
-  							modal={false}
-  							open={this.state.open}
-  							onRequestClose={this.handleClose}>
-  							{this.state.graph}
-  						</Dialog>
-          </div>
+					</div>;
 
       }
 
       return (
 				<div>
-				<AppBar title={"Hello "+cookie.load("user")} iconElementRight={< Link to = "/" > <FlatButton label="Logout" labelStyle={{color:"white"}} onClick={this.handleLogout}/> < /Link>}/>
-				<TitleCard/>
-        <Grid>
-          <Row style={{margin:"5px"}}>
-            <Col lg={12}>
-              <Card>
-                <CardHeader title="Workflows" style={{backgroundColor:"#BDBDBD"}}></CardHeader>
-              </Card>
-            </Col>
-          </Row>
-          <Row style={{margin:'5px'}}>
-            <Col lg={12}>
-              <Card>
-                  <CardHeader title="Choose WorkFlow" style={{backgroundColor:"#BDBDBD"}}/>
-                      <CardText>
-                        {this.state.worklist.map((item)=>(
-                        <Menu>
-                          <MenuItem key={item} primaryText={item.templateName} onClick={
-                              ()=>{
-                                this.setState({template:item.templateName,templateContent:item.content,open1:false,isSelect:true});
-                              }}/>
-                        </Menu>
-                      ))}
-                      </CardText>
-              </Card>
-            </Col>
-          </Row>
-          <Row style={{margin:"5px"}}>
-            <Col lg={12}>
-              {box}
-            </Col>
-          </Row>
-        </Grid>
+  				<AppBar title={"Hello "+cookie.load("user")} iconElementRight={< Link to = "/" > <FlatButton label="Logout" labelStyle={{color:"white"}} onClick={this.handleLogout}/> < /Link>}/>
+  				<TitleCard/>
+					<Grid>
+						<Row>
+							<Col xs={12} sm={12} md={3} lg={3}>
+								<Card style={{borderRadius: "2px",marginTop:"6%"}}>
+									<CardText>
+									<List style={{}} >
+									<Subheader>User Board</Subheader>
+									<ListItem primaryText="New Project"  />
+									<ListItem primaryText="Build History"  />
+									</List>
+									</CardText>
+								</Card>
+						 </Col>
+						 <Col xs={12} sm={12} md={9} lg={9}>
+							 <div >
+		             <GridList cols={1} cellHeight="auto">
+		               <GridTile style={{margin:"5px"}}>
+		                   <Card>
+		                     <CardHeader title="Workflows" style={{backgroundColor:"#BDBDBD"}}></CardHeader>
+		                   </Card>
+		               </GridTile>
+		               <GridTile style={{margin:'5px'}}>
+		                   <Card>
+		                       <CardHeader title="Choose WorkFlow" style={{backgroundColor:"#BDBDBD"}}/>
+		                           <CardText>
+		                             {this.state.worklist.map((item)=>(
+		                             <Menu>
+		                               <MenuItem key={item} primaryText={item.templateName} onClick={()=>{
+		                                   this.setState({template:item.templateName,templateContent:item.content,open1:false,isSelect:true},()=>{
+		                                     this.split();
+		                                   });
+		                                 }}/>
+		                             </Menu>
+		                           ))}
+		                           </CardText>
+		                   </Card>
+		               </GridTile>
+		               <GridTile style={{margin:"5px"}}>
+		                 {box}
+		               </GridTile>
+		             </GridList>
+		           </div>
+
+						 </Col>
+						</Row>
+					</Grid>
+
 				</div>
       );
 		} //end of render
