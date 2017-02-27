@@ -42,7 +42,7 @@ ReactDOM.render(<MuiThemeProvider muiTheme={muiTheme}>
               <Route path={"/monitor"} component={Monitoring} onEnter={autherize}/>
              <Route path={"/edit"} component={WorkFlowEdit} onEnter={autherize}/>
              <Route path={"/workflows"} component={WorkFlowList} onEnter={autherize}/>
-             <Route path={"/AdminPipeline"} component={AdminInitiate} onEnter={autherize}/>
+             <Route path={"/AdminPipeline"} component={User} onEnter={autherize}/>
         </Route>
      </Router>
     </MuiThemeProvider>, document.getElementById('app'));

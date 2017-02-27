@@ -21,6 +21,7 @@ export default class SelectRepo extends React.Component
 		this.handleUrl = this.handleUrl.bind(this);
 	    this.handleText = this.handleText.bind(this);
     	this.handleYes = this.handleYes.bind(this);
+			this.handleSubmit = this.handleSubmit.bind(this);
 	}
 	  componentWillMount()
     {
@@ -59,7 +60,13 @@ export default class SelectRepo extends React.Component
     console.log(e.target.value);
     this.setState({githubUrl:e.target.value});
   }
-
+handleSubmit()
+{
+	var temp=this.state.githubUrl.split('/');
+	var name = temp[3]+'/'+temp[4];
+	console.log(name);
+	this.setState({githubName:name});
+}
   handleYes()
   {
     this.setState({open:false});
@@ -121,7 +128,7 @@ export default class SelectRepo extends React.Component
                 <CardText>
                         <TextField value={this.state.githubUrl} floatingLabelText="Type a repo Url" style={{width:"80%"}} onChange={this.handleText}/>
 												<Link to={"/chooseworkflow/"+this.state.githubName}>
-                        <RaisedButton label="Submit" primary={true} style={{marginLeft:"1%"}}/>
+                        <RaisedButton label="Submit" primary={true} style={{marginLeft:"1%"}} onClick={this.handleSubmit}/>
 												</Link>
                         <center><h1>OR Choose your repo below</h1></center>
                         <List>

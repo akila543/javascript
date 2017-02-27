@@ -47,7 +47,7 @@ class HtmlHint extends React.Component {
         <h4>Output:</h4>
         {(typeof this.state.data.stdout === 'string')?
                     (
-                        <h2>{this.state.data.stdout}</h2>
+                        <div><pre>{this.state.data.stdout}</pre></div>
                     ):(
                     <div><pre>{JSON.stringify(this.state.data.stdout)}</pre></div>
                     )}

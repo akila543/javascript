@@ -26,7 +26,7 @@ class App extends React.Component {
       {return(
         <div>
         <DashNavbar>
-          <AdminInitiate />
+          <User />
         </DashNavbar>
 
         </div>

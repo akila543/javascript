@@ -24,8 +24,9 @@ import Mocha from './Mocha.jsx';
 import CodeCoverage from './CodeCoverage.jsx';
 import Results from './Results.jsx';
 import {Chart} from 'react-google-charts';
-import TitleCard from './TitleCard.jsx';
+import TitleCardResult from './TitleCardResult.jsx';
 import newUser from './NewUser.jsx';
+import DashNavbar from './DashNavbar.jsx';
 export default class User extends React.Component {
     constructor(props)
     {
@@ -116,9 +117,7 @@ export default class User extends React.Component {
         console.log("inside geting reports");
           Request.get('/getreports/'+this.state.jobId).set('Accept', 'application/json').end(function(err, res) {
               if (!err) {
-                  var that = this;
-                  var tempArr = new Array();
-                  tempArr.push(["sdasd", new Date(), new Date()]);
+                  var that=this;
                   console.log("reports",res,"====================",typeof res);
                   JSON.parse(res.text).map(function(item) {
                       if (item != null) {
@@ -127,10 +126,12 @@ export default class User extends React.Component {
                           var scheduled = new Date(item.scheduled);;
                           var completed = new Date(item.completed);;
                           arr.push(stageName, scheduled, completed);
-                          tempArr.push(arr);
+                          that.state.data2.push(arr);
                       }
                   });
-                  this.setState({data2:tempArr});
+                  var first = ["sdasd", new Date(), new Date()];
+                                  that.state.data2.unshift(first);
+
               }
           })
       }
@@ -139,22 +140,29 @@ export default class User extends React.Component {
     render() {
             var timeline=null;
           if(this.state.data2!=null){
+            console.log("inside google api");
             timeline= <div style={{margin: "50px"}}>
                   <Chart chartType="Timeline" data={this.state.data2} graph_id="Timeline" options={this.state.options} width="60%" height="500px"/>
               </div>
         }
+        var bar=null;
+          if(cookie.load('type')=='user')
+          bar=<AppBar title={"Hello "+cookie.load("user")} iconElementRight={< Link to = "/" > <FlatButton label="Logout" labelStyle={{color:"white"}} onClick={this.handleLogout}/> < /Link>}/>
+            else if(cookie.load('type')=='admin'){
+    					bar=<DashNavbar/>
+    				}
 
         return (
                 <div>
-                <AppBar title={"Hello "+cookie.load("user")} iconElementRight={< Link to = "/" > <FlatButton label="Logout" labelStyle={{color:"white"}} onClick={this.handleLogout}/> < /Link>}/>
-                <TitleCard/>
+                  {bar}
+                  <TitleCardResult/>
                 <Grid style={{
                     marginTop: "1%"
                 }}>
                     <Row style={{
                         marginTop: "1%"
                     }} >
-                        <Col lg={10}>
+                        <Col lg={12}>
                             <div >
                                 {this.state.stageArr6}
                                 {this.state.stageArr1}

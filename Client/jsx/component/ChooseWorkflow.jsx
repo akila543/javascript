@@ -22,9 +22,9 @@ import Mocha from './Mocha.jsx';
 import CodeCoverage from './CodeCoverage.jsx';
 import io from 'socket.io-client';
 import {Link,hashHistory} from 'react-router';
-
+import DashNavbar from './DashNavbar.jsx';
 import FinalResult from '../component/FinalResult.jsx'
-import TitleCard from './TitleCard.jsx';
+import TitleCardFlow from './TitleCardFlow.jsx';
 var YAML = require('json2yaml');
 
 
@@ -240,7 +240,13 @@ class ChooseWorkflow extends React.Component
 					onTouchTap={this.handleClose}
 					/>,
 			];
-			var box = null;
+			var bar=null;
+		    if(cookie.load('type')=='user')
+		    bar=<AppBar title={"Hello "+cookie.load("user")} iconElementRight={< Link to = "/" > <FlatButton label="Logout" labelStyle={{color:"white"}} onClick={this.handleLogout}/> < /Link>}/>
+				else if(cookie.load('type')=='admin'){
+					bar=<DashNavbar/>
+				}
+		var box = null;
       if(this.state.isSelect)
       {
         box=<div>
@@ -272,8 +278,8 @@ class ChooseWorkflow extends React.Component
 
       return (
 				<div>
-				<AppBar title={"Hello "+cookie.load("user")} iconElementRight={< Link to = "/" > <FlatButton label="Logout" labelStyle={{color:"white"}} onClick={this.handleLogout}/> < /Link>}/>
-				<TitleCard/>
+				{bar}
+				<TitleCardFlow />
         <Grid>
           <Row style={{margin:"5px"}}>
             <Col lg={12}>

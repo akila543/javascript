@@ -1,6 +1,6 @@
 import React from 'react';
 import AppBar from 'material-ui/AppBar';
-import TitleCard from './TitleCard.jsx';
+import TitleCardRepo from './TitleCardRepo.jsx';
 import FlatButton from 'material-ui/FlatButton';
 import cookie from 'react-cookie';
 import SelectRepo from './selectRepo.jsx';
@@ -22,12 +22,13 @@ export default class User extends React.Component
 
 
   render()
-  {
-
+  {var box=null;
+    if(cookie.load('type')=='user')
+    box=<AppBar title={"Hello "+cookie.load("user")} iconElementRight={< Link to = "/" > <FlatButton label="Logout" labelStyle={{color:"white"}} onClick={this.handleLogout}/> < /Link>}/>
     return(
     <div>
-                <AppBar title={"Hello "+cookie.load("user")} iconElementRight={< Link to = "/" > <FlatButton label="Logout" labelStyle={{color:"white"}} onClick={this.handleLogout}/> < /Link>}/>
-                <TitleCard/>
+                {box}
+                <TitleCardRepo />
                 <SelectRepo/>
 
       </div>);
