@@ -53,26 +53,27 @@
 													<div><h4>Output</h4><pre>{this.state.data.stdout}</pre></div>
 											):(
 												<Table showCheckbox={false}>
-												<TableHeader displaySelectAll={false} adjustForCheckbox={false} >
-												<TableRow>
-													<TableHeaderColumn>filePath</TableHeaderColumn>
-													<TableHeaderColumn>messages</TableHeaderColumn>
-													<TableHeaderColumn>errorCount</TableHeaderColumn>
-													<TableHeaderColumn>warningCount</TableHeaderColumn>
-												</TableRow>
-												</TableHeader>
-												 <TableBody showRowHover={true} displayRowCheckbox={false}>
-												{this.state.data.stdout.map((tile,i) => (
-									 <TableRow>
-										 <TableRowColumn id={i}> {tile[Object.keys(tile)[0]]}</TableRowColumn>
-										 <TableRowColumn id={i+1}> {tile[Object.keys(tile)[1]]}</TableRowColumn>
-										 <TableRowColumn id={i+2}> {tile[Object.keys(tile)[2]]}</TableRowColumn>
-										 <TableRowColumn id={i+3}> {tile[Object.keys(tile)[3]]}</TableRowColumn>
-									 </TableRow>
+	 					<TableHeader displaySelectAll={false} adjustForCheckbox={false} >
+		 				<TableRow>
+			 				<TableHeaderColumn>filePath</TableHeaderColumn>
+			 				<TableHeaderColumn>errorCount</TableHeaderColumn>
+							<TableHeaderColumn>warningCount</TableHeaderColumn>
+							<TableHeaderColumn>Status</TableHeaderColumn>
+		 				</TableRow>
+	 					</TableHeader>
+						 <TableBody showRowHover={true} displayRowCheckbox={false}>
+						{this.state.data.stdout.map((tile) => (
+			 <TableRow>
+				 <TableRowColumn> {tile[Object.keys(tile)[0]]}</TableRowColumn>
+				 <TableRowColumn> {tile[Object.keys(tile)[2]]}</TableRowColumn>
+				 <TableRowColumn> {tile[Object.keys(tile)[3]]}</TableRowColumn>
+				 <TableRowColumn> {(tile[Object.keys(tile)[2]]==0 && tile[Object.keys(tile)[3]]==0)?
+					 (<div><img src="../jsx/images/passStat.png"></img></div>):(tile[Object.keys(tile)[2]]>0)?(<div><img src="../jsx/images/errorStat.jpg"></img></div>):(tile[Object.keys(tile)[3]]>0)?(<div><img src="../jsx/images/warning.jpg"></img></div>):(<div><img src="../jsx/images/warning.jpg"></img></div>)}</TableRowColumn>
+			 </TableRow>
 
-								 ))}
-									 </TableBody>
-							 </Table>
+		 ))}
+		 	 </TableBody>
+	 </Table>
 						 )
 					 ):(
 						 <div><h4>Output</h4><pre></pre></div>
