@@ -59,7 +59,8 @@ class ChooseWorkflow extends React.Component
                 open1: false,
                 isSelect:false,
                 template: 'CI-Pipeline.yml',
-								jobId:""
+								jobId:"",
+								bgcolor:"",
 							}
 
 	}
@@ -101,8 +102,8 @@ class ChooseWorkflow extends React.Component
 
   		var array = Object.getOwnPropertyNames(obj);
   		var json= {"nodes":[],"edges":[]};
-  		var xaxis=[0,0,130,200,500,240,180,310,370,400,440,480,520,560,600] ;
-  		var yaxis=[0,0,-50,0,100,-200,100,0,100,-200,-100,0,100,-150,200];
+			var yaxis=[0,0,130,240,500,130,130,240,350,400,440,480,520,560,600] ;
+			var xaxis=[0,0,-10,-30,20,-150,100,30,0,-200,-100,0,100,-150,200];
   		array.map(function(item){
   		x1=(xaxis[incr]*3);
   		y1=(yaxis[incr]*2);
@@ -195,14 +196,24 @@ class ChooseWorkflow extends React.Component
 			var box = null;
       if(this.state.isSelect)
       {
-        box=<div>
+        box=(<div>
             <div>{this.state.graph}</div>
             <Link to={"/finalresult/"+this.state.jobId}>
               <RaisedButton label="Submit" secondary={true} onClick={this.handleSubmit} style={{marginTop:"4%",marginLeft:"10%"}} />
             </Link>
-					</div>;
+					</div>);
 
       }
+			else {
+
+				box=(<div style={{height:"100%",opacity:"0.5"}}>
+								<h1 style={{fontFamily:'Orbitron', color:"#19615d", textAlign:"center"}}>WORKFLOW</h1>
+								<h3 style={{textAlign:"center", color:"#fe6342", fontFamily:'Orbitron' }}>
+									Workflow is a Process or a Job divided into number of dependent or independent Stages.
+								</h3>
+						</div>);
+			}
+
 			var bar=null;
 		    if(cookie.load('type')=='user')
 		    bar=<AppBar title={"Hello "+cookie.load("user")} iconElementRight={< Link to = "/" > <FlatButton label="Logout" labelStyle={{color:"white"}} onClick={this.handleLogout}/> < /Link>}/>
@@ -212,55 +223,29 @@ class ChooseWorkflow extends React.Component
 
       return (
 				<div>
-  			{bar}
+  				{bar}
   				<TitleCardFlow/>
-					<Grid>
-						<Row>
-							<Col xs={12} sm={12} md={3} lg={3}>
-								<Card style={{borderRadius: "2px",marginTop:"6%"}}>
-									<CardText>
-									<List style={{}} >
-									<Subheader>User Board</Subheader>
-									<ListItem primaryText="New Project"  />
-									<ListItem primaryText="Build History"  />
-									</List>
-									</CardText>
+					<GridList cols={2} cellHeight="auto">
+						<GridTile style={{margin:'5px'}}>
+								<Card>
+										<CardHeader title="Choose WorkFlow" style={{backgroundColor:"#BDBDBD"}}/>
+												<CardText>
+													{this.state.worklist.map((item)=>(
+													<Menu>
+														<MenuItem key={item} primaryText={item.templateName} onClick={()=>{
+																this.setState({template:item.templateName,templateContent:item.content,open1:false,isSelect:true},()=>{
+																	this.split();
+																});
+															}}/>
+													</Menu>
+												))}
+												</CardText>
 								</Card>
-						 </Col>
-						 <Col xs={12} sm={12} md={9} lg={9}>
-							 <div >
-		             <GridList cols={1} cellHeight="auto">
-		               <GridTile style={{margin:"5px"}}>
-		                   <Card>
-		                     <CardHeader title="Workflows" style={{backgroundColor:"#BDBDBD"}}></CardHeader>
-		                   </Card>
-		               </GridTile>
-		               <GridTile style={{margin:'5px'}}>
-		                   <Card>
-		                       <CardHeader title="Choose WorkFlow" style={{backgroundColor:"#BDBDBD"}}/>
-		                           <CardText>
-		                             {this.state.worklist.map((item)=>(
-		                             <Menu>
-		                               <MenuItem key={item} primaryText={item.templateName} onClick={()=>{
-		                                   this.setState({template:item.templateName,templateContent:item.content,open1:false,isSelect:true},()=>{
-		                                     this.split();
-		                                   });
-		                                 }}/>
-		                             </Menu>
-		                           ))}
-		                           </CardText>
-		                   </Card>
-		               </GridTile>
-		               <GridTile style={{margin:"5px"}}>
-		                 {box}
-		               </GridTile>
-		             </GridList>
-		           </div>
-
-						 </Col>
-						</Row>
-					</Grid>
-
+						</GridTile>
+						<GridTile style={{margin:"5px",opacity:"0.5"}}>
+							{box}
+						</GridTile>
+					</GridList>
 				</div>
       );
 		} //end of render

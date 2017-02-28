@@ -215,7 +215,8 @@ export default class Graph extends Component {
                     onSelectEdge={this.onSelectEdge}
                     onCreateEdge={this.onCreateEdge}
                     onSwapEdge={this.onSwapEdge}
-                    onDeleteEdge={this.onDeleteEdge}/>
+                    onDeleteEdge={this.onDeleteEdge}
+                    style={{background:"white", fontSize:"30px", color:"white"}}/>
       </div>
     );
   }
