@@ -73,31 +73,30 @@
                                     (
                                         <h2>{this.state.data.stdout}</h2>
                                     ):(
-                      <div>  <h4>Tests:</h4>
-                        {
+                                      <div>  <h4>Tests:</h4>
+                          {
 
-      <Table showCheckbox={false}>
-      <TableHeader displaySelectAll={false} adjustForCheckbox={false} >
-      <TableRow>
-        <TableHeaderColumn>Title</TableHeaderColumn>
-        <TableHeaderColumn>Duration</TableHeaderColumn>
-        <TableHeaderColumn>CurrentRetry</TableHeaderColumn>
-        <TableHeaderColumn>warning</TableHeaderColumn>
-      </TableRow>
-      </TableHeader>
-       <TableBody showRowHover={true} displayRowCheckbox={false}>
-      {this.state.data.stdout.tests.map((tile,i) => (
-  <TableRow>
-   <TableRowColumn id={i}> {tile[Object.keys(tile)[1]]}</TableRowColumn>
-   <TableRowColumn id={i+1}> {tile[Object.keys(tile)[2]]}</TableRowColumn>
-   <TableRowColumn id={i+2}> {tile[Object.keys(tile)[3]]}</TableRowColumn>
-   <TableRowColumn id={i+3}> {JSON.stringify(tile[Object.keys(tile)[4]])}</TableRowColumn>
-  </TableRow>
+        <Table showCheckbox={false}>
+        <TableHeader displaySelectAll={false} adjustForCheckbox={false} >
+        <TableRow>
+          <TableHeaderColumn>Title</TableHeaderColumn>
+          <TableHeaderColumn>Warning</TableHeaderColumn>
+          <TableHeaderColumn>Status</TableHeaderColumn>
+        </TableRow>
+        </TableHeader>
+         <TableBody showRowHover={true} displayRowCheckbox={false}>
+        {this.state.data.stdout.tests.map((tile,i) => (
+    <TableRow>
+     <TableRowColumn id={i}> {tile[Object.keys(tile)[1]]}</TableRowColumn>
+     <TableRowColumn id={i+1}>{JSON.stringify(tile[Object.keys(tile)[4]])}</TableRowColumn>
+     <TableRowColumn id={i+2}>{(JSON.stringify(tile[Object.keys(tile)[4]])!='{}')?
+       (<div><img src="../jsx/images/errorStat.jpg"></img></div>):(<div><img src="../jsx/images/passStat.png"></img></div>)}</TableRowColumn>
+    </TableRow>
 
-  ))}
-  </TableBody>
-  </Table>}
-</div>
+    ))}
+    </TableBody>
+    </Table>}
+  </div>
 )}</div>
                   </CardText>
               </Card>

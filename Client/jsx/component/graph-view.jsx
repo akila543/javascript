@@ -61,9 +61,9 @@ function makeStyles(primary='dodgerblue', light='white', dark='black'){
     },
     node: {
       base: {
-        color: primary,
+        color: "#fe6342",
         stroke: light,
-        fill: light,
+        fill: "#fe6342",
         filter: 'url(#dropshadow)',
         strokeWidth: '0.5px',
         cursor: 'pointer'
@@ -81,8 +81,8 @@ function makeStyles(primary='dodgerblue', light='white', dark='black'){
     },
     text: {
       base:{
-        fill: dark,
-        stroke: dark
+        fill: "white",
+        stroke:"none"
       },
       selected: {
         fill: light,

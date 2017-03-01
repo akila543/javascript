@@ -54,11 +54,12 @@ class WorkFlowEdit extends React.Component
 
 		var array = Object.getOwnPropertyNames(obj);
 		var json= {"nodes":[],"edges":[]};
-		var xaxis=[0,0,130,200,500,240,180,310,370,400,440,480,520,560,600] ;
-		var yaxis=[0,0,-50,0,100,-200,100,0,100,-200,-100,0,100,-150,200];
+		var yaxis=[0,0,130,240,500,130,130,240,350,400,440,480,520,560,600] ;
+		var xaxis=[0,0,-10,-30,20,-150,100,30,0,-200,-100,0,100,-150,200];
 		array.map(function(item){
 		x1=(xaxis[incr]*3);
-		y1=(yaxis[incr]*2);
+		y1=(yaxis[incr]*2-100);
+		console.log(item,x1,y1);
 		var temp = {
 			id : incr,
 			title:item,

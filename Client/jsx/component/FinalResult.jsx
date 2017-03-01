@@ -41,7 +41,8 @@ export default class User extends React.Component {
         this.state = {
             jobId:this.props.params.jobId,
             isSubmit: false,
-            socket: io.connect('http://localhost:3000/monitor')
+            socket: io.connect('http://localhost:3000/monitor'),
+            box:<h2 style={{color: '#FFA500',textAlign:'center'}}>Reports are getting Generated</h2>
         };
           this.handleLogout=this.handleLogout.bind(this);
           this.drawCharts = this.drawCharts.bind(this);
@@ -75,23 +76,23 @@ export default class User extends React.Component {
                             switch (data.stageName) {
                                 case 'build':
                                     that.setState({stageArr1: (<Build res={data}/>)});
-                                    that.setState({stage1: data.status});
+                                    that.setState({stage1: data.status, box:null});
                                     break;
                                 case 'eslint':
                                     that.setState({stageArr2: (<Eslint res={data}/>)});
-                                    that.setState({stage2: data.status});
+                                    that.setState({stage2: data.status,box:null});
                                     break;
                                 case 'htmlhint':
                                     that.setState({stageArr3: (<HtmlHint res={data}/>)});
-                                    that.setState({stage3: data.status})
+                                    that.setState({stage3: data.status,box:null})
                                     break;
                                 case 'code-coverage':
                                     that.setState({stageArr4: (<CodeCoverage res={data}/>)});
-                                    that.setState({stage4: data.status})
+                                    that.setState({stage4: data.status,box:null})
                                     break;
                                 case 'whitebox':
                                     that.setState({stageArr5: (<Mocha res={data}/>)});
-                                    that.setState({stage5: data.status})
+                                    that.setState({stage5: data.status,box:null})
                                     break;
                                 default:
                                     that.setState({stageArr6: (
@@ -104,7 +105,7 @@ export default class User extends React.Component {
                                             </div>
 
                                         )});
-                                    that.setState({stage6: data.status});
+                                    that.setState({stage6: data.status,box:null});
                                     that.drawCharts();
                                     break;
                             }
@@ -139,6 +140,7 @@ export default class User extends React.Component {
 
     render() {
             var timeline=null;
+
           if(this.state.data2!=null){
             console.log("inside google api");
             timeline= <div style={{margin: "50px"}}>
@@ -164,6 +166,7 @@ export default class User extends React.Component {
                     }} >
                         <Col lg={12}>
                             <div >
+                                {this.state.box}
                                 {this.state.stageArr6}
                                 {this.state.stageArr1}
                                 {this.state.stageArr2}
