@@ -27,6 +27,7 @@ import {Chart} from 'react-google-charts';
 import TitleCardResult from './TitleCardResult.jsx';
 import newUser from './NewUser.jsx';
 import DashNavbar from './DashNavbar.jsx';
+var fileDownload = require('react-file-download');
 export default class User extends React.Component {
     constructor(props)
     {
@@ -46,6 +47,7 @@ export default class User extends React.Component {
         };
           this.handleLogout=this.handleLogout.bind(this);
           this.drawCharts = this.drawCharts.bind(this);
+          this.handleDownload = this.handleDownload.bind(this);
     }
     componentWillReceiveProps(nextProps) {
       console.log("joId=====>",nextProps.params.jobId);
@@ -56,6 +58,19 @@ export default class User extends React.Component {
         cookie.remove("access_token");
         cookie.remove("type");
     }
+
+handleDownload()
+{
+  var that = this;
+ Request.get('/download/'+that.state.jobId).end((err,res)=>{
+   if(err)
+     console.log(err);
+   else{
+    console.log(res.text);
+    fileDownload(res.text,that.state.jobId+".json");
+   }
+ })
+}
 
     componentWillMount()
     {
@@ -101,7 +116,6 @@ export default class User extends React.Component {
                                                     color: '#FFA500'
                                                 }}>{data.jobId}
                                                     Status:{data.status}</h4>
-
                                             </div>
 
                                         )});
@@ -116,23 +130,23 @@ export default class User extends React.Component {
     }
     drawCharts(){
         console.log("inside geting reports");
+        var that=this;
           Request.get('/getreports/'+this.state.jobId).set('Accept', 'application/json').end(function(err, res) {
               if (!err) {
-                  var that=this;
                   console.log("reports",res,"====================",typeof res);
-                  JSON.parse(res.text).map(function(item) {
+                  var tempArr = new Array();
+                  tempArr.push(["sdasd", new Date(), new Date()]);
+                  JSON.parse(res.text)[0].report.map(function(item) {
                       if (item != null) {
                           var arr = [];
                           var stageName = item.stageName;
                           var scheduled = new Date(item.scheduled);;
                           var completed = new Date(item.completed);;
                           arr.push(stageName, scheduled, completed);
-                          that.state.data2.push(arr);
+                          tempArr.push(arr);
                       }
                   });
-                  var first = ["sdasd", new Date(), new Date()];
-                                  that.state.data2.unshift(first);
-
+                  that.setState({data2:tempArr});
               }
           })
       }
@@ -142,10 +156,11 @@ export default class User extends React.Component {
             var timeline=null;
 
           if(this.state.data2!=null){
-            console.log("inside google api");
-            timeline= <div style={{margin: "50px"}}>
-                  <Chart chartType="Timeline" data={this.state.data2} graph_id="Timeline" options={this.state.options} width="60%" height="500px"/>
-              </div>
+            console.log("inside google api",this.state.data2);
+            timeline=(<div>
+                  <Chart chartType="Timeline" data={this.state.data2} graph_id="Timeline" options={this.state.options} width="100%"/>
+                  <RaisedButton label="Download Reports" secondary={true} onClick={this.handleDownload}/>
+                </div>);
         }
         var bar=null;
           if(cookie.load('type')=='user')
@@ -168,6 +183,7 @@ export default class User extends React.Component {
                             <div >
                                 {this.state.box}
                                 {this.state.stageArr6}
+                                {timeline}
                                 {this.state.stageArr1}
                                 {this.state.stageArr2}
                                 {this.state.stageArr3}
@@ -177,12 +193,6 @@ export default class User extends React.Component {
 
                         </Col>
                         </Row>
-                    <Row>
-                        <Col>
-                          {timeline}
-                        </Col>
-
-                    </Row>
                 </Grid>
                   </div>
         );

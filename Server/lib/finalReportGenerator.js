@@ -7,18 +7,15 @@ const MongoClient = require('mongodb').MongoClient;
 var url = 'mongodb://localhost:27017/reports';
 
 module.exports = function(jobId,result,done){
-  async.parallel([
+  async.series([
     function(callback){
       MongoClient.connect(url, function(err, db) {
           if (err) {
               console.log('---- DB connection error <<=== ' + err + ' ===>>');
           } else {
-              db.collection('buildreports').updateOne({
-                  jobId: jobId
-              }, {
-                  $set: {
-                      report: result,
-                  }
+              db.collection('buildreports').insertOne({
+                  jobId: jobId,
+                  report: result,
               }, function(err, result) {
                 if (err) {
                     console.log('---- DB add error <<=== ' + err + ' ===>>');
