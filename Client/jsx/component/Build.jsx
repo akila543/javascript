@@ -39,15 +39,13 @@ class Build extends React.Component {
         return (
             <Card >
                 <CardHeader title="Build" avatar={avatar} subtitle={this.state.data.status} actAsExpander={true} showExpandableButton={true}/>
-                <CardTitle title="Report" expandable={true}/>
                 <CardText expandable={true}>
-                <h4>Status:</h4><div><pre>{this.state.data.status}</pre></div><br/>
-                <h4>Output:</h4><div><pre>{this.state.data.stderr}</pre></div><br />
-                <h4>Errors:</h4><div><pre>{this.state.data.stderr}</pre></div><br />
                 <h4>ExitCode:</h4><div><pre>{this.state.data.exitCode}</pre></div><br/>
                 <h4>Initialized@:</h4><div><pre>{this.state.data.initialized}</pre></div><br />
-                <h4>scheduled@:</h4><div><pre>{this.state.data.scheduled}</pre></div><br />
-                <h4>completed@:</h4><div><pre>{this.state.data.completed}</pre></div><br/>
+                <h4>Output:</h4><div><pre>{this.state.data.stderr}</pre></div><br />
+                <h4>Errors:</h4><div><pre>{this.state.data.stderr}</pre></div><br />
+
+
                     <br/>
                 </CardText>
             </Card>
