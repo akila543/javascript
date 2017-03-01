@@ -48,30 +48,18 @@
           return (
               <Card >
                   <CardHeader title="Mocha" avatar={avatar} subtitle={this.state.data.status} actAsExpander={true} showExpandableButton={true}/>
-                  <CardTitle title="Report" expandable={true}/>
                   <CardText expandable={true}>
-                  <h4>Status:</h4><div><pre>{this.state.data.status}</pre></div><br/>
+                    <h4>ExitCode:</h4><div><pre>{this.state.data.exitCode}</pre></div><br />
+                    <h4>Initialized@:</h4><div><pre>{this.state.data.initialized}</pre></div><br />
+                    <h4>scheduled@:</h4><div><pre>{this.state.data.scheduled}</pre></div><br />
+                    <h4>completed@:</h4><div><pre>{this.state.data.completed}</pre></div><br/>
                   <h4>Errors:</h4><div><pre>{this.state.data.stderr}</pre></div><br />
-                  <h4>ExitCode:</h4><div><pre>{this.state.data.exitCode}</pre></div><br/>
-                  <h4>Initialized@:</h4><div><pre>{this.state.data.initialized}</pre></div><br />
-                  <h4>scheduled@:</h4><div><pre>{this.state.data.scheduled}</pre></div><br />
-                  <h4>completed@:</h4><div><pre>{this.state.data.completed}</pre></div><br/>
-                      <br/>
-                      <div>
-                          {(typeof this.state.data.stdout === 'string'|| this.state.data.stdout===undefined)?
-                                      (
-                                          <h2>{this.state.data.stdout}</h2>
-                                      ):( <div>{(Object.getOwnPropertyNames(this.state.data.stdout.stats).map((tile,i) => (
-                    <div id={i+"mocha"}><h4>{tile}:</h4><pre>{this.state.data.stdout.stats[tile]}</pre></div>
-                  )))
-                  }</div>
-                  )
-                          }
-                      </div>
+
+
                       <div>
                         {(typeof this.state.data.stdout === 'string'|| this.state.data.stdout===undefined)?
                                     (
-                                        <h2>{this.state.data.stdout}</h2>
+                                        <div><h4>Output</h4><div><pre>{this.state.data.stdout}</pre></div><br /></div>
                                     ):(
                                       <div>  <h4>Tests:</h4>
                           {
