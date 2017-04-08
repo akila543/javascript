@@ -1,0 +1,73 @@
+version: '1'
+templateName: PipelineForExpress
+stages:
+  gitClone:
+    type: "/stackroute/git/clone"
+    input:
+      REPOSITORYURL: "{{payload.repo_url}}"
+      BRANCH: "{{payload.repo_ref}}"
+      WORKSPACE: "{{context.workspace}}"
+    output:
+    context:
+    depends_on:
+  build:
+    type: "/stackroute/javascript/build"
+    input:
+      WORKSPACE: "{{context.workspace}}"
+    output:
+    context:
+    depends_on:
+    - gitClone
+  whitebox:
+    type: 
+      INCLUDE: "{{payload.whitebox.include}}"
+      EXCLUDE: "{{payload.whitebox.exclude}}"
+    output:
+      payload:
+        output:
+          unittest: "{{OUTPUT}}"
+    context:
+    depends_on:
+    - build
+  eslint:
+    type: "/stackroute/javascript/eslint"
+    input:
+      INCLUDE:
+      - "**/*.spec.js"
+      EXCLUDE:
+      - "**/node_modules/**/*.js"
+      - "**/bower_components/**/*.js"
+    output:
+      payload:
+        output:
+          lint:
+            js: "{{OUTPUT}}"
+    context:
+    depends_on:
+    - gitClone
+  htmlhint:
+    type: "/stackroute/javascript/htmlhint"
+    input:
+      INCLUDE: "{{payload.htmlhint.include}}"
+      EXCLUDE: "{{payload.htmlhint.exclude}}"
+    output:
+      payload:
+        output:
+          lint:
+            html: "{{OUTPUT}}"
+    context:
+    depends_on:
+    - gitClone
+  code-coverage:
+    type: "/stackroute/javascript/code-coverage"
+    input:
+      INCLUDE: "{{payload.codecoverage.include}}"
+      EXCLUDE: "{{payload.codecoverage.exclude}}"
+    output:
+      payload:
+        output:
+          codecoverage: "{{OUTPUT}}"
+    context:
+    depends_on:
+    - build
+  

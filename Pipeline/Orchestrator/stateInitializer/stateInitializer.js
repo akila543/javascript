@@ -86,22 +86,20 @@ function dataPush(jobId, callback) {
                 client.lpush('JOBLIST', jobId, (err, reply) => {
                     if (!err) {
                         client.hmset(jobId, 'status', 'Initialized', 'at', (new Date()).toISOString(), function(err, reply) {
-                            if (!err)
+                            if(!err)
                                 callback();
-                            else
+                            else{
                                 console.log(err);
                             }
-                        );
+                            });
 
                     } else
                         console.log(err);
-                    }
-                )
+                    });
 
             } else
                 console.log(err);
-            }
-        );
+            });
 
     })
 

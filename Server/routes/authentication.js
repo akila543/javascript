@@ -24,7 +24,8 @@ var adminList = [
     'varun7777',
     'rsunray',
     'subashchandarsiva',
-    'karanjeet298'
+    'karanjeet298',
+    'akila543'
 ];
 
 Router.get('/authentication', function(req, response, next) {

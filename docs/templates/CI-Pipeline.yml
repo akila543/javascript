@@ -19,8 +19,7 @@ stages:
     depends_on:
     - gitClone
   whitebox:
-    type: "/stackroute/javascript/mocha"
-    input:
+    type: 
       INCLUDE: "{{payload.whitebox.include}}"
       EXCLUDE: "{{payload.whitebox.exclude}}"
     output:

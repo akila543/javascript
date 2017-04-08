@@ -17,7 +17,6 @@ RUN ["npm","install","-g","istanbul"]
 RUN ["npm","install","-g","should"]
 RUN ["npm","install","-g","esprima"]
 ADD . /
-COPY ./configFiles/* /tmp/
 RUN chmod -R 0777 /stackroute
 WORKDIR /
 VOLUME /tmp
